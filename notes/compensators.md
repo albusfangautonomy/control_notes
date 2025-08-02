@@ -10,7 +10,7 @@ phase margin is a measure of stability for a feedback control system. It represe
 ### Phase Margin Calculation:
 $$\text{Phase Margin} = 180^\circ + \angle G(j\omega_{gc})H(j\omega_{gc})$$
 
-- $ \omega_{gc} $ is the **gain crossover frequency** — the frequency at which the **magnitude** of the open-loop transfer function \( |G(j\omega)H(j\omega)| = 1 \) (i.e., **0 dB**).
+- $$ \omega_{gc} $$ is the **gain crossover frequency** — the frequency at which the **magnitude** of the open-loop transfer function \( |G(j\omega)H(j\omega)| = 1 \) (i.e., **0 dB**).
 - $ \angle G(j\omega)H(j\omega)$ is the **phase** of the open-loop transfer function at that frequency.
 ## Phase Lead and Lag
 A zero (s) adds phase while pole (1/s) subtracts phase.
