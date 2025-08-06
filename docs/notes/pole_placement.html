@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pole Placement</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="pole-placement">Pole Placement</h1>
+<h2 id="linear-system">Linear system</h2>
+<p>For the controllable linear system, \(\dot{x} = Ax+Bu \\ u=-Kx \\ \dot{x}=(A-BK)x\), there’s a trade off between convergence rate (eigenvalues or poles) and system jerkiness, ie, more negative real parts would lead to faster convergence to stability but sacrifice system response smoothness. Linear Quadratic Regulator (LQR) can be used to find optimal point.</p>
+
+<h2 id="linear-quadratic-regulator">Linear Quadratic Regulator</h2>
+<h3 id="formulation">Formulation</h3>
+<p>Cost function \(J=\int_{0}^{\infty}(x^TQx + u^TRu)dt\), where Q is positive semidefinite and x and u are dependet on t. There are <strong>two</strong> components of the cost:</p>
+<ol>
+  <li>first term penalizes difference between desired state and actual state, which accelerates convergence.</li>
+  <li>second term penalizes bigger u - for instance, gas may be expensive and the cost cannot be exorbitant.
+The term <strong>linear</strong> refers to $u=-Kx$, which is a linear controller; <strong>Quadratic</strong> refers to the Cost function; <strong>Regulator</strong> means this stabilizes the system.
+    <h3 id="result">Result</h3>
+    <p>LQR gives u=-Kx specifically the K matrix that yields the best strategy.</p>
+  </li>
+</ol>
+
+<h2 id="linear-quadratic-estimator">Linear Quadratic Estimator</h2>
+<p>The Kalman filter is an example of an LQE. More details are in State Estimation page.</p>
+
+</body>
+</html>

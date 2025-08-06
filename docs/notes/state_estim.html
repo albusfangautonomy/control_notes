@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>State Estimation</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="state-estimation">State Estimation</h1>
+<h2 id="measurement-model">Measurement Model</h2>
+<p>\(\dot{x}=Ax+Bu, y=Cx, x\in\mathbb{R^n}, y \in\mathbb{R^p}\)</p>
+<h2 id="observability">Observability</h2>
+<p>In simple terms, <strong>observability</strong> is if any state in x can be reproduced and deduced from measurements y(t)</p>
+<h2 id="observability-matrix">Observability Matrix</h2>
+<p>\(\mathbb{O} = \begin{bmatrix}
+C \\
+CA \\
+CA^2 \\
+\vdots \\
+CA^{n-1}
+\end{bmatrix}\)
+This is a tall matrix and therefore its rank is the column rank.
+<strong>Note</strong> that the C matrices are measurement matrices, not controllability matrices.</p>
+<ol>
+  <li>The system is observable if rank(O)=n.</li>
+  <li>The full state x can be estimated from y.</li>
+  <li><strong>Degrees of Observability</strong> can be calculated from the <strong>Observability Gramian</strong> and the <strong>SVD</strong>
+    <h2 id="kalman-filter-linear-quadratic-estimator">Kalman Filter (Linear Quadratic Estimator)</h2>
+    <h3 id="notes">Notes</h3>
+  </li>
+  <li><strong>Both Kalman Filter and LQR solve an algebraic Riccati Equation, yielding a closed-form solution</strong></li>
+  <li>The algebraic Riccati Equation for Kalman filter is very similar to that of LQR.</li>
+  <li>Kalman filter gain ($K_{k}$)is derived by minimizing the estimate coveriance matrix $P_{k}$
+<img src="../figures/estimator.png" alt="A picture of estimator dynamical model" /></li>
+</ol>
+
+<p>Kalman is a <strong>Full State Estimator</strong> that measures full state $x(t)$ given the knowledge of the measurement $y(t)$ and control input $u(t)$. The eigenvalues of the Kalman filter signifies how fast estimates converge to the true state. Pole placement can be performed on Kalman to find the optimal eigenvalues. More aggressive poles means Kalman will be more susceptible to external noise.</p>
+<h3 id="kalman-cost-function">Kalman Cost Function</h3>
+<p>\(J= \mathbb{E}[(x-\hat{x})^T(x-\hat{x})]\)</p>
+<h3 id="measurement-noise">Measurement Noise</h3>
+<p>$ \epsilon = x - \hat{x} \ \dot{\epsilon}=(A-KC) \epsilon + w_{d} - Kw_{n}$, where K is the Kalman gain and C is the measurement matrix, W_{d} is the process noise from system dynamics and w_{n} is the sensor noise</p>
+<h3 id="two-major-noises">Two Major noises</h3>
+<ol>
+  <li>Model Noise $w_{d}$</li>
+  <li>Measurement Noise $w_{n}$
+if one is high, trust the other more.</li>
+</ol>
+
+</body>
+</html>

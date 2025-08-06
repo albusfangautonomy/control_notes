@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Robust Control</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="robust-control">Robust Control</h1>
+<h2 id="motivation-and-background">Motivation and Background</h2>
+<p>A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the performance and robustness.</p>
+<h2 id="three-equivalent-representations-of-linear-systems">Three Equivalent Representations of Linear Systems</h2>
+<ol>
+  <li>State space representation
+ \(\dot{x}=Ax+Bu \\ y=Cx\)</li>
+  <li>Transfer functions
+\(G(s)=C(sI-A)^{-1}B\)</li>
+  <li>Impulse response time domain
+\(y(t)=\int_{0}^{t}h(t-\tau)u(\tau)d\tau\) 
+This is a convolution between impulse response and control input
+<strong>Note</strong> there are different usages for each of the three representations. 1. If physics can be represented, State space representation can be very useful. Transfer functions can be useful for investigating robustness and performance</li>
+</ol>
+
+<h2 id="fourier-and-laplace-transforms">Fourier and Laplace Transforms</h2>
+<h2 id="fourier-series">Fourier Series</h2>
+
+<p>If $f(t)$ is a periodic function with period $T$, its <strong>Fourier series</strong> representation is:</p>
+
+\[f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right]\]
+
+<p>The coefficients are given by:</p>
+
+\[a_0 = \frac{1}{T} \int_{-T/2}^{T/2} f(t) \, dt\]
+
+\[a_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(\frac{2\pi n t}{T}\right) dt\]
+
+\[b_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin\left(\frac{2\pi n t}{T}\right) dt\]
+
+<p>You can also write the Fourier series using <strong>complex exponentials</strong>:</p>
+
+\[f(t) = \sum_{n=-\infty}^{\infty} c_n e^{i 2\pi n t / T}\]
+
+<p>with coefficients:</p>
+
+\[c_n = \frac{1}{T} \int_{-T/2}^{T/2} f(t) e^{-i 2\pi n t / T} dt\]
+
+<hr />
+
+<h2 id="fourier-transform">Fourier Transform</h2>
+
+<p>For non-periodic functions, the <strong>Fourier Transform</strong> is used. The <strong>continuous-time Fourier transform (CTFT)</strong> of a function $f(t)$ is:</p>
+
+\[F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i \omega t} dt\]
+
+<p>The <strong>inverse Fourier transform</strong> is:</p>
+
+\[f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i \omega t} d\omega\]
+
+<p>Alternatively, in terms of frequency $f$ (Hz) instead of angular frequency $\omega = 2\pi f$:</p>
+
+\[F(f) = \int_{-\infty}^{\infty} f(t) e^{-i 2\pi f t} dt\]
+
+\[f(t) = \int_{-\infty}^{\infty} F(f) e^{i 2\pi f t} df\]
+
+<h2 id="transfer-function">Transfer Function</h2>
+
+<h3 id="frequency-response">Frequency Response</h3>
+<p><img src="../figures/frequency_response.png" alt="frequency response of a mass-spring damper system" /></p>
+
+<p>\(ratio{\bar{x}}{\bar{u}}\)
+<strong>Notes:</strong></p>
+<ol>
+  <li>The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency.</li>
+  <li>At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.</li>
+  <li></li>
+</ol>
+
+</body>
+</html>
