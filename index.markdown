@@ -8,20 +8,20 @@ title: Control Notes
 Welcome to my personal collection of control systems notes. This site compiles essential topics, explanations, and formulas for quick reference and deeper learning.
 
 ## 📚 Core Topics
-- [Open-loop vs Close-loop control](./notes/openclose.md)
+- [Open-loop vs Close-loop control]({{ site.baseurl }}/openclose.md)
   A comparison between Open Loop control and Closed Loop control
 
-- [PID Control](./notes/pid.md)  
+- [PID Control]({{ site.baseurl }}/pid.md)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
 
-- [Lead, Lag, and Lead-Lag Compensators](./notes/compensators.md)  
+- [Lead, Lag, and Lead-Lag Compensators]({{ site.baseurl }}/compensators.md)  
   Frequency domain intuition, Bode plot effects, stability and performance improvement.
 
 - [Root Locus Analysis](./notes/root-locus.md)  
   Pole-zero placement and visualizing the impact of controller design.
 
 - [Optimal Pole Placement in Linear Systems](./notes/pole_placement.md)
-  Introduces LQR and pole placement
+  Introduces LQR and pole placement.
 
 - [LQE](./notes/state_estim.md)
   Linear quadratic Estimator and Observability.
@@ -31,9 +31,6 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Frequency Analysis and Fourier Transform](./notes/frequency-response.md)  
   How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
-
-- [State Space Representation](./notes/state-space.md)  
-  Modern control approach using states, matrices, and observability/controllability.
 
 - [Stability Analysis](./notes/stability.md)  
   Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
@@ -51,6 +48,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Control Using Simulink & Python](./notes/tools.html)  
   Practical guides using Simulink, Python (`control`, `matplotlib`, etc.).
+
+## Interview Prep
+
 
 ---
 
