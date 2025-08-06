@@ -8,29 +8,31 @@ title: Control Notes
 Welcome to my personal collection of control systems notes. This site compiles essential topics, explanations, and formulas for quick reference and deeper learning.
 
 ## 📚 Core Topics
+- [Open-loop vs Close-loop control](./notes/openclose.md)
+  A comparison between Open Loop control and Closed Loop control
 
-- [PID Control](./notes/pid.html)  
+- [PID Control](./notes/pid.md)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
 
-- [Lead, Lag, and Lead-Lag Compensators](./notes/compensators.html)  
+- [Lead, Lag, and Lead-Lag Compensators](./notes/compensators.md)  
   Frequency domain intuition, Bode plot effects, stability and performance improvement.
 
-- [Root Locus Analysis](./notes/root-locus.html)  
+- [Root Locus Analysis](./notes/root-locus.md)  
   Pole-zero placement and visualizing the impact of controller design.
 
-- [Bode and Nyquist Plots](./notes/frequency-response.html)  
+- [Bode and Nyquist Plots](./notes/frequency-response.md)  
   How to interpret system behavior in the frequency domain.
 
-- [State Space Representation](./notes/state-space.html)  
+- [State Space Representation](./notes/state-space.md)  
   Modern control approach using states, matrices, and observability/controllability.
 
-- [Stability Analysis](./notes/stability.html)  
+- [Stability Analysis](./notes/stability.md)  
   Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
 
-- [Discrete-Time Control](./notes/discrete-control.html)  
+- [Discrete-Time Control](./notes/discrete-control.md)  
   Z-transform, digital implementation of controllers, sampling effects.
 
-- [Model Predictive Control (MPC)](./notes/mpc.html)  
+- [Model Predictive Control (MPC)](./notes/mpc.md)  
   Optimization-based control for constrained systems (intro-level overview).
 
 ## 🛠️ Tools and Techniques
