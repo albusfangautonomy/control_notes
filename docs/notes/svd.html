@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVD</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <p>SVD works on any matrix</p>
+
+<h1 id="intuitive-interpretations">Intuitive Interpretations</h1>
+<h2 id="rotation-coordinate-scaling-and-reflection">Rotation, coordinate scaling, and reflection</h2>
+<h2 id="-svd-geometry-summary">🎯 SVD Geometry Summary</h2>
+
+<p>For a real matrix <strong>M</strong>, the Singular Value Decomposition is:</p>
+
+\[\mathbf{M} = \mathbf{U} \boldsymbol{\Sigma} \mathbf{V}^*\]
+
+<h3 id="-square-matrix-case-mathbfm-in-mathbbrm-times-m">🔷 Square Matrix Case: \(\mathbf{M} \in \mathbb{R}^{m \times m}\)</h3>
+
+<ul>
+  <li><strong>U</strong> and <strong>V*</strong> are real orthogonal matrices (rotations/reflections)</li>
+  <li><strong>Σ</strong> scales each coordinate by singular values $\sigma_i$</li>
+  <li>Geometrically:
+<code class="language-plaintext highlighter-rouge">rotation/reflection → scaling → rotation/reflection</code></li>
+</ul>
+
+<h4 id="-determinant-interpretation">🔸 Determinant Interpretation</h4>
+
+<ul>
+  <li>$\det(\mathbf{M}) &gt; 0$: U and V^* are both <strong>rotations</strong> or both <strong>reflections</strong></li>
+  <li>$ \det(\mathbf{M}) &lt; 0 $: One of U or V^* must involve <strong>reflection</strong></li>
+  <li>$ \det(\mathbf{M}) = 0 $: U and V^* can independently be rotations or reflections</li>
+</ul>
+
+<h3 id="-rectangular-matrix-case-mathbfm-in-mathbbrm-times-n">🔷 Rectangular Matrix Case: $\mathbf{M} \in \mathbb{R}^{m \times n}$</h3>
+
+<ul>
+  <li>M maps \(\mathbb{R}^n \to \mathbb{R}^m\)</li>
+  <li>U and V* act on $\mathbb{R}^m$ and $\mathbb{R}^n$ respectively</li>
+  <li>Σ:
+    <ul>
+      <li>Scales the first $\min(m, n)$ coordinates</li>
+      <li>Extends (pads) or truncates vector dimensions appropriately</li>
+    </ul>
+  </li>
+</ul>
+
+<p>This decomposition reveals how any linear transformation can be interpreted geometrically using <strong>rotations/reflections and scaling</strong>.</p>
+
+</body>
+</html>

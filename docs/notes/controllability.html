@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Discrete-Time Control</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="equivalence">Equivalence</h1>
+<ol>
+  <li>System is controllable</li>
+  <li>Arbitrary Eigenvalue (Pole) placement is allowed
+    <ul>
+      <li>
+\[u = -Kx =&gt; \dot{x} = (A-BK)x\]
+      </li>
+    </ul>
+  </li>
+  <li>Reachability (full in R^{n})
+    <ul>
+      <li>Theorectically one can drive from Massachusetts to California in a second</li>
+      <li>This can be proven by Cayley-Hamilton theorem</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="cayley-hamilton-theorem">Cayley-Hamilton Theorem</h2>
+<p>The characteristic polynomial of matrix $A$ is defined as:
+\(p_A(\lambda) = \det(\lambda I_n - A)\)
+Since this is a degree-$n$ monic polynomial, it can be written as:
+\(p_A(\lambda) = \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0\)
+By replacing the scalar variable $\lambda$ with the matrix $A$, we define the matrix polynomial:
+\(p_A(A) = A^n + c_{n-1} A^{n-1} + \cdots + c_1 A + c_0 I_n\)</p>
+<h1 id="controllability">Controllability</h1>
+<h2 id="stabilizability">Stabilizability</h2>
+
+<p>Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as
+<strong>Stabilizability</strong>
+A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controlable subspace. (Anything unstable can be damped)</p>
+
+<p>Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix.</p>
+
+<h2 id="controllability-of-linear-system">Controllability of Linear system</h2>
+<p>\(\dot{x}=Ax+Bu\)
+\(y=Cx\)
+This system is controllable if and only if the controllability matrix \(C=[B\ AB\ A^2B\ ...\ A^{n-1}B]\) is of full column rank</p>
+
+<p><strong>Note</strong> This is a binary check. To see how controllable this system is, investigate the SVD of C.</p>
+
+<h2 id="degrees-of-controllability">Degrees of Controllability</h2>
+<p>The Singular Value Decomposition (SVD) of the controllability matrix provides deep insight into the degree and direction of controllability of a linear system:</p>
+<ol>
+  <li>
+    <p>Controllability Rank
+ If 𝐶 has full rank (i.e. rank = number of states 𝑛), the system is completely controllable.</p>
+
+    <p>The number of nonzero singular values = the rank of 𝐶.</p>
+  </li>
+  <li>
+    <p>Strength of Controllability (Conditioning)
+ The magnitude of the singular values tells you how “strongly” controllable the system is in different directions:</p>
+
+    <p>Large singular values → easy to move the system in that direction.</p>
+
+    <p>Tiny singular values → very difficult to control (require large input energy).</p>
+
+    <p>Zero singular values → system not controllable in that direction.</p>
+  </li>
+  <li>
+    <p>Controllable Directions
+ The right singular vectors V from \(𝐶 = 𝑈Σ𝑉^𝑇\) span the input space.</p>
+
+    <p>The left singular vectors 𝑈 represent orthogonal directions in the state space.</p>
+
+    <p>Directions associated with large singular values in 𝑈 are the most controllable.</p>
+    <h2 id="controllability-gramian">Controllability Gramian</h2>
+    <p><strong>The eigenvectors of the Gramian ($W_t$) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix</strong>
+\(W_{t} \approx CC^T\)
+The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal to noise ratio</strong></p>
+    <h2 id="pbh-test">PBH Test</h2>
+    <p>(A,B) is controllable if and only if
+\(rank[(A-\lambda I)\ B] = n \forall \lambda \in \mathbb{C}\)</p>
+  </li>
+  <li>$rank(A-\lambda I)=n$ except for eigenvalues $\lambda$</li>
+  <li>B needs to have some component in each eigenvector directions</li>
+  <li>(Advanced) a random vector B would make (A,B) controllably with high probability
+    <h2 id="reachability">Reachability</h2>
+    <p>In control theory, <strong>reachability</strong> describes whether it is possible to move a system from an initial state to a desired final state using admissible control inputs over a finite time interval.</p>
+  </li>
+</ol>
+
+<p>For a continuous-time linear time-invariant (LTI) system described by:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t)\]
+
+<p>where:</p>
+<ul>
+  <li>$x(t) \in \mathbb{R}^n$ is the state vector,</li>
+  <li>$u(t) \in \mathbb{R}^m$ is the control input,</li>
+  <li>$A \in \mathbb{R}^{n \times n}$ is the system matrix,</li>
+  <li>$B \in \mathbb{R}^{n \times m}$ is the input matrix,</li>
+</ul>
+
+<p>the system is <strong>reachable</strong> if, for any initial state $x(0)$ and any final state $x_f$, there exists an input $u(t)$ that drives the system from $x(0)$ to $x_f$ in finite time.</p>
+
+<h3 id="reachability-matrix">Reachability Matrix</h3>
+
+<p>The reachability of the system can be tested using the <strong>reachability matrix</strong>:</p>
+
+\[\mathcal{R} = \begin{bmatrix} B &amp; AB &amp; A^2B &amp; \cdots &amp; A^{n-1}B \end{bmatrix}\]
+
+<p>If $\mathcal{R}$ has <strong>full rank</strong> (i.e., $\text{rank}(\mathcal{R}) = n$), then the system is reachable</p>
+<h3 id="-reachability-set">🎯 Reachability Set</h3>
+
+<p>The <strong>reachability set</strong> (or reachable set) at time $t_f$ is the set of all states that the system can reach from an initial state $x(0)$ under some admissible input $u(t)$ over the time interval $[0, t_f]$.</p>
+
+<p>Formally, for a continuous-time LTI system:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t), \quad x(0) = 0\]
+
+<p>the <strong>reachability set</strong> at time $t_f$ is defined as:</p>
+
+\[\mathcal{R}(t_f) = \left\{ x(t_f) \in \mathbb{R}^n \;\middle|\; x(t_f) = \int_0^{t_f} e^{A(t_f - \tau)} B u(\tau) \, d\tau,\; u(\cdot) \in \mathcal{L}^2[0, t_f] \right\}\]
+
+<p>This set contains all possible states the system can reach at time $t_f$ from the origin with square-integrable inputs $u(t)$.</p>
+
+<p>If $\mathcal{R}(t_f)$ spans $\mathbb{R}^n$ for some finite $t_f$, the system is reachable.</p>
+
+<p>For discrete-time systems:</p>
+
+\[x[k+1] = A x[k] + B u[k], \quad x[0] = 0\]
+
+<p>the reachability set after $N$ steps is:</p>
+
+\[\mathcal{R}_d(N) = \left\{ x[N] = \sum_{i=0}^{N-1} A^i B u[N-1-i] \;\middle|\; u[i] \in \mathbb{R}^m \right\}\]
+
+<p>The union of all such sets over all $t_f$ (or $N$ in discrete time) is the <strong>total reachable set</strong> from the origin.</p>
+
+
+</body>
+</html>
