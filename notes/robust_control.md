@@ -1,3 +1,7 @@
+---
+layout: default
+title: Robust Control
+---
 # Robust Control
 ## Motivation and Background
 A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the performance and robustness.

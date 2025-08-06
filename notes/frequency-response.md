@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Frequency Response
+title: Frequency Response and Fourier Transform
 ---
 
 # Bode and Nyquist Plots

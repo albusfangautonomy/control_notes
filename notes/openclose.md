@@ -1,3 +1,7 @@
+---
+layout: default
+title: Open loop vs closed loop control
+---
 # Open Loop vs Closed Loop Control
 Why feedback control?
 1. Uncertainty (inherent in the system) in open loop system dynamics. Preplanned control inputs may fall flat against uncertainties.

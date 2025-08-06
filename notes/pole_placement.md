@@ -1,3 +1,7 @@
+---
+layout: default
+title: Pole Placement
+---
 # Pole Placement
 ## Linear system
 For the controllable linear system, $$\dot{x} = Ax+Bu \\ u=-Kx \\ \dot{x}=(A-BK)x$$, there's a trade off between convergence rate (eigenvalues or poles) and system jerkiness, ie, more negative real parts would lead to faster convergence to stability but sacrifice system response smoothness. Linear Quadratic Regulator (LQR) can be used to find optimal point.

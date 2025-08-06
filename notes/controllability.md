@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Discrete-Time Control
+title: Controllability
 ---
 # Equivalence
 1. System is controllable

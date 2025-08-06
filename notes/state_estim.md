@@ -1,3 +1,7 @@
+---
+layout: default
+title: State Estimation
+---
 # State Estimation
 ## Measurement Model
 $$\dot{x}=Ax+Bu, y=Cx, x\in\mathbb{R^n}, y \in\mathbb{R^p}$$

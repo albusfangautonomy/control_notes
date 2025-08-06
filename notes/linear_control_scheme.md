@@ -1,3 +1,7 @@
+---
+layout: default
+title: Linear Control Schemes - LQG
+---
 # Important Control Schemes
 ## Linear Quadratic Gaussian (Optimal Control)
 ![System Diagram of LQG](../figures/regulator.png)
