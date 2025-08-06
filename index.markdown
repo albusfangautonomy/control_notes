@@ -20,8 +20,17 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Root Locus Analysis](./notes/root-locus.md)  
   Pole-zero placement and visualizing the impact of controller design.
 
-- [Bode and Nyquist Plots](./notes/frequency-response.md)  
-  How to interpret system behavior in the frequency domain.
+- [Optimal Pole Placement in Linear Systems](./notes/pole_placement.md)
+  Introduces LQR and pole placement
+
+- [LQE](./notes/state_estim.md)
+  Linear quadratic Estimator and Observability.
+
+- [Controllability and Reachability](./notes/controllability.md)
+  Illustrates the equivalence between controllability and reachability.
+
+- [Frequency Analysis and Fourier Transform](./notes/frequency-response.md)  
+  How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
 
 - [State Space Representation](./notes/state-space.md)  
   Modern control approach using states, matrices, and observability/controllability.
@@ -45,4 +54,4 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 ---
 
-*Made with ❤️ using [Jekyll](https://jekyllrb.com/)*
+*Made using [Jekyll](https://jekyllrb.com/)*
