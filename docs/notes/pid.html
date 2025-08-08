@@ -10,6 +10,25 @@
 <body>
   <h1 id="pid-control">PID Control</h1>
 
+<h2 id="which-controller-to-use">Which controller to use?</h2>
+<p>\(\begin{array}{c|c|c|c}
+Example &amp; System Order &amp; Controller &amp; Reasoning\\
+\hline
+\text{Controlling mass position using force} &amp; 2 &amp; \text{PD or PID} &amp; \text{Typically needs damping like mass-spring damper, otherwise will oscillate} \\
+\text{Controlling V across C using current} &amp; 1 &amp; \text{P or PI} &amp; \text{not much danger of over-shoot or oscillation}  \\
+\text{Controlling I across R using voltage} &amp; 0 &amp; \text{P or PI} &amp; \text{not much danger, direct mapping}
+\end{array}\)</p>
+
+<p><strong>Note</strong> System order denotes how many ‘integration’ away is your control input from output. For instance controlling position with force would be a second order system.</p>
+<h2 id="pi-vs-pd-vs-pid">PI vs PD vs PID</h2>
+<p>The derivative controller is highly sensitive to noise and may throw system into instability.</p>
+
+<h3 id="pi-controller">PI controller</h3>
+<p>PI controller reduces both rise time and the steady state errors of the system. Integral term introduces phase lag, which may slow down response time.</p>
+
+<h3 id="pd-controller">PD controller</h3>
+<p>A PD controller reduces transients like rise time, overshoot, and oscillations in the output. D controller cannot exist on its own since itself doesn’t stabilize the system, but amplifies noise.</p>
+
 <p>Coming soon…</p>
 
 </body>

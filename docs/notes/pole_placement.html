@@ -10,7 +10,31 @@
 <body>
   <h1 id="pole-placement">Pole Placement</h1>
 <h2 id="linear-system">Linear system</h2>
-<p>For the controllable linear system, \(\dot{x} = Ax+Bu \\ u=-Kx \\ \dot{x}=(A-BK)x\), there’s a trade off between convergence rate (eigenvalues or poles) and system jerkiness, ie, more negative real parts would lead to faster convergence to stability but sacrifice system response smoothness. Linear Quadratic Regulator (LQR) can be used to find optimal point.</p>
+<p>For the controllable linear system, 
+\(\dot{x} = Ax+Bu,
+u=-Kx,
+\dot{x}=(A-BK)x\),</p>
+
+<p>there’s a trade off between convergence rate (eigenvalues or poles) and system jerkiness, ie, more negative real parts would lead to faster convergence to stability but sacrifice system response smoothness. Linear Quadratic Regulator (LQR) can be used to find optimal point.</p>
+
+<hr />
+
+<h3 id="poles-to-the-far-left-of-the-complex-plane">Poles to the far left of the complex plane:</h3>
+<p>Pro:</p>
+<ol>
+  <li>Faster Response</li>
+  <li>Increased stability margin</li>
+</ol>
+
+<p>Cons:</p>
+<ol>
+  <li>Control effort becomes large. Actuators may saturate.</li>
+  <li>Sensitivity to Noise and model uncretainty. High gain feedback amplified measurement noise and unmodeled dynamics</li>
+  <li>Numerical instability</li>
+  <li>Reduced Robustness</li>
+</ol>
+
+<hr />
 
 <h2 id="linear-quadratic-regulator">Linear Quadratic Regulator</h2>
 <h3 id="formulation">Formulation</h3>

@@ -26,21 +26,30 @@
   </li>
 </ol>
 
+<hr />
+
 <h2 id="cayley-hamilton-theorem">Cayley-Hamilton Theorem</h2>
-<p>The characteristic polynomial of matrix $A$ is defined as:
+<p>Almost every square matrix satisfies its own characteristic equation</p>
+
+<p>The characteristic polynomial of matrix \(A\) is defined as:
 \(p_A(\lambda) = \det(\lambda I_n - A)\)
-Since this is a degree-$n$ monic polynomial, it can be written as:
+Since this is a degree-\(n\) monic polynomial, it can be written as:
 \(p_A(\lambda) = \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0\)
-By replacing the scalar variable $\lambda$ with the matrix $A$, we define the matrix polynomial:
+By replacing the scalar variable \(\lambda\) with the matrix \(A\), we define the matrix polynomial:
 \(p_A(A) = A^n + c_{n-1} A^{n-1} + \cdots + c_1 A + c_0 I_n\)</p>
+
 <h1 id="controllability">Controllability</h1>
+
 <h2 id="stabilizability">Stabilizability</h2>
 
-<p>Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as
-<strong>Stabilizability</strong>
+<p>Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as</p>
+
+<p><strong>Stabilizability</strong>
 A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controlable subspace. (Anything unstable can be damped)</p>
 
 <p>Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix.</p>
+
+<hr />
 
 <h2 id="controllability-of-linear-system">Controllability of Linear system</h2>
 <p>\(\dot{x}=Ax+Bu\)
@@ -75,21 +84,85 @@ This system is controllable if and only if the controllability matrix \(C=[B\ AB
     <p>The left singular vectors 𝑈 represent orthogonal directions in the state space.</p>
 
     <p>Directions associated with large singular values in 𝑈 are the most controllable.</p>
-    <h2 id="controllability-gramian">Controllability Gramian</h2>
-    <p><strong>The eigenvectors of the Gramian ($W_t$) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix</strong>
-\(W_{t} \approx CC^T\)
-The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal to noise ratio</strong></p>
-    <h2 id="pbh-test">PBH Test</h2>
-    <p>(A,B) is controllable if and only if
-\(rank[(A-\lambda I)\ B] = n \forall \lambda \in \mathbb{C}\)</p>
-  </li>
-  <li>$rank(A-\lambda I)=n$ except for eigenvalues $\lambda$</li>
-  <li>B needs to have some component in each eigenvector directions</li>
-  <li>(Advanced) a random vector B would make (A,B) controllably with high probability
-    <h2 id="reachability">Reachability</h2>
-    <p>In control theory, <strong>reachability</strong> describes whether it is possible to move a system from an initial state to a desired final state using admissible control inputs over a finite time interval.</p>
   </li>
 </ol>
+
+<hr />
+
+<h2 id="controllability-gramian">Controllability Gramian</h2>
+<p><strong>The eigenvectors of the Gramian (\(W_t\)) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix</strong></p>
+
+<p>\(W_{t} \approx CC^T\)
+The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal to noise ratio</strong></p>
+
+<p>The <strong>controllability Gramian</strong> is a matrix that quantifies how easily a system’s state can be driven by the input. It measures the <strong>energy</strong> required to move the system from the origin to a particular state.</p>
+
+<hr />
+
+<h3 id="-system-setup">🔧 System Setup</h3>
+
+<p>For a linear time-invariant (LTI) system:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t)\]
+
+<p>The <strong>finite-horizon controllability Gramian</strong> over the time interval \([0, T]\) is:</p>
+
+\[W_c(T) = \int_0^T e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
+
+<p>If (A) is stable and \(T \to \infty\), the <strong>infinite-horizon controllability Gramian</strong> is:</p>
+
+\[W_c = \int_0^\infty e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
+
+<hr />
+
+<h3 id="-what-the-gramian-tells-you">📌 What the Gramian Tells You</h3>
+
+<h4 id="-1-controllability-test">✅ 1. Controllability Test</h4>
+
+<ul>
+  <li>The system is <strong>controllable</strong> if and only if \(W_c\) is <strong>positive definite</strong>.</li>
+  <li>If \(W_c\) is singular (has zero eigenvalues), some states cannot be reached from the origin.</li>
+</ul>
+
+<h4 id="-2-energy-to-reach-a-state">⚡ 2. Energy to Reach a State</h4>
+
+<p>The <strong>minimum energy</strong> to reach a state ( x_f ) from the origin is:</p>
+
+\[E = x_f^\top W_c^{-1} x_f\]
+
+<p>States in directions with <strong>small eigenvalues</strong> of (W_c) require <strong>more energy</strong> to reach.</p>
+
+<h4 id="-3-geometric-interpretation">📐 3. Geometric Interpretation</h4>
+
+<p>The ellipsoid:</p>
+
+\[\left\{ x \in \mathbb{R}^n : x^\top W_c^{-1} x \leq 1 \right\}\]
+
+<p>describes the set of states reachable with <strong>unit energy</strong>. This is known as the <strong>reachable ellipsoid</strong>.</p>
+
+<h4 id="-4-mode-wise-controllability">🎯 4. Mode-wise Controllability</h4>
+
+<p>If \(W_c\) has a mix of <strong>large</strong> and <strong>small</strong> eigenvalues, then <strong>some state directions are harder to control</strong> than others.</p>
+
+<p><strong>Notes</strong></p>
+<ol>
+  <li>The controllability Gramian is only defined for <strong>linear</strong> systems and often assumes zero initial state.</li>
+  <li>The controllability Gramian is symmetric and positive semi-definite</li>
+</ol>
+
+<h2 id="pbh-test">PBH Test</h2>
+<p>(A,B) is controllable if and only if
+\(rank[(A-\lambda I)\ B] = n \forall \lambda \in \mathbb{C}\)</p>
+<ol>
+  <li>\(rank(A-\lambda I)=n\) except for eigenvalues \(\lambda\)</li>
+  <li>B needs to have some component in each eigenvector directions</li>
+  <li>(Advanced) a random vector B would make (A,B) controllably with high probability</li>
+</ol>
+
+<hr />
+
+<h2 id="reachability">Reachability</h2>
+<p>In control theory, <strong>reachability</strong> describes whether it is possible to move a system from an initial state to a desired final state using admissible control inputs over a finite time interval.</p>
 
 <p>For a continuous-time linear time-invariant (LTI) system described by:</p>
 
@@ -97,13 +170,15 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 
 <p>where:</p>
 <ul>
-  <li>$x(t) \in \mathbb{R}^n$ is the state vector,</li>
-  <li>$u(t) \in \mathbb{R}^m$ is the control input,</li>
-  <li>$A \in \mathbb{R}^{n \times n}$ is the system matrix,</li>
-  <li>$B \in \mathbb{R}^{n \times m}$ is the input matrix,</li>
+  <li>\(x(t) \in \mathbb{R}^n\) is the state vector,</li>
+  <li>\(u(t) \in \mathbb{R}^m\) is the control input,</li>
+  <li>\(A \in \mathbb{R}^{n \times n}\) is the system matrix,</li>
+  <li>\(B \in \mathbb{R}^{n \times m}\) is the input matrix,</li>
 </ul>
 
-<p>the system is <strong>reachable</strong> if, for any initial state $x(0)$ and any final state $x_f$, there exists an input $u(t)$ that drives the system from $x(0)$ to $x_f$ in finite time.</p>
+<p>the system is <strong>reachable</strong> if, for any initial state \(x(0)\) and any final state \(x_f\), there exists an input \(u(t)\) that drives the system from \(x(0)\) to \(x_f\) in finite time.</p>
+
+<hr />
 
 <h3 id="reachability-matrix">Reachability Matrix</h3>
 
@@ -111,32 +186,32 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 
 \[\mathcal{R} = \begin{bmatrix} B &amp; AB &amp; A^2B &amp; \cdots &amp; A^{n-1}B \end{bmatrix}\]
 
-<p>If $\mathcal{R}$ has <strong>full rank</strong> (i.e., $\text{rank}(\mathcal{R}) = n$), then the system is reachable</p>
+<p>If \(\mathcal{R}\) has <strong>full rank</strong> (i.e., \(\text{rank}(\mathcal{R}) = n\)), then the system is reachable</p>
 <h3 id="-reachability-set">🎯 Reachability Set</h3>
 
-<p>The <strong>reachability set</strong> (or reachable set) at time $t_f$ is the set of all states that the system can reach from an initial state $x(0)$ under some admissible input $u(t)$ over the time interval $[0, t_f]$.</p>
+<p>The <strong>reachability set</strong> (or reachable set) at time \(t_f\) is the set of all states that the system can reach from an initial state \(x(0)\) under some admissible input \(u(t)\) over the time interval \([0, t_f]\).</p>
 
 <p>Formally, for a continuous-time LTI system:</p>
 
 \[\dot{x}(t) = A x(t) + B u(t), \quad x(0) = 0\]
 
-<p>the <strong>reachability set</strong> at time $t_f$ is defined as:</p>
+<p>the <strong>reachability set</strong> at time \(t_f\) is defined as:</p>
 
 \[\mathcal{R}(t_f) = \left\{ x(t_f) \in \mathbb{R}^n \;\middle|\; x(t_f) = \int_0^{t_f} e^{A(t_f - \tau)} B u(\tau) \, d\tau,\; u(\cdot) \in \mathcal{L}^2[0, t_f] \right\}\]
 
-<p>This set contains all possible states the system can reach at time $t_f$ from the origin with square-integrable inputs $u(t)$.</p>
+<p>This set contains all possible states the system can reach at time \(t_f\) from the origin with square-integrable inputs \(u(t)\).</p>
 
-<p>If $\mathcal{R}(t_f)$ spans $\mathbb{R}^n$ for some finite $t_f$, the system is reachable.</p>
+<p>If \(\mathcal{R}(t_f)\) spans \(\mathbb{R}^n\) for some finite \(t_f\), the system is reachable.</p>
 
 <p>For discrete-time systems:</p>
 
 \[x[k+1] = A x[k] + B u[k], \quad x[0] = 0\]
 
-<p>the reachability set after $N$ steps is:</p>
+<p>the reachability set after \(N\) steps is:</p>
 
 \[\mathcal{R}_d(N) = \left\{ x[N] = \sum_{i=0}^{N-1} A^i B u[N-1-i] \;\middle|\; u[i] \in \mathbb{R}^m \right\}\]
 
-<p>The union of all such sets over all $t_f$ (or $N$ in discrete time) is the <strong>total reachable set</strong> from the origin.</p>
+<p>The union of all such sets over all \(t_f\) (or \(N\) in discrete time) is the <strong>total reachable set</strong> from the origin.</p>
 
 
 </body>

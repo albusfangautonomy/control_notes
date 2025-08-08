@@ -8,9 +8,72 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <h1 id="bode-and-nyquist-plots">Bode and Nyquist Plots</h1>
+  <h1 id="frequency-response-and-fourier-transform">Frequency Response and Fourier Transform</h1>
+<h2 id="fourier-and-laplace-transforms">Fourier and Laplace Transforms</h2>
+<h3 id="laplace-transform">Laplace Transform</h3>
+<p>\(\mathcal{L}\{f(t)\} = F(s) = \int_0^{\infty} e^{-st} f(t) \, dt\)</p>
 
-<p>Coming soon…</p>
+<p>Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at \(i\omega\), with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform.
+<strong>Inpoulse response</strong> h(t) given \(u = \delta(t)\) is \(L^{-1}{G(s), where Y(s) = G(s)X(s)}\) ie the inverse Laplace Transform of the Transfer function (G(s))</p>
+<h3 id="fourier-series">Fourier Series</h3>
+
+<p>If \(f(t)\) is a periodic function with period $T$, its <strong>Fourier series</strong> representation is:</p>
+
+\[f(t) = a_0 + \sum_{n=1}^{\infty} \left[ a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right]\]
+
+<p>The coefficients are given by:</p>
+
+\[a_0 = \frac{1}{T} \int_{-T/2}^{T/2} f(t) \, dt\]
+
+\[a_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \cos\left(\frac{2\pi n t}{T}\right) dt\]
+
+\[b_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin\left(\frac{2\pi n t}{T}\right) dt\]
+
+<p>You can also write the Fourier series using <strong>complex exponentials</strong>:</p>
+
+\[f(t) = \sum_{n=-\infty}^{\infty} c_n e^{i 2\pi n t / T}\]
+
+<p>with coefficients:</p>
+
+\[c_n = \frac{1}{T} \int_{-T/2}^{T/2} f(t) e^{-i 2\pi n t / T} dt\]
+
+<hr />
+
+<h3 id="fourier-transform">Fourier Transform</h3>
+
+<p>For non-periodic functions, the <strong>Fourier Transform</strong> is used. The <strong>continuous-time Fourier transform (CTFT)</strong> of a function $f(t)$ is:</p>
+
+\[F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i \omega t} dt\]
+
+<p>The <strong>inverse Fourier transform</strong> is:</p>
+
+\[f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{i \omega t} d\omega\]
+
+<p>Alternatively, in terms of frequency \(f\) (Hz) instead of angular frequency $\omega = 2\pi f$:</p>
+
+\[F(f) = \int_{-\infty}^{\infty} f(t) e^{-i 2\pi f t} dt\]
+
+\[f(t) = \int_{-\infty}^{\infty} F(f) e^{i 2\pi f t} df\]
+
+<p><strong>Intuition</strong> Fourier Transform converts a time-domain \(\bar{x}(t)\) to frequency domain \(X(f)\). This investigates how much of this specific frequency exists in the signal.
+Fourier Transform returns a complex number.</p>
+<ol>
+  <li>The magnitude of this number denotes how strong that frequency is in the signal</li>
+  <li>The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.</li>
+</ol>
+
+<h2 id="bode-and-nyquist-plots">Bode and Nyquist Plots</h2>
+
+<h3 id="frequency-response">Frequency Response</h3>
+<p><img src="../figures/frequency_response.png" alt="frequency response of a mass-spring damper system" /></p>
+
+<p>\(ratio{\bar{x}}{\bar{u}}\)
+<strong>Notes:</strong></p>
+<ol>
+  <li>The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency.</li>
+  <li>At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.
+Coming soon…</li>
+</ol>
 
 </body>
 </html>
