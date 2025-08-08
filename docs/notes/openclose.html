@@ -14,12 +14,23 @@
   <li>Uncertainty (inherent in the system) in open loop system dynamics. Preplanned control inputs may fall flat against uncertainties.</li>
   <li>Instability of the open loop system cann never be dealt with by open loop control. Feedback control allows us to directly change the dynamics of the system, inlcuding the eigenvalues of the system.</li>
   <li>Disturbances (external forces) can be rejected by feedback.</li>
-  <li>Energy and efficiency.
-    <h2 id="fixing-instability-with-pole-placement">Fixing Instability with Pole Placement</h2>
-    <p>\(\dot{x}=Ax + Bu\), \(y=Cx\), let \(u=-Kx\), \(\dot{x}=Ax-BKx=(A-BK)x\)
+  <li>Energy and efficiency.</li>
+</ol>
+
+<hr />
+
+<h2 id="fixing-instability-with-pole-placement">Fixing Instability with Pole Placement</h2>
+<p>\(\dot{x}=Ax + Bu\), \(y=Cx\), let \(u=-Kx\), \(\dot{x}=Ax-BKx=(A-BK)x\)
 <br />
 We are able to change the actual dynamics of the system to stabilize it by selecting appropriate \(B*K\).</p>
-  </li>
+
+<hr />
+<h2 id="an-ideal-controller">An Ideal Controller</h2>
+<ol>
+  <li>design for stability</li>
+  <li>compensate for uncertainty</li>
+  <li>reject diturbance</li>
+  <li>attenduate noise</li>
 </ol>
 
 </body>

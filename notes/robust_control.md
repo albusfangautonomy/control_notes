@@ -20,3 +20,5 @@ This is a convolution between impulse response and control input
 ---
 
 ## Loop Transfer Function
+![controller loop diagram with noise](../figures/controller_loop.png)
+
