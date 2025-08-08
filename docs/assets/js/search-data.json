@@ -2,427 +2,427 @@
     "doc": "About",
     "title": "About",
     "content": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at jekyllrb.com . You can find the source code for Minima at GitHub: jekyll / minima . You can find the source code for Jekyll at GitHub: jekyll / jekyll . ",
-    "url": "/about/",
+    "url": "/control_notes/about/",
     
     "relUrl": "/about/"
   },"1": {
     "doc": "Compensators",
     "title": "Lead, Lag, and Lead-Lag Compensators",
     "content": " ",
-    "url": "/notes/compensators.html#lead-lag-and-lead-lag-compensators",
+    "url": "/control_notes/notes/compensators.html#lead-lag-and-lead-lag-compensators",
     
     "relUrl": "/notes/compensators.html#lead-lag-and-lead-lag-compensators"
   },"2": {
     "doc": "Compensators",
     "title": "Phase Margin",
     "content": "Definition . phase margin is a measure of stability for a feedback control system. It represents the amount of phase shift, expressed in degrees, that can be added to the open-loop transfer function before the system reaches the point of instability, specifically where the Bode plot crosses the -180° line at the gain crossover frequency. Phase Margin Calculation: . \\(\\text{Phase Margin} = 180^\\circ + \\angle G(j\\omega_{gc})H(j\\omega_{gc})\\) . | \\(\\omega_{gc}\\) is the gain crossover frequency — the frequency at which the magnitude of the open-loop transfer function $$ | G(j\\omega)H(j\\omega) | = 1$$ (i.e., 0 dB). | . | \\(\\angle G(j\\omega)H(j\\omega)\\) is the phase of the open-loop transfer function at that frequency. ",
-    "url": "/notes/compensators.html#phase-margin",
+    "url": "/control_notes/notes/compensators.html#phase-margin",
     
     "relUrl": "/notes/compensators.html#phase-margin"
   },"3": {
     "doc": "Compensators",
     "title": "Phase Lead and Lag",
     "content": "A zero (s) adds phase while pole (1/s) subtracts phase. | . phase lead compensators add positive phase to the output, so the output leads the input. phase lag compensators add negative phase to the output, so the output lags behind the input. Phase Lead . Example: Differentiator input: sin(t) output: cos(t) cosine is leading sine by 90 degrees -&gt; phase lead A differentiator circuit introduces a positive phase shift of 90 degrees . Phase Lag . ",
-    "url": "/notes/compensators.html#phase-lead-and-lag",
+    "url": "/control_notes/notes/compensators.html#phase-lead-and-lag",
     
     "relUrl": "/notes/compensators.html#phase-lead-and-lag"
   },"4": {
     "doc": "Compensators",
     "title": "Compensators",
     "content": " ",
-    "url": "/notes/compensators.html",
+    "url": "/control_notes/notes/compensators.html",
     
     "relUrl": "/notes/compensators.html"
   },"5": {
     "doc": "Controllability",
     "title": "Equivalence",
     "content": ". | System is controllable | Arbitrary Eigenvalue (Pole) placement is allowed . | \\[u = -Kx =&gt; \\dot{x} = (A-BK)x\\] | . | Reachability (full in R^{n}) . | Theorectically one can drive from Massachusetts to California in a second | This can be proven by Cayley-Hamilton theorem | . | . ",
-    "url": "/notes/controllability.html#equivalence",
+    "url": "/control_notes/notes/controllability.html#equivalence",
     
     "relUrl": "/notes/controllability.html#equivalence"
   },"6": {
     "doc": "Controllability",
     "title": "Cayley-Hamilton Theorem",
     "content": "Almost every square matrix satisfies its own characteristic equation . The characteristic polynomial of matrix \\(A\\) is defined as: \\(p_A(\\lambda) = \\det(\\lambda I_n - A)\\) Since this is a degree-\\(n\\) monic polynomial, it can be written as: \\(p_A(\\lambda) = \\lambda^n + c_{n-1} \\lambda^{n-1} + \\cdots + c_1 \\lambda + c_0\\) By replacing the scalar variable \\(\\lambda\\) with the matrix \\(A\\), we define the matrix polynomial: \\(p_A(A) = A^n + c_{n-1} A^{n-1} + \\cdots + c_1 A + c_0 I_n\\) . ",
-    "url": "/notes/controllability.html#cayley-hamilton-theorem",
+    "url": "/control_notes/notes/controllability.html#cayley-hamilton-theorem",
     
     "relUrl": "/notes/controllability.html#cayley-hamilton-theorem"
   },"7": {
     "doc": "Controllability",
     "title": "Controllability",
     "content": " ",
-    "url": "/notes/controllability.html",
+    "url": "/control_notes/notes/controllability.html",
     
     "relUrl": "/notes/controllability.html"
   },"8": {
     "doc": "Controllability",
     "title": "Stabilizability",
     "content": "Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as . Stabilizability A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controlable subspace. (Anything unstable can be damped) . Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix. ",
-    "url": "/notes/controllability.html#stabilizability",
+    "url": "/control_notes/notes/controllability.html#stabilizability",
     
     "relUrl": "/notes/controllability.html#stabilizability"
   },"9": {
     "doc": "Controllability",
     "title": "Controllability of Linear system",
     "content": "\\(\\dot{x}=Ax+Bu\\) \\(y=Cx\\) This system is controllable if and only if the controllability matrix \\(C=[B\\ AB\\ A^2B\\ ...\\ A^{n-1}B]\\) is of full column rank . Note This is a binary check. To see how controllable this system is, investigate the SVD of C. ",
-    "url": "/notes/controllability.html#controllability-of-linear-system",
+    "url": "/control_notes/notes/controllability.html#controllability-of-linear-system",
     
     "relUrl": "/notes/controllability.html#controllability-of-linear-system"
   },"10": {
     "doc": "Controllability",
     "title": "Degrees of Controllability",
     "content": "The Singular Value Decomposition (SVD) of the controllability matrix provides deep insight into the degree and direction of controllability of a linear system: . | Controllability Rank If 𝐶 has full rank (i.e. rank = number of states 𝑛), the system is completely controllable. The number of nonzero singular values = the rank of 𝐶. | Strength of Controllability (Conditioning) The magnitude of the singular values tells you how “strongly” controllable the system is in different directions: . Large singular values → easy to move the system in that direction. Tiny singular values → very difficult to control (require large input energy). Zero singular values → system not controllable in that direction. | Controllable Directions The right singular vectors V from \\(𝐶 = 𝑈Σ𝑉^𝑇\\) span the input space. The left singular vectors 𝑈 represent orthogonal directions in the state space. Directions associated with large singular values in 𝑈 are the most controllable. | . ",
-    "url": "/notes/controllability.html#degrees-of-controllability",
+    "url": "/control_notes/notes/controllability.html#degrees-of-controllability",
     
     "relUrl": "/notes/controllability.html#degrees-of-controllability"
   },"11": {
     "doc": "Controllability",
     "title": "Controllability Gramian",
     "content": "The eigenvectors of the Gramian (\\(W_t\\)) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix . \\(W_{t} \\approx CC^T\\) The determinant of the Gramian indicates the volume of the ellipsoid and the signal to noise ratio . The controllability Gramian is a matrix that quantifies how easily a system’s state can be driven by the input. It measures the energy required to move the system from the origin to a particular state. 🔧 System Setup . For a linear time-invariant (LTI) system: . \\[\\dot{x}(t) = A x(t) + B u(t)\\] The finite-horizon controllability Gramian over the time interval \\([0, T]\\) is: . \\[W_c(T) = \\int_0^T e^{A\\tau} B B^\\top e^{A^\\top \\tau} \\, d\\tau\\] If (A) is stable and \\(T \\to \\infty\\), the infinite-horizon controllability Gramian is: . \\[W_c = \\int_0^\\infty e^{A\\tau} B B^\\top e^{A^\\top \\tau} \\, d\\tau\\] . 📌 What the Gramian Tells You . ✅ 1. Controllability Test . | The system is controllable if and only if \\(W_c\\) is positive definite. | If \\(W_c\\) is singular (has zero eigenvalues), some states cannot be reached from the origin. | . ⚡ 2. Energy to Reach a State . The minimum energy to reach a state ( x_f ) from the origin is: . \\[E = x_f^\\top W_c^{-1} x_f\\] States in directions with small eigenvalues of (W_c) require more energy to reach. 📐 3. Geometric Interpretation . The ellipsoid: . \\[\\left\\{ x \\in \\mathbb{R}^n : x^\\top W_c^{-1} x \\leq 1 \\right\\}\\] describes the set of states reachable with unit energy. This is known as the reachable ellipsoid. 🎯 4. Mode-wise Controllability . If \\(W_c\\) has a mix of large and small eigenvalues, then some state directions are harder to control than others. Notes . | The controllability Gramian is only defined for linear systems and often assumes zero initial state. | The controllability Gramian is symmetric and positive semi-definite | . ",
-    "url": "/notes/controllability.html#controllability-gramian",
+    "url": "/control_notes/notes/controllability.html#controllability-gramian",
     
     "relUrl": "/notes/controllability.html#controllability-gramian"
   },"12": {
     "doc": "Controllability",
     "title": "PBH Test",
     "content": "(A,B) is controllable if and only if \\(rank[(A-\\lambda I)\\ B] = n \\forall \\lambda \\in \\mathbb{C}\\) . | \\(rank(A-\\lambda I)=n\\) except for eigenvalues \\(\\lambda\\) | B needs to have some component in each eigenvector directions | (Advanced) a random vector B would make (A,B) controllably with high probability | . ",
-    "url": "/notes/controllability.html#pbh-test",
+    "url": "/control_notes/notes/controllability.html#pbh-test",
     
     "relUrl": "/notes/controllability.html#pbh-test"
   },"13": {
     "doc": "Controllability",
     "title": "Reachability",
     "content": "In control theory, reachability describes whether it is possible to move a system from an initial state to a desired final state using admissible control inputs over a finite time interval. For a continuous-time linear time-invariant (LTI) system described by: . \\[\\dot{x}(t) = A x(t) + B u(t)\\] where: . | \\(x(t) \\in \\mathbb{R}^n\\) is the state vector, | \\(u(t) \\in \\mathbb{R}^m\\) is the control input, | \\(A \\in \\mathbb{R}^{n \\times n}\\) is the system matrix, | \\(B \\in \\mathbb{R}^{n \\times m}\\) is the input matrix, | . the system is reachable if, for any initial state \\(x(0)\\) and any final state \\(x_f\\), there exists an input \\(u(t)\\) that drives the system from \\(x(0)\\) to \\(x_f\\) in finite time. Reachability Matrix . The reachability of the system can be tested using the reachability matrix: . \\[\\mathcal{R} = \\begin{bmatrix} B &amp; AB &amp; A^2B &amp; \\cdots &amp; A^{n-1}B \\end{bmatrix}\\] If \\(\\mathcal{R}\\) has full rank (i.e., \\(\\text{rank}(\\mathcal{R}) = n\\)), then the system is reachable . 🎯 Reachability Set . The reachability set (or reachable set) at time \\(t_f\\) is the set of all states that the system can reach from an initial state \\(x(0)\\) under some admissible input \\(u(t)\\) over the time interval \\([0, t_f]\\). Formally, for a continuous-time LTI system: . \\[\\dot{x}(t) = A x(t) + B u(t), \\quad x(0) = 0\\] the reachability set at time \\(t_f\\) is defined as: . \\[\\mathcal{R}(t_f) = \\left\\{ x(t_f) \\in \\mathbb{R}^n \\;\\middle|\\; x(t_f) = \\int_0^{t_f} e^{A(t_f - \\tau)} B u(\\tau) \\, d\\tau,\\; u(\\cdot) \\in \\mathcal{L}^2[0, t_f] \\right\\}\\] This set contains all possible states the system can reach at time \\(t_f\\) from the origin with square-integrable inputs \\(u(t)\\). If \\(\\mathcal{R}(t_f)\\) spans \\(\\mathbb{R}^n\\) for some finite \\(t_f\\), the system is reachable. For discrete-time systems: . \\[x[k+1] = A x[k] + B u[k], \\quad x[0] = 0\\] the reachability set after \\(N\\) steps is: . \\[\\mathcal{R}_d(N) = \\left\\{ x[N] = \\sum_{i=0}^{N-1} A^i B u[N-1-i] \\;\\middle|\\; u[i] \\in \\mathbb{R}^m \\right\\}\\] The union of all such sets over all \\(t_f\\) (or \\(N\\) in discrete time) is the total reachable set from the origin. ",
-    "url": "/notes/controllability.html#reachability",
+    "url": "/control_notes/notes/controllability.html#reachability",
     
     "relUrl": "/notes/controllability.html#reachability"
   },"14": {
     "doc": "Discrete-Time Control",
     "title": "Discrete-Time Control",
     "content": "Coming soon… . ",
-    "url": "/notes/discrete-control.html",
+    "url": "/control_notes/notes/discrete-control.html",
     
     "relUrl": "/notes/discrete-control.html"
   },"15": {
     "doc": "Frequency Response and Fourier Transform",
     "title": "Frequency Response and Fourier Transform",
     "content": " ",
-    "url": "/notes/frequency-response.html",
+    "url": "/control_notes/notes/frequency-response.html",
     
     "relUrl": "/notes/frequency-response.html"
   },"16": {
     "doc": "Frequency Response and Fourier Transform",
     "title": "Fourier and Laplace Transforms",
     "content": "Laplace Transform . \\(\\mathcal{L}\\{f(t)\\} = F(s) = \\int_0^{\\infty} e^{-st} f(t) \\, dt\\) . Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at \\(i\\omega\\), with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform. Inpoulse response h(t) given \\(u = \\delta(t)\\) is \\(L^{-1}{G(s), where Y(s) = G(s)X(s)}\\) ie the inverse Laplace Transform of the Transfer function (G(s)) . Fourier Series . If \\(f(t)\\) is a periodic function with period $T$, its Fourier series representation is: . \\[f(t) = a_0 + \\sum_{n=1}^{\\infty} \\left[ a_n \\cos\\left(\\frac{2\\pi n t}{T}\\right) + b_n \\sin\\left(\\frac{2\\pi n t}{T}\\right) \\right]\\] The coefficients are given by: . \\[a_0 = \\frac{1}{T} \\int_{-T/2}^{T/2} f(t) \\, dt\\] \\[a_n = \\frac{2}{T} \\int_{-T/2}^{T/2} f(t) \\cos\\left(\\frac{2\\pi n t}{T}\\right) dt\\] \\[b_n = \\frac{2}{T} \\int_{-T/2}^{T/2} f(t) \\sin\\left(\\frac{2\\pi n t}{T}\\right) dt\\] You can also write the Fourier series using complex exponentials: . \\[f(t) = \\sum_{n=-\\infty}^{\\infty} c_n e^{i 2\\pi n t / T}\\] with coefficients: . \\[c_n = \\frac{1}{T} \\int_{-T/2}^{T/2} f(t) e^{-i 2\\pi n t / T} dt\\] . Fourier Transform . For non-periodic functions, the Fourier Transform is used. The continuous-time Fourier transform (CTFT) of a function $f(t)$ is: . \\[F(\\omega) = \\int_{-\\infty}^{\\infty} f(t) e^{-i \\omega t} dt\\] The inverse Fourier transform is: . \\[f(t) = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} F(\\omega) e^{i \\omega t} d\\omega\\] Alternatively, in terms of frequency \\(f\\) (Hz) instead of angular frequency $\\omega = 2\\pi f$: . \\[F(f) = \\int_{-\\infty}^{\\infty} f(t) e^{-i 2\\pi f t} dt\\] \\[f(t) = \\int_{-\\infty}^{\\infty} F(f) e^{i 2\\pi f t} df\\] Intuition Fourier Transform converts a time-domain \\(\\bar{x}(t)\\) to frequency domain \\(X(f)\\). This investigates how much of this specific frequency exists in the signal. Fourier Transform returns a complex number. | The magnitude of this number denotes how strong that frequency is in the signal | The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero. | . ",
-    "url": "/notes/frequency-response.html#fourier-and-laplace-transforms",
+    "url": "/control_notes/notes/frequency-response.html#fourier-and-laplace-transforms",
     
     "relUrl": "/notes/frequency-response.html#fourier-and-laplace-transforms"
   },"17": {
     "doc": "Frequency Response and Fourier Transform",
     "title": "Bode and Nyquist Plots",
     "content": "Frequency Response . \\(ratio{\\bar{x}}{\\bar{u}}\\) Notes: . | The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency. | At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\\infty$ in log scale. Coming soon… | . ",
-    "url": "/notes/frequency-response.html#bode-and-nyquist-plots",
+    "url": "/control_notes/notes/frequency-response.html#bode-and-nyquist-plots",
     
     "relUrl": "/notes/frequency-response.html#bode-and-nyquist-plots"
   },"18": {
     "doc": "Control Notes",
     "title": "🧠 Control Notes",
     "content": "Welcome to my personal collection of control systems notes. This site compiles essential topics, explanations, and formulas for quick reference and deeper learning. ",
-    "url": "/#-control-notes",
+    "url": "/control_notes/#-control-notes",
     
     "relUrl": "/#-control-notes"
   },"19": {
     "doc": "Control Notes",
     "title": "📚 Core Topics",
     "content": ". | Open-loop vs Close-loop control A comparison between Open Loop control and Closed Loop control . | PID Control Overview of Proportional-Integral-Derivative control, tuning methods, use cases. | Lead, Lag, and Lead-Lag Compensators Frequency domain intuition, Bode plot effects, stability and performance improvement. | Root Locus Analysis Pole-zero placement and visualizing the impact of controller design. | Optimal Pole Placement in Linear Systems Introduces LQR and pole placement. | LQE Linear quadratic Estimator and Observability. | Controllability and Reachability Illustrates the equivalence between controllability and reachability. | Frequency Analysis and Fourier Transform How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots. | Stability Analysis Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights. | Discrete-Time Control Z-transform, digital implementation of controllers, sampling effects. | Model Predictive Control (MPC) Optimization-based control for constrained systems (intro-level overview). | . ",
-    "url": "/#-core-topics",
+    "url": "/control_notes/#-core-topics",
     
     "relUrl": "/#-core-topics"
   },"20": {
     "doc": "Control Notes",
     "title": "🛠️ Tools and Techniques",
     "content": ". | Control System Design Workflow From modeling to simulation to real-world tuning. | Control Using Simulink &amp; Python Practical guides using Simulink, Python (control, matplotlib, etc.). | . ",
-    "url": "/#%EF%B8%8F-tools-and-techniques",
+    "url": "/control_notes/#%EF%B8%8F-tools-and-techniques",
     
     "relUrl": "/#️-tools-and-techniques"
   },"21": {
     "doc": "Control Notes",
     "title": "Interview Prep",
     "content": ". Made using Jekyll . ",
-    "url": "/#interview-prep",
+    "url": "/control_notes/#interview-prep",
     
     "relUrl": "/#interview-prep"
   },"22": {
     "doc": "Control Notes",
     "title": "Control Notes",
     "content": " ",
-    "url": "/",
+    "url": "/control_notes/",
     
     "relUrl": "/"
   },"23": {
     "doc": "Linear Control Schemes - LQG",
     "title": "Important Control Schemes",
     "content": " ",
-    "url": "/notes/linear_control_scheme.html#important-control-schemes",
+    "url": "/control_notes/notes/linear_control_scheme.html#important-control-schemes",
     
     "relUrl": "/notes/linear_control_scheme.html#important-control-schemes"
   },"24": {
     "doc": "Linear Control Schemes - LQG",
     "title": "Linear Quadratic Gaussian (Optimal Control)",
     "content": "where $w$ is the dynamics white noise and $v$ is the external disturbance white noise . Separation Principle . If (A, B) is controllable and (A, C) is observable, then LQE and LQR can be seperately optimized then put together while preserving stability. However, this can lead the system to be non-robust sometimes. ",
-    "url": "/notes/linear_control_scheme.html#linear-quadratic-gaussian-optimal-control",
+    "url": "/control_notes/notes/linear_control_scheme.html#linear-quadratic-gaussian-optimal-control",
     
     "relUrl": "/notes/linear_control_scheme.html#linear-quadratic-gaussian-optimal-control"
   },"25": {
     "doc": "Linear Control Schemes - LQG",
     "title": "Linear Control Schemes - LQG",
     "content": " ",
-    "url": "/notes/linear_control_scheme.html",
+    "url": "/control_notes/notes/linear_control_scheme.html",
     
     "relUrl": "/notes/linear_control_scheme.html"
   },"26": {
     "doc": "Model Predictive Control",
     "title": "Model Predictive Control (MPC)",
     "content": "Coming soon… . ",
-    "url": "/notes/mpc.html#model-predictive-control-mpc",
+    "url": "/control_notes/notes/mpc.html#model-predictive-control-mpc",
     
     "relUrl": "/notes/mpc.html#model-predictive-control-mpc"
   },"27": {
     "doc": "Model Predictive Control",
     "title": "Model Predictive Control",
     "content": " ",
-    "url": "/notes/mpc.html",
+    "url": "/control_notes/notes/mpc.html",
     
     "relUrl": "/notes/mpc.html"
   },"28": {
     "doc": "Open loop vs closed loop control",
     "title": "Open Loop vs Closed Loop Control",
     "content": "Why feedback control? . | Uncertainty (inherent in the system) in open loop system dynamics. Preplanned control inputs may fall flat against uncertainties. | Instability of the open loop system cann never be dealt with by open loop control. Feedback control allows us to directly change the dynamics of the system, inlcuding the eigenvalues of the system. | Disturbances (external forces) can be rejected by feedback. | Energy and efficiency. | . ",
-    "url": "/notes/openclose.html#open-loop-vs-closed-loop-control",
+    "url": "/control_notes/notes/openclose.html#open-loop-vs-closed-loop-control",
     
     "relUrl": "/notes/openclose.html#open-loop-vs-closed-loop-control"
   },"29": {
     "doc": "Open loop vs closed loop control",
     "title": "Fixing Instability with Pole Placement",
     "content": "\\(\\dot{x}=Ax + Bu\\), \\(y=Cx\\), let \\(u=-Kx\\), \\(\\dot{x}=Ax-BKx=(A-BK)x\\) We are able to change the actual dynamics of the system to stabilize it by selecting appropriate \\(B*K\\). ",
-    "url": "/notes/openclose.html#fixing-instability-with-pole-placement",
+    "url": "/control_notes/notes/openclose.html#fixing-instability-with-pole-placement",
     
     "relUrl": "/notes/openclose.html#fixing-instability-with-pole-placement"
   },"30": {
     "doc": "Open loop vs closed loop control",
     "title": "An Ideal Controller",
     "content": ". | design for stability | compensate for uncertainty | reject diturbance | attenduate noise | . ",
-    "url": "/notes/openclose.html#an-ideal-controller",
+    "url": "/control_notes/notes/openclose.html#an-ideal-controller",
     
     "relUrl": "/notes/openclose.html#an-ideal-controller"
   },"31": {
     "doc": "Open loop vs closed loop control",
     "title": "Open loop vs closed loop control",
     "content": " ",
-    "url": "/notes/openclose.html",
+    "url": "/control_notes/notes/openclose.html",
     
     "relUrl": "/notes/openclose.html"
   },"32": {
     "doc": "PID Control",
     "title": "PID Control",
     "content": " ",
-    "url": "/notes/pid.html",
+    "url": "/control_notes/notes/pid.html",
     
     "relUrl": "/notes/pid.html"
   },"33": {
     "doc": "PID Control",
     "title": "Which controller to use?",
     "content": "\\(\\begin{array}{c|c|c|c} Example &amp; System Order &amp; Controller &amp; Reasoning\\\\ \\hline \\text{Controlling mass position using force} &amp; 2 &amp; \\text{PD or PID} &amp; \\text{Typically needs damping like mass-spring damper, otherwise will oscillate} \\\\ \\text{Controlling V across C using current} &amp; 1 &amp; \\text{P or PI} &amp; \\text{not much danger of over-shoot or oscillation} \\\\ \\text{Controlling I across R using voltage} &amp; 0 &amp; \\text{P or PI} &amp; \\text{not much danger, direct mapping} \\end{array}\\) . Note System order denotes how many ‘integration’ away is your control input from output. For instance controlling position with force would be a second order system. ",
-    "url": "/notes/pid.html#which-controller-to-use",
+    "url": "/control_notes/notes/pid.html#which-controller-to-use",
     
     "relUrl": "/notes/pid.html#which-controller-to-use"
   },"34": {
     "doc": "PID Control",
     "title": "PI vs PD vs PID",
     "content": "The derivative controller is highly sensitive to noise and may throw system into instability. PI controller . PI controller reduces both rise time and the steady state errors of the system. Integral term introduces phase lag, which may slow down response time. PD controller . A PD controller reduces transients like rise time, overshoot, and oscillations in the output. D controller cannot exist on its own since itself doesn’t stabilize the system, but amplifies noise. ",
-    "url": "/notes/pid.html#pi-vs-pd-vs-pid",
+    "url": "/control_notes/notes/pid.html#pi-vs-pd-vs-pid",
     
     "relUrl": "/notes/pid.html#pi-vs-pd-vs-pid"
   },"35": {
     "doc": "PID Control",
     "title": "Strategies for Tuning a PID Controller",
     "content": "Manual PID Tuning Strategy . | Start with: | . \\[K_P &gt; 0, \\quad K_I = 0, \\quad K_D = 0\\] . | Increase \\(K_P\\) until: . | The system starts responding to setpoint changes. | It begins to oscillate consistently without settling. | . This means it’s reached the edge of stability. | Back off \\(K_P\\) by ~10–20% to get a stable (but responsive) system. | Increase \\(K_D\\) to: . | Dampen the oscillations. | Improve settling time and reduce overshoot. | . | Increase \\(K_I\\) slowly to: . | Eliminate steady-state error (e.g. small drift from setpoint). | Watch for overshoot or oscillation due to integral windup. | . | . ",
-    "url": "/notes/pid.html#strategies-for-tuning-a-pid-controller",
+    "url": "/control_notes/notes/pid.html#strategies-for-tuning-a-pid-controller",
     
     "relUrl": "/notes/pid.html#strategies-for-tuning-a-pid-controller"
   },"36": {
     "doc": "PID Control",
     "title": "🧪 Ziegler–Nichols Method (Ultimate Gain Method)",
     "content": "This is a classical tuning rule. It gives you a starting point for \\(K_P,\\ K_I,\\ \\text{and}\\ K_D\\) based on when the system first starts oscillating. 🔧 Steps: . | Set: \\(K_I = 0,\\quad K_D = 0\\) . | Increase \\(K_P\\) until the system output shows sustained oscillations (constant amplitude). | That value of \\(K_P\\) is called the ultimate gain, denoted: \\(K_u\\) | . | Measure the oscillation period — the time between peaks — and call it: \\(T_u\\) . | . 📐 Use these tables to compute gains: . | Controller | \\(K_P\\) | \\(K_I\\) | \\(K_D\\) | . | P | \\(0.5K_u\\) | – | – | . | PI | \\(0.45K_u\\) | \\(1.2K_u / T_u\\) | – | . | PID | \\(0.6K_u\\) | \\(2K_u / T_u\\) | \\(K_u T_u / 8\\) | . | Control Type | \\(K_p\\) | \\(T_i\\) | \\(T_d\\) | \\(K_i\\) | \\(K_d\\) | . | P | \\(0.5K_u\\) | – | – | – | – | . | PI | \\(0.45K_u\\) | \\(0.8\\overline{3}T_u\\) | – | \\(0.54K_u / T_u\\) | – | . | PD | \\(0.8K_u\\) | – | \\(0.125T_u\\) | – | \\(0.10K_u T_u\\) | . | Classic PID | \\(0.6K_u\\) | \\(0.5T_u\\) | \\(0.125T_u\\) | \\(1.2K_u / T_u\\) | \\(0.075K_u T_u\\) | . | Pessen Integral Rule | \\(0.7K_u\\) | \\(0.4T_u\\) | \\(0.15T_u\\) | \\(1.75K_u / T_u\\) | \\(0.105K_u T_u\\) | . | Some Overshoot | \\(0.3\\overline{3}K_u\\) | \\(0.50T_u\\) | \\(0.3\\overline{3}T_u\\) | \\(0.6\\overline{6}K_u / T_u\\) | \\(0.1\\overline{1}K_u T_u\\) | . | No Overshoot | \\(0.20K_u\\) | \\(0.50T_u\\) | \\(0.3\\overline{3}T_u\\) | \\(0.40K_u / T_u\\) | \\(0.06\\overline{6}K_u T_u\\) | . ⚠️ Notes for Drone Applications . | Ziegler–Nichols gives aggressive tuning, often with overshoot. | For drones, it’s safer to: . | Start with rate control loops (angular velocity). | Then move to attitude control (roll, pitch, yaw). | . | . Coming soon… . ",
-    "url": "/notes/pid.html#-zieglernichols-method-ultimate-gain-method",
+    "url": "/control_notes/notes/pid.html#-zieglernichols-method-ultimate-gain-method",
     
     "relUrl": "/notes/pid.html#-zieglernichols-method-ultimate-gain-method"
   },"37": {
     "doc": "Pole Placement",
     "title": "Pole Placement",
     "content": " ",
-    "url": "/notes/pole_placement.html",
+    "url": "/control_notes/notes/pole_placement.html",
     
     "relUrl": "/notes/pole_placement.html"
   },"38": {
     "doc": "Pole Placement",
     "title": "Linear system",
     "content": "For the controllable linear system, \\(\\dot{x} = Ax+Bu, u=-Kx, \\dot{x}=(A-BK)x\\), . there’s a trade off between convergence rate (eigenvalues or poles) and system jerkiness, ie, more negative real parts would lead to faster convergence to stability but sacrifice system response smoothness. Linear Quadratic Regulator (LQR) can be used to find optimal point. Poles to the far left of the complex plane: . Pro: . | Faster Response | Increased stability margin | . Cons: . | Control effort becomes large. Actuators may saturate. | Sensitivity to Noise and model uncretainty. High gain feedback amplified measurement noise and unmodeled dynamics | Numerical instability | Reduced Robustness | . ",
-    "url": "/notes/pole_placement.html#linear-system",
+    "url": "/control_notes/notes/pole_placement.html#linear-system",
     
     "relUrl": "/notes/pole_placement.html#linear-system"
   },"39": {
     "doc": "Pole Placement",
     "title": "Linear Quadratic Regulator",
     "content": "Formulation . Cost function \\(J=\\int_{0}^{\\infty}(x^TQx + u^TRu)dt\\), where Q is positive semidefinite and x and u are dependet on t. There are two components of the cost: . | first term penalizes difference between desired state and actual state, which accelerates convergence. | second term penalizes bigger u - for instance, gas may be expensive and the cost cannot be exorbitant. The term linear refers to $u=-Kx$, which is a linear controller; Quadratic refers to the Cost function; Regulator means this stabilizes the system. Result . LQR gives u=-Kx specifically the K matrix that yields the best strategy. | . ",
-    "url": "/notes/pole_placement.html#linear-quadratic-regulator",
+    "url": "/control_notes/notes/pole_placement.html#linear-quadratic-regulator",
     
     "relUrl": "/notes/pole_placement.html#linear-quadratic-regulator"
   },"40": {
     "doc": "Pole Placement",
     "title": "Linear Quadratic Estimator",
     "content": "The Kalman filter is an example of an LQE. More details are in State Estimation page. ",
-    "url": "/notes/pole_placement.html#linear-quadratic-estimator",
+    "url": "/control_notes/notes/pole_placement.html#linear-quadratic-estimator",
     
     "relUrl": "/notes/pole_placement.html#linear-quadratic-estimator"
   },"41": {
     "doc": "Robust Control",
     "title": "Robust Control",
     "content": " ",
-    "url": "/notes/robust_control.html",
+    "url": "/control_notes/notes/robust_control.html",
     
     "relUrl": "/notes/robust_control.html"
   },"42": {
     "doc": "Robust Control",
     "title": "Motivation and Background",
     "content": "A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the performance, sensitivity, and robustness characteristics. ",
-    "url": "/notes/robust_control.html#motivation-and-background",
+    "url": "/control_notes/notes/robust_control.html#motivation-and-background",
     
     "relUrl": "/notes/robust_control.html#motivation-and-background"
   },"43": {
     "doc": "Robust Control",
     "title": "Three Equivalent Representations of Linear Systems",
     "content": ". | State space representation \\(\\dot{x}=Ax+Bu \\\\ y=Cx\\) | Transfer functions \\(G(s)=C(sI-A)^{-1}B\\) | Impulse response time domain \\(y(t)=\\int_{0}^{t}h(t-\\tau)u(\\tau)d\\tau\\) This is a convolution between impulse response and control input Note there are different usages for each of the three representations. 1. If physics can be represented, State space representation can be very useful. Transfer functions can be useful for investigating robustness and performance | . ",
-    "url": "/notes/robust_control.html#three-equivalent-representations-of-linear-systems",
+    "url": "/control_notes/notes/robust_control.html#three-equivalent-representations-of-linear-systems",
     
     "relUrl": "/notes/robust_control.html#three-equivalent-representations-of-linear-systems"
   },"44": {
     "doc": "Robust Control",
     "title": "Loop Transfer Function",
     "content": ". ",
-    "url": "/notes/robust_control.html#loop-transfer-function",
+    "url": "/control_notes/notes/robust_control.html#loop-transfer-function",
     
     "relUrl": "/notes/robust_control.html#loop-transfer-function"
   },"45": {
     "doc": "Root Locus Analysis",
     "title": "Root Locus Analysis",
     "content": "Coming soon… . ",
-    "url": "/notes/root-locus.html",
+    "url": "/control_notes/notes/root-locus.html",
     
     "relUrl": "/notes/root-locus.html"
   },"46": {
     "doc": "Stability Analysis",
     "title": "Stability Analysis",
     "content": "Coming soon… . ",
-    "url": "/notes/stability.html",
+    "url": "/control_notes/notes/stability.html",
     
     "relUrl": "/notes/stability.html"
   },"47": {
     "doc": "State Space Representation",
     "title": "State Space Representation",
     "content": "Coming soon… . ",
-    "url": "/notes/state-space.html",
+    "url": "/control_notes/notes/state-space.html",
     
     "relUrl": "/notes/state-space.html"
   },"48": {
     "doc": "State Estimation",
     "title": "State Estimation",
     "content": " ",
-    "url": "/notes/state_estim.html",
+    "url": "/control_notes/notes/state_estim.html",
     
     "relUrl": "/notes/state_estim.html"
   },"49": {
     "doc": "State Estimation",
     "title": "Measurement Model",
     "content": "\\(\\dot{x}=Ax+Bu, y=Cx, x\\in\\mathbb{R^n}, y \\in\\mathbb{R^p}\\) . ",
-    "url": "/notes/state_estim.html#measurement-model",
+    "url": "/control_notes/notes/state_estim.html#measurement-model",
     
     "relUrl": "/notes/state_estim.html#measurement-model"
   },"50": {
     "doc": "State Estimation",
     "title": "Observability",
     "content": "In simple terms, observability is if any state in x can be reproduced and deduced from measurements y(t) . ",
-    "url": "/notes/state_estim.html#observability",
+    "url": "/control_notes/notes/state_estim.html#observability",
     
     "relUrl": "/notes/state_estim.html#observability"
   },"51": {
     "doc": "State Estimation",
     "title": "Observability Matrix",
     "content": "\\(\\mathbb{O} = \\begin{bmatrix} C \\\\ CA \\\\ CA^2 \\\\ \\vdots \\\\ CA^{n-1} \\end{bmatrix}\\) This is a tall matrix and therefore its rank is the column rank. Note that the C matrices are measurement matrices, not controllability matrices. | The system is observable if rank(O)=n. | The full state x can be estimated from y. | Degrees of Observability can be calculated from the Observability Gramian and the SVD | . ",
-    "url": "/notes/state_estim.html#observability-matrix",
+    "url": "/control_notes/notes/state_estim.html#observability-matrix",
     
     "relUrl": "/notes/state_estim.html#observability-matrix"
   },"52": {
     "doc": "State Estimation",
     "title": "Kalman Filter (Linear Quadratic Estimator)",
     "content": "Notes . | Both Kalman Filter and LQR solve an algebraic Riccati Equation, yielding a closed-form solution | The algebraic Riccati Equation for Kalman filter is very similar to that of LQR. | Kalman filter gain (\\(K_{k}\\)) is derived by minimizing the estimate coveriance matrix \\(P_{k}\\) | . Kalman is a Full State Estimator that measures full state $x(t)$ given the knowledge of the measurement \\(y(t)\\) and control input \\(u(t)\\). The eigenvalues of the Kalman filter signifies how fast estimates converge to the true state. Pole placement can be performed on Kalman to find the optimal eigenvalues. More aggressive poles means Kalman will be more susceptible to external noise. Kalman Cost Function . \\(J= \\mathbb{E}[(x-\\hat{x})^T(x-\\hat{x})]\\) . Measurement Noise . \\(\\epsilon = x - \\hat{x} \\\\ \\dot{\\epsilon}=(A-KC) \\epsilon + w_{d} - Kw_{n}\\), where K is the Kalman gain and C is the measurement matrix, W_{d} is the process noise from system dynamics and w_{n} is the sensor noise . Two Major noises . | Model Noise \\(w_{d}\\) | Measurement Noise \\(w_{n}\\) if one is high, trust the other more. | . ",
-    "url": "/notes/state_estim.html#kalman-filter-linear-quadratic-estimator",
+    "url": "/control_notes/notes/state_estim.html#kalman-filter-linear-quadratic-estimator",
     
     "relUrl": "/notes/state_estim.html#kalman-filter-linear-quadratic-estimator"
   },"53": {
     "doc": "SVD",
     "title": "Intuitive Interpretations",
     "content": " ",
-    "url": "/notes/svd.html#intuitive-interpretations",
+    "url": "/control_notes/notes/svd.html#intuitive-interpretations",
     
     "relUrl": "/notes/svd.html#intuitive-interpretations"
   },"54": {
     "doc": "SVD",
     "title": "Rotation, coordinate scaling, and reflection",
     "content": " ",
-    "url": "/notes/svd.html#rotation-coordinate-scaling-and-reflection",
+    "url": "/control_notes/notes/svd.html#rotation-coordinate-scaling-and-reflection",
     
     "relUrl": "/notes/svd.html#rotation-coordinate-scaling-and-reflection"
   },"55": {
     "doc": "SVD",
     "title": "🎯 SVD Geometry Summary",
     "content": "For a real matrix M, the Singular Value Decomposition is: . \\[\\mathbf{M} = \\mathbf{U} \\boldsymbol{\\Sigma} \\mathbf{V}^*\\] 🔷 Square Matrix Case: \\(\\mathbf{M} \\in \\mathbb{R}^{m \\times m}\\) . | U and V* are real orthogonal matrices (rotations/reflections) | Σ scales each coordinate by singular values $\\sigma_i$ | Geometrically: rotation/reflection → scaling → rotation/reflection | . 🔸 Determinant Interpretation . | $\\det(\\mathbf{M}) &gt; 0$: U and V^* are both rotations or both reflections | $ \\det(\\mathbf{M}) &lt; 0 $: One of U or V^* must involve reflection | $ \\det(\\mathbf{M}) = 0 $: U and V^* can independently be rotations or reflections | . 🔷 Rectangular Matrix Case: $\\mathbf{M} \\in \\mathbb{R}^{m \\times n}$ . | M maps \\(\\mathbb{R}^n \\to \\mathbb{R}^m\\) | U and V* act on $\\mathbb{R}^m$ and $\\mathbb{R}^n$ respectively | Σ: . | Scales the first $\\min(m, n)$ coordinates | Extends (pads) or truncates vector dimensions appropriately | . | . This decomposition reveals how any linear transformation can be interpreted geometrically using rotations/reflections and scaling. ",
-    "url": "/notes/svd.html#-svd-geometry-summary",
+    "url": "/control_notes/notes/svd.html#-svd-geometry-summary",
     
     "relUrl": "/notes/svd.html#-svd-geometry-summary"
   },"56": {
     "doc": "SVD",
     "title": "SVD",
     "content": "SVD works on any matrix . ",
-    "url": "/notes/svd.html",
+    "url": "/control_notes/notes/svd.html",
     
     "relUrl": "/notes/svd.html"
   },"57": {
     "doc": "Control Tools",
     "title": "Control Using Simulink &amp; Python",
     "content": "Coming soon… . ",
-    "url": "/notes/tools.html#control-using-simulink--python",
+    "url": "/control_notes/notes/tools.html#control-using-simulink--python",
     
     "relUrl": "/notes/tools.html#control-using-simulink--python"
   },"58": {
     "doc": "Control Tools",
     "title": "Control Tools",
     "content": " ",
-    "url": "/notes/tools.html",
+    "url": "/control_notes/notes/tools.html",
     
     "relUrl": "/notes/tools.html"
   },"59": {
     "doc": "Control System Design Workflow",
     "title": "Preliminary EOM design",
     "content": "Use Euler-Langragian to derive the EOMs of the system. The calculate the Jacobian at fixed points. ",
-    "url": "/notes/workflow.html#preliminary-eom-design",
+    "url": "/control_notes/notes/workflow.html#preliminary-eom-design",
     
     "relUrl": "/notes/workflow.html#preliminary-eom-design"
   },"60": {
     "doc": "Control System Design Workflow",
     "title": "Control System Design Workflow",
     "content": "Coming soon… . ",
-    "url": "/notes/workflow.html",
+    "url": "/control_notes/notes/workflow.html",
     
     "relUrl": "/notes/workflow.html"
   }
