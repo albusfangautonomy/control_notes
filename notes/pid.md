@@ -117,4 +117,17 @@ $$
   - Then move to **attitude control** (roll, pitch, yaw).
 
 
+## Integral Windup
+Error builds up even though actuator saturates. takes take for negative error to be reflected in the controller
+
+![Integral Windup scenario](../figures/windup.png)
+
+### Anti-Windup
+**Most anti-windup schemes prevents integral from accumulating error past a threshold**
+1. clamping: two checks (if both true, shut off integration)
+    - Output is saturating (clamp the output of the PID (**this needs to be conservative**), if the output before and after the clamp are the same, then actuator is beginning to get saturated.)
+    - Input and output have same sign
+2. block calculation
+3. observer approach
+
 Coming soon...

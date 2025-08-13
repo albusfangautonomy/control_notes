@@ -20,7 +20,8 @@ $$
 $$
 
 
-- $$ \omega_{gc} $$ is the **gain crossover frequency** — the frequency at which the **magnitude** of the open-loop transfer function $$|G(j\omega)H(j\omega)| = 1$$ (i.e., **0 dB**).
+- $$ \omega_{gc} $$ is the **gain crossover frequency** — the frequency at which the **magnitude** of the open-loop transfer function 
+$$ |G(j\omega)H(j\omega)| = 1 $$ (i.e., **0 dB**).
 - $$ \angle G(j\omega)H(j\omega) $$ is the **phase** of the open-loop transfer function at that frequency.
 
 ---

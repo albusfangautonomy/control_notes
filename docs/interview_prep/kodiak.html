@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kodiak Autonomous Trucking</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="full-dynamic-model-of-a-truck-kodiak-interview-prep">Full Dynamic Model of a Truck (Kodiak Interview Prep)</h1>
+
+<p>Understanding the full dynamic model of a truck is critical for interviews with autonomous trucking companies like <strong>Kodiak</strong>. Trucks have unique dynamics due to their size, mass distribution, and articulated trailer structure.</p>
+
+<hr />
+
+<h2 id="1-basic-models-used-in-control--estimation">1. Basic Models (Used in Control &amp; Estimation)</h2>
+
+<h3 id="a-kinematic-bicycle-model">A. Kinematic Bicycle Model</h3>
+
+<ul>
+  <li>Simplified model assuming <strong>no slip</strong>, <strong>pure rolling</strong>.</li>
+  <li>State: \(x, y, \theta, v\)</li>
+  <li>Control: \(a, \delta\) (acceleration and steering angle)</li>
+</ul>
+
+\[\dot{x} = v \cos\theta, \quad \dot{y} = v \sin\theta, \quad \dot{\theta} = \frac{v}{L} \tan\delta\]
+
+<blockquote>
+  <p>Use case: <strong>low-speed control and path planning</strong></p>
+</blockquote>
+
+<hr />
+
+<h3 id="b-dynamic-single-track-model-no-trailer">B. Dynamic Single-Track Model (No Trailer)</h3>
+
+<ul>
+  <li>Captures lateral slip, yaw dynamics, and tire forces.</li>
+  <li>States: \(x, y, \theta, v_x, v_y, r\)</li>
+  <li>Inputs: \(F_x\), \(\delta\)</li>
+</ul>
+
+<p><strong>Equations of motion:</strong></p>
+
+<ul>
+  <li><strong>Longitudinal</strong>:
+\(m(\dot{v}_x - v_y r) = F_{x,f} \cos\delta - F_{y,f} \sin\delta + F_{x,r}\)</li>
+  <li><strong>Lateral</strong>:
+\(m(\dot{v}_y + v_x r) = F_{x,f} \sin\delta + F_{y,f} \cos\delta + F_{y,r}\)</li>
+  <li><strong>Yaw</strong>:
+\(I_z \dot{r} = a F_{y,f} \cos\delta + a F_{x,f} \sin\delta - b F_{y,r}\)</li>
+</ul>
+
+<p>Where:</p>
+<ul>
+  <li>\(a\), \(b\): distances from CG to front/rear axle</li>
+  <li>\(F_{y,f}\), \(F_{y,r}\): lateral tire forces from slip angles</li>
+  <li>\(F_{x,f}\), \(F_{x,r}\): longitudinal tire forces</li>
+</ul>
+
+<hr />
+
+<h2 id="2-truck-specific-models">2. Truck-Specific Models</h2>
+
+<h3 id="c-articulated-truck-model-tractor--trailer">C. Articulated Truck Model (Tractor + Trailer)</h3>
+
+<blockquote>
+  <p><strong>Essential for Kodiak!</strong> Includes yaw dynamics and articulation between tractor and trailer.</p>
+</blockquote>
+
+<p>Typical state vector:
+\(\mathbf{x} = [x, y, \psi_t, \psi_{tr}, v_x, v_y, r_t, r_{tr}]\)</p>
+
+<ul>
+  <li>\(\psi_t\): yaw angle of tractor</li>
+  <li>\(\psi_{tr}\): yaw angle of trailer</li>
+  <li>\(r_t\), \(r_{tr}\): yaw rates</li>
+  <li><strong>Articulation angle</strong>: \(\phi = \psi_{tr} - \psi_t\)</li>
+  <li><strong>Articulation rate</strong>: \(\dot{\phi} = r_{tr} - r_t\)</li>
+</ul>
+
+<p><strong>Yaw Dynamics</strong> (high-level):</p>
+
+<ul>
+  <li><strong>Tractor</strong>:
+\(I_{z,t} \dot{r}_t = \text{sum of moments on tractor}\)</li>
+  <li><strong>Trailer</strong>:
+\(I_{z,tr} \dot{r}_{tr} = \text{sum of moments on trailer}\)</li>
+</ul>
+
+<blockquote>
+  <p>Used for high-speed motion, stability control, and trailer swing suppression.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="3-higher-fidelity-models-for-simulation--mpc">3. Higher-Fidelity Models (for Simulation &amp; MPC)</h2>
+
+<ul>
+  <li><strong>Pacejka “Magic Formula”</strong> for nonlinear tire force modeling</li>
+  <li><strong>Suspension &amp; compliance</strong> modeling</li>
+  <li><strong>ABS/EBS braking system dynamics</strong></li>
+  <li><strong>Multi-body</strong> dynamics of each axle and articulation constraint</li>
+</ul>
+
+<hr />
+
+<h2 id="summary-table">Summary Table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Captures</th>
+      <th>Use Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Kinematic Bicycle</strong></td>
+      <td>No dynamics or slip</td>
+      <td>Path planning, low-speed control</td>
+    </tr>
+    <tr>
+      <td><strong>Dynamic Single Track</strong></td>
+      <td>Lateral slip, yaw</td>
+      <td>Medium-speed control, stability analysis</td>
+    </tr>
+    <tr>
+      <td><strong>Articulated Truck Model</strong></td>
+      <td>Tractor-trailer coupling</td>
+      <td>High-speed maneuvering, safety, control</td>
+    </tr>
+    <tr>
+      <td><strong>Full Multi-Body Model</strong></td>
+      <td>All dynamics</td>
+      <td>Simulation, MPC, offline validation</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+</body>
+</html>

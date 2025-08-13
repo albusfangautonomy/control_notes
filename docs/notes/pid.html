@@ -220,6 +220,24 @@ based on when the system first starts oscillating.</p>
   </li>
 </ul>
 
+<h2 id="integral-windup">Integral Windup</h2>
+<p>Error builds up even though actuator saturates. takes take for negative error to be reflected in the controller</p>
+
+<p><img src="../figures/windup.png" alt="Integral Windup scenario" /></p>
+
+<h3 id="anti-windup">Anti-Windup</h3>
+<p><strong>Most anti-windup schemes prevents integral from accumulating error past a threshold</strong></p>
+<ol>
+  <li>clamping: two checks (if both true, shut off integration)
+    <ul>
+      <li>Output is saturating (clamp the output of the PID (<strong>this needs to be conservative</strong>), if the output before and after the clamp are the same, then actuator is beginning to get saturated.)</li>
+      <li>Input and output have same sign</li>
+    </ul>
+  </li>
+  <li>block calculation</li>
+  <li>observer approach</li>
+</ol>
+
 <p>Coming soon…</p>
 
 </body>

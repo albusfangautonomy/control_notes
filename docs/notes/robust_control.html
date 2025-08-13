@@ -8,7 +8,7 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <h1 id="robust-control">Robust Control</h1>
+  <h1 id="robust-control-and-loop-shaping">Robust Control and Loop Shaping</h1>
 <h2 id="motivation-and-background">Motivation and Background</h2>
 <p>A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the <strong>performance, sensitivity, and robustness characteristics</strong>.</p>
 
@@ -20,14 +20,149 @@
 \(G(s)=C(sI-A)^{-1}B\)</li>
   <li>Impulse response time domain
 \(y(t)=\int_{0}^{t}h(t-\tau)u(\tau)d\tau\) 
-This is a convolution between impulse response and control input
-<strong>Note</strong> there are different usages for each of the three representations. 1. If physics can be represented, State space representation can be very useful. Transfer functions can be useful for investigating robustness and performance</li>
+This is a convolution between impulse response and control input</li>
+</ol>
+
+<p><strong>Note</strong> there are different usages for each of the three representations.</p>
+<ol>
+  <li>If physics can be represented, State space representation can be very useful.</li>
+  <li>Transfer functions can be useful for investigating robustness and performance</li>
 </ol>
 
 <hr />
 
-<h2 id="loop-transfer-function">Loop Transfer Function</h2>
+<h2 id="deriving-sensitivity-and-complementary-sensitivity-with-loop-transfer-function">Deriving Sensitivity and Complementary Sensitivity with Loop Transfer Function</h2>
 <p><img src="../figures/controller_loop.png" alt="controller loop diagram with noise" /></p>
+
+<p>where d is disturbance, n is measurement noise, r is reference setpoint, P is the system transfer function, and K is the controller transfer function.</p>
+
+\[L = PK\]
+
+<p>Note K is applied first to the error before P.</p>
+
+\[I*y = P_{d}*d+ PK(r-y-n), \text{where} (r-y-n) = \epsilon\]
+
+\[(I+Pk)*y = PKr + P_{d}*d - PKn\]
+
+\[y = (I+P*K)^{-1} * PKr + (I+PK)^{-1}P_{d}d - (I+PK)^{-1}PKn\]
+
+<p>\(\text{Therefore, } (I+PK)^{-1}PK \text{ is called complimentary sensitivity matrix, and } (I+(Pk))^{-1} \text{ is the sensitivity matrix}\)</p>
+<ol>
+  <li>first term of y tracks trajectory</li>
+  <li>second term of y rejects disturbance</li>
+  <li>third term of y attenuates noise</li>
+</ol>
+
+<hr />
+
+<h2 id="sensitivity-and-complementary-sensitivity-functions">Sensitivity and Complementary Sensitivity Functions</h2>
+
+<p>In a standard negative feedback loop:</p>
+
+<ul>
+  <li>Plant: \(G(s)\)</li>
+  <li>Controller: \(K(s)\)</li>
+  <li>Loop transfer function: \(L(s) = K(s)G(s)\)</li>
+</ul>
+
+<h3 id="1-sensitivity-function-ss">1. <strong>Sensitivity Function</strong> \(S(s)\)</h3>
+
+\[S(s) = \frac{1}{1 + L(s)} = \frac{1}{1 + K(s)G(s)}\]
+
+<ul>
+  <li>Measures the system’s sensitivity to disturbances and model uncertainty.</li>
+  <li>A smaller 
+\(|S(j\omega)|\text{ means better disturbance rejection at frequency }\omega\).</li>
+</ul>
+
+<h3 id="2-complementary-sensitivity-function-ts">2. <strong>Complementary Sensitivity Function</strong> \(T(s)\)</h3>
+
+\[T(s) = \frac{L(s)}{1 + L(s)} = \frac{K(s)G(s)}{1 + K(s)G(s)}\]
+
+<ul>
+  <li>Measures the system’s response to the reference input and its sensitivity to measurement noise.</li>
+  <li>A larger 
+\(|T(j\omega)|\) at low frequencies means better reference tracking.</li>
+</ul>
+
+<h3 id="3-transfer-functions-bode-plots">3. <strong>Transfer Functions Bode Plots</strong></h3>
+<p><img src="../figures/sensitvity_transfer.png" alt="Sensitivity and Complementary Sensitivity Transfer Function" /></p>
+
+<p>Error Term \(\mathcal{E} = r - y_{m} = S*r - S*P_{d}*d + T*n\)
+where</p>
+<ul>
+  <li>\(n\) is measurement noise</li>
+  <li>\(P_{d}\) is disturbance Transfer Function and d is disturbance. \((\text{L loop output} + P_{d}*d=y)\)</li>
+  <li>\(r\) is reference setpoint</li>
+  <li>\(S\) is Sensitivity and \(T\) is Complementary Sensitivity</li>
+</ul>
+
+<p><strong>Why does the Bode plot look like that?</strong></p>
+<ol>
+  <li>S needs to be small in low frequencies to minimize error \(\mathcal{E}\) (first term in \(\mathcal{E}\) formula), since a realistic \(r\) would be low in frequency for system to follow.</li>
+  <li>Reference Tracking and disturbance rejection are typically low frequency phenomemon.</li>
+  <li>T needs to be small in maganitude for high frequencies, since noise \(n\) is generally high in frequency.</li>
+  <li>\(\omega_ {c}\) denotes the <strong>crossover frequency</strong>, being the frequency at which Sensitivity starts to increase and Complementary Sensitivity begins to decrease.</li>
+  <li>\(\omega_ {c}\) can be tuned to be where the user thinks noise begin to overwhelm the system.</li>
+</ol>
+
+<h3 id="4-relationship">4. <strong>Relationship</strong></h3>
+
+\[S(s) + T(s) = 1\]
+
+<hr />
+
+<h3 id="mimo-case-matrix-form">MIMO Case (Matrix Form)</h3>
+
+<p>Let:</p>
+
+<ul>
+  <li>\(G(s) \in \mathbb{R}^{p \times m}\) be the plant</li>
+  <li>\(K(s) \in \mathbb{R}^{m \times p}\) be the controller</li>
+  <li>
+\[L(s) = G(s)K(s)\]
+  </li>
+</ul>
+
+<p>Then:</p>
+
+<p>\(S(s) = (I + L(s))^{-1}\)
+\(T(s) = L(s)(I + L(s))^{-1}\)</p>
+
+<p>These satisfy:</p>
+
+\[S(s) + T(s) = I\]
+
+<hr />
+
+<h3 id="summary">Summary</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Formula</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>\(S(s)\)</td>
+      <td>\(\frac{1}{1 + K(s)G(s)}\) or \((I + G(s)K(s))^{-1}\)</td>
+      <td>Sensitivity to disturbances</td>
+    </tr>
+    <tr>
+      <td>\(T(s)\)</td>
+      <td>\(\frac{K(s)G(s)}{1 + K(s)G(s)}\) or \(G(s)K(s)(I + G(s)K(s))^{-1}\)</td>
+      <td>Response to reference / noise sensitivity</td>
+    </tr>
+    <tr>
+      <td>Relation</td>
+      <td>\(S + T = 1\) or \(S + T = I\)</td>
+      <td>Always holds</td>
+    </tr>
+  </tbody>
+</table>
 
 
 </body>

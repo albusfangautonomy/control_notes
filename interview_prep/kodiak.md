@@ -1,3 +1,7 @@
+---
+layout: default
+title: Kodiak Autonomous Trucking
+---
 # Full Dynamic Model of a Truck (Kodiak Interview Prep)
 
 Understanding the full dynamic model of a truck is critical for interviews with autonomous trucking companies like **Kodiak**. Trucks have unique dynamics due to their size, mass distribution, and articulated trailer structure.
@@ -9,8 +13,8 @@ Understanding the full dynamic model of a truck is critical for interviews with 
 ### A. Kinematic Bicycle Model
 
 - Simplified model assuming **no slip**, **pure rolling**.
-- State: $x, y, \theta, v$
-- Control: $a, \delta$ (acceleration and steering angle)
+- State: $$x, y, \theta, v$$
+- Control: $$a, \delta$$ (acceleration and steering angle)
 
 $$
 \dot{x} = v \cos\theta, \quad \dot{y} = v \sin\theta, \quad \dot{\theta} = \frac{v}{L} \tan\delta
@@ -23,8 +27,8 @@ $$
 ### B. Dynamic Single-Track Model (No Trailer)
 
 - Captures lateral slip, yaw dynamics, and tire forces.
-- States: $x, y, \theta, v_x, v_y, r$
-- Inputs: $F_x$, $\delta$
+- States: $$x, y, \theta, v_x, v_y, r$$
+- Inputs: $$F_x$$, $$\delta$$
 
 **Equations of motion:**
 
@@ -42,9 +46,9 @@ $$
   $$
 
 Where:
-- $a$, $b$: distances from CG to front/rear axle
-- $F_{y,f}$, $F_{y,r}$: lateral tire forces from slip angles
-- $F_{x,f}$, $F_{x,r}$: longitudinal tire forces
+- $$a$$, $$b$$: distances from CG to front/rear axle
+- $$F_{y,f}$$, $$F_{y,r}$$: lateral tire forces from slip angles
+- $$F_{x,f}$$, $$F_{x,r}$$: longitudinal tire forces
 
 ---
 
@@ -59,11 +63,11 @@ $$
 \mathbf{x} = [x, y, \psi_t, \psi_{tr}, v_x, v_y, r_t, r_{tr}]
 $$
 
-- $\psi_t$: yaw angle of tractor  
-- $\psi_{tr}$: yaw angle of trailer  
-- $r_t$, $r_{tr}$: yaw rates  
-- **Articulation angle**: $\phi = \psi_{tr} - \psi_t$  
-- **Articulation rate**: $\dot{\phi} = r_{tr} - r_t$
+- $$\psi_t$$: yaw angle of tractor  
+- $$\psi_{tr}$$: yaw angle of trailer  
+- $$r_t$$, $$r_{tr}$$: yaw rates  
+- **Articulation angle**: $$\phi = \psi_{tr} - \psi_t$$
+- **Articulation rate**: $$\dot{\phi} = r_{tr} - r_t$$
 
 **Yaw Dynamics** (high-level):
 

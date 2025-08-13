@@ -34,6 +34,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Frequency Analysis and Fourier Transform](./notes/frequency-response.html)  
   How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
 
+- [Robustness and Robust Control](./notes/robust_control.html)
+  Sensitive, complimentary Sensitivity, and robust control techniques
+
 - [Stability Analysis](./notes/stability.html)  
   Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
 
@@ -53,6 +56,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 ## Interview Prep
 
+- [Kodiak Autonomous Trucking](./interview_prep/kodiak.html)
 
 ---
 
