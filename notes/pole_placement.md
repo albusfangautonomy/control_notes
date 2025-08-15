@@ -33,7 +33,7 @@ Cons:
 Cost function $$J=\int_{0}^{\infty}(x^TQx + u^TRu)dt$$, where Q is positive semidefinite and x and u are dependet on t. There are **two** components of the cost:
 1. first term penalizes difference between desired state and actual state, which accelerates convergence.
 2. second term penalizes bigger u - for instance, gas may be expensive and the cost cannot be exorbitant.
-The term **linear** refers to $u=-Kx$, which is a linear controller; **Quadratic** refers to the Cost function; **Regulator** means this stabilizes the system.
+The term **linear** refers to $$u=-Kx$$, which is a linear controller; **Quadratic** refers to the Cost function; **Regulator** means this stabilizes the system.
 ### Result
 LQR gives u=-Kx specifically the K matrix that yields the best strategy.
 

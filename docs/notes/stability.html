@@ -10,7 +10,64 @@
 <body>
   <h1 id="stability-analysis">Stability Analysis</h1>
 
-<p>Coming soon…</p>
+<h2 id="nyquist-criterion--bodenyquist-terms-unity-feedback">Nyquist Criterion — Bode/Nyquist Terms (Unity Feedback)</h2>
+
+<p><strong>Setup.</strong> Let the open-loop transfer be \(G(s)\) for a unity-feedback loop with closed-loop characteristic \(1+G(s)=0\). Let:</p>
+<ul>
+  <li>\(P\) = number of open-loop poles of \(G(s)\) in the right-half plane (RHP),</li>
+  <li>\(N\) = number of <em>clockwise</em> encirclements of the Nyquist critical point \(-1+0j\) by the Nyquist plot of \(G(j\omega)\) (standard Nyquist contour),</li>
+  <li>\(Z\) = number of closed-loop poles in the RHP.</li>
+</ul>
+
+<p><strong>General Nyquist criterion.</strong>
+\(Z = N + P.\)
+The closed loop is <strong>stable</strong> iff \(Z=0\). Equivalently, the Nyquist plot must encircle \(-1\) <strong>clockwise</strong> exactly \(N=-P\) times.</p>
+
+<p><strong>Common special case (open-loop stable, i.e., \(P=0\)).</strong>
+If \(G(s)\) has no RHP poles and no poles on the \(j\omega\)-axis (aside from allowable integrators handled with the modified contour), then:</p>
+<ul>
+  <li>Closed loop is stable <strong>iff</strong> the Nyquist plot of \(G(j\omega)\) <strong>does not encircle</strong> \(-1+0j\) (i.e., \(N=0 \Rightarrow Z=0\)).</li>
+</ul>
+
+<hr />
+
+<h3 id="bode-plot-restatements-margins">Bode-plot restatements (margins)</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Let \(\omega_{gc}\) be a gain-crossover frequency where $$</td>
+      <td>G(j\omega_{gc})</td>
+      <td>=1\(, and let\)\omega_{pc}\(be a phase-crossover frequency where\)\angle G(j\omega_{pc})=-180^\circ$$.</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p><strong>Phase margin condition (at gain crossover):</strong>
+\(|G(j\omega_{gc})|=1 \quad \Rightarrow \quad \angle G(j\omega_{gc}) &gt; -180^\circ\)
+(positive phase margin). This ensures the Nyquist plot does <strong>not</strong> cross the real axis at or left of \(-1\).</p>
+  </li>
+  <li>
+    <p><strong>Gain margin condition (at phase crossover):</strong>
+\(\angle G(j\omega_{pc})=-180^\circ \quad \Rightarrow \quad |G(j\omega_{pc})| &lt; 1\)
+(positive gain margin). This keeps the Nyquist locus inside the unit circle when it is at \(-180^\circ\), avoiding the point \(-1\).</p>
+  </li>
+</ul>
+
+<p>If <strong>both</strong> conditions hold for all relevant crossovers and \(P=0\), the loop has positive stability margins and the closed loop is stable.</p>
+
+<hr />
+
+<h3 id="notescaveats">Notes/Caveats</h3>
+
+<ul>
+  <li>If \(P&gt;0\) (open-loop unstable), you <strong>must</strong> have exactly \(N=-P\) clockwise encirclements of \(-1\). Simple “margin checks” at crossovers are insufficient without accounting for \(P\).</li>
+  <li>Poles on the imaginary axis (e.g., pure integrators) require the standard indentation in the Nyquist contour; apply the modified criterion accordingly.</li>
+  <li>The above statements presume unity feedback; for non-unity feedback, apply the criterion to the appropriate open-loop function that multiplies the feedback path.</li>
+</ul>
+
 
 </body>
 </html>

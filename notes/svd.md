@@ -18,15 +18,15 @@ $$
 ### 🔷 Square Matrix Case: $$ \mathbf{M} \in \mathbb{R}^{m \times m} $$
 
 - **U** and **V\*** are real orthogonal matrices (rotations/reflections)
-- **Σ** scales each coordinate by singular values $\sigma_i$
+- **Σ** scales each coordinate by singular values $$\sigma_i$$
 - Geometrically:
   `rotation/reflection → scaling → rotation/reflection`
 
 #### 🔸 Determinant Interpretation
 
-- $\det(\mathbf{M}) > 0$: U and V^* are both **rotations** or both **reflections**
-- $ \det(\mathbf{M}) < 0 $: One of U or V^* must involve **reflection**
-- $ \det(\mathbf{M}) = 0 $: U and V^* can independently be rotations or reflections
+- $$ \det(\mathbf{M}) > 0 $$: U and $$V^*$$ are both **rotations** or both **reflections**
+- $$ \det(\mathbf{M}) < 0 $$: One of U or $$ V^* $$ must involve **reflection**
+- $$ \det(\mathbf{M}) = 0 $$: U and $$ V^* $$ can independently be rotations or reflections
 
 ### 🔷 Rectangular Matrix Case: $\mathbf{M} \in \mathbb{R}^{m \times n}$
 

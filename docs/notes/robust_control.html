@@ -104,6 +104,7 @@ where</p>
   <li>T needs to be small in maganitude for high frequencies, since noise \(n\) is generally high in frequency.</li>
   <li>\(\omega_ {c}\) denotes the <strong>crossover frequency</strong>, being the frequency at which Sensitivity starts to increase and Complementary Sensitivity begins to decrease.</li>
   <li>\(\omega_ {c}\) can be tuned to be where the user thinks noise begin to overwhelm the system.</li>
+  <li><strong>Peaks or bumps in Sensitivty transfer function is undesirable and needs to be attenuated</strong></li>
 </ol>
 
 <h3 id="4-relationship">4. <strong>Relationship</strong></h3>
@@ -164,6 +165,56 @@ where</p>
   </tbody>
 </table>
 
+<h2 id="loop-shaping">Loop Shaping</h2>
+<p><img src="../figures/loop_shaping_graph.png" alt="Loop Shaping Diagram" /></p>
+
+<ol>
+  <li>The Bode plot of the Loop Transfer Function looks like an <strong>Integrator</strong>
+    <ul>
+      <li>high gain at low frequencies for good reference tracking and noise rejection (S needs to be small so L needs to be big )</li>
+      <li>low gain at high frequencies to attenuate noise</li>
+      <li><strong>bode plot can be shifted left or right by multiplying transfer function by \(\omega_{s}/s\)</strong></li>
+    </ul>
+  </li>
+  <li>Loop shaping is a collection of several different design methods based on the idea of choosing a
+compensator that gives a loop transfer function with a desired shape.</li>
+  <li>One possibility is to start with the loop transfer function of the process and modify it by changing the gain and adding poles and zeros to the controller until the desired shape is obtained.</li>
+</ol>
+
+<p>If you have a model for the system and a desired Loop Transfer Function, MATLAB can tune <strong>K, the controller transfer function</strong> to robustify control system. No LQG needed.</p>
+
+<h3 id="non-robustness-for-loop-shaping">Non-Robustness for Loop Shaping</h3>
+<p>The peaks in Sensitivity graph is undesirable since the larger the peak, the closer the controller system gets to instability (-1 point on the Nyquist plot).</p>
+
+<p><img src="../figures/nyquist_loop_shaping.png" alt="Loop Shaping Nyquist plot" /></p>
+
+<p>where
+\(max|s|=1/m\)</p>
+
+<p>Therefore a larger peak in sensitivity <strong>S</strong> correspond to a closer distance to instability.</p>
+
+<p>The actual system dynamics can rotate the curve (Phase) or shift it left to make the system unstable.</p>
+
+<h3 id="cone-of-uncertainty">Cone of Uncertainty</h3>
+<p><img src="../figures/cone_of_uncertainty.png" alt="cone of uncertainty on Nyquist plot" /></p>
+
+<p>This takes into account of model uncertainty in P.</p>
+
+<h3 id="causes-of-non-robustness-and-unstability">Causes of Non-Robustness and Unstability</h3>
+<ol>
+  <li>model uncertainty. The real system gain is smaller or bigger than the model</li>
+  <li><strong>Time delays.</strong></li>
+  <li>Right Half Plane (RHP) zeros of P (the system transfer function)</li>
+</ol>
+
+<p><strong>Important Note:</strong> Time delay and RHP zeros of P give a <strong>fundamental limit</strong> on how small \(max(|S|)\) can be!
+To satisfy these hard rules set by Time delay and RHP zeros, one needs to shift \(\omega_{c}\) (the crossover frequency) to the left. This means the systems can only track low frequency references and reject lower frequency disturbances.</p>
+
+<p>Recall: a RHP zero would cause the system to go in the wrong direction before converging. (This behavior is similar to a time delay.)</p>
+
+<p>A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.</p>
+
+<p>Example: 1. Aircraft gaining altitude. 2. parallel park.</p>
 
 </body>
 </html>

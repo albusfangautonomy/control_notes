@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="nichols-chart-nyquist-plot-and-bode-plot">Nichols Chart, Nyquist Plot, and Bode Plot</h1>
+
+<p><img src="../figures/bode_nyquist_nichols.png" alt="Bode, Nyquist, Nichols plots" /></p>
+
+<p>All three plots display 3 Key information about the system: 1. <strong>Gain</strong> 2. <strong>Phase</strong> 3. <strong>Frequency</strong></p>
+
+<h2 id="which-to-use-a-comparison">Which to Use? A comparison</h2>
+<p><strong>All three display the same information just in different ways</strong>
+Bode Plot is useful for Loop shaping
+Nyquist Plot and Nichols Plot are useful for general sensitivity and stability analysis.</p>
+
+<h2 id="intuition">Intuition</h2>
+
+<p>Bode plot is extremely useful when analyzing open loop frequency reponse  \(G(s)\) of <strong>minimum phase and stable systems</strong> to predict the beahvior of the closed loop system \(\frac{G(s)}{1+G(s)}\).
+However, Bode plot falls apart when dealing with non-minimum phase or unstable systems. This is where <strong>Nyquist plot</strong> comes in useful. Nyquist plot displays all three in one plot (Gain, Phase, Frequency).
+Nichols encodes Bode magnitude and phase plots into one single plot, displaying same information as the Nyquist plot in cartesian coordinates.</p>
+
+<h2 id="nyquist-plot">Nyquist Plot</h2>
+<!-- ![Nyquist Plot example](../figures/nyquist_plot.png)
+
+![Nyquist Plot and Bode plot](../figures/nyquist_bode.png)
+
+![Nyquist Plot Margins](../figures/nyquist_margin.png)  -->
+<p><img src="../figures/nyquist_plot.png" alt="Nyquist Plot example" width="300" />
+<img src="../figures/nyquist_bode.png" alt="Nyquist Plot and Bode plot" width="500" height="300" />
+<img src="../figures/nyquist_margin.png" alt="Nyquist Plot Margins" width="300" /></p>
+
+<h3 id="nyquist-plot-stability-analysis-benefits">Nyquist Plot Stability analysis (benefits)</h3>
+<ol>
+  <li>for minimum phase and stable open loop systems, don’t corss the cricitical point (-1,0)</li>
+  <li>Gain margin and Phase Margin can be read from Nyquist Plot</li>
+  <li>We can still use Nyquist Stability Criterion and Nyquist plot even for unstable open loop systems</li>
+  <li>Easier to see combinations of gain and phase (<strong>disk margin</strong>)</li>
+  <li>Information displayed in polar coordinates.
+    <h3 id="nyquist-plot-critical-point">Nyquist Plot Critical Point</h3>
+    <p>Avoid (-1,0) on Nyquist plot. Closed loop system oscillates at that point.</p>
+  </li>
+</ol>
+
+<h2 id="nichols-plot">Nichols Plot</h2>
+<p><img src="../figures/nichols_plot.png" alt="Nichols Plot example" width="300" />
+Frequency is not explicitly shown just as Nyquist plot</p>
+
+<h2 id="applications">Applications</h2>
+
+<h3 id="system-identification-with-bode-plot">System Identification with Bode Plot</h3>
+
+<p>Given a <strong>blackbox</strong> LTI system, feeding in signals of various frequency (<strong>Sine sweep</strong>) and observing the output can generate the bode plot of the transfer function.</p>
+
+<h3 id="system-design-and-analysis-with-bode-plot">System Design and Analysis with Bode plot</h3>
+<p>Fundamental Principle: Open loop system can provide insightful information about the close loop system.
+Let open loop system = G(s) = L(s) = P(s) * K(s), closed loop system =  \(\frac{G(s)}{1+G(s)}\)</p>
+
+<p><strong>Applications of Bode plot</strong></p>
+<ol>
+  <li>If \(G(s)\), an open loop system transfer function has any 0 dB and -180 degrees phase frequencies (G(s)=-1+0j), then closed loop \(\frac{G(s)}{1+G(s)}\) will oscillate. Bode plot can be used to check.</li>
+  <li>If open loop system is miminum phase and stable, (both zeroes poles are on the LHP), then we can determine closed loop easily through bode plot</li>
+</ol>
+
+<p><strong>Key Observation</strong>
+Bode-plot restatements of Nyquist Criterion (margins)</p>
+
+<p>Let \(\omega_{gc}\) 
+be a gain-crossover frequency where 
+\(|G(j\omega_{gc})|=1\)
+, and let \(\omega_{pc}\) be a phase-crossover frequency where 
+\(\angle G(j\omega_{pc})=-180^\circ\).</p>
+
+<ul>
+  <li>
+    <p><strong>Phase margin condition (at gain crossover):</strong>
+\(|G(j\omega_{gc})|=1 \quad \Rightarrow \quad \angle G(j\omega_{gc}) &gt; -180^\circ\)
+(positive phase margin). This ensures the Nyquist plot does <strong>not</strong> cross the real axis at or left of \(-1\).</p>
+  </li>
+  <li>
+    <p><strong>Gain margin condition (at phase crossover):</strong>
+\(\angle G(j\omega_{pc})=-180^\circ \quad \Rightarrow \quad |G(j\omega_{pc})| &lt; 1\)
+(positive gain margin). This keeps the Nyquist locus inside the unit circle when it is at \(-180^\circ\), avoiding the point \(-1\).</p>
+  </li>
+</ul>
+
+<p>If <strong>both</strong> conditions hold for all relevant crossovers and \(P=0\), the loop has positive stability margins and the closed loop is stable.</p>
+
+</body>
+</html>

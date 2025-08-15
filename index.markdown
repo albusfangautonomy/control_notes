@@ -10,8 +10,11 @@ has_children: true
 Welcome to my personal collection of control systems notes. This site compiles essential topics, explanations, and formulas for quick reference and deeper learning.
 
 ## 📚 Core Topics
-- [Open-loop vs Close-loop control](./notes/openclose.html)
+- [Open-loop vs Close-loop control](./notes/openclose.html)\\
   A comparison between Open Loop control and Closed Loop control
+
+- [Plot Reviews](./notes/important_plots.html)\\
+  Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot
 
 - [PID Control](./notes/pid.html)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
@@ -25,16 +28,16 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Optimal Pole Placement in Linear Systems](./notes/pole_placement)
   Introduces LQR and pole placement.
 
-- [LQE](./notes/state_estim.html)
+- [LQE](./notes/state_estim.html)   
   Linear quadratic Estimator and Observability.
 
-- [Controllability and Reachability](./notes/controllability.html)
+- [Controllability and Reachability](./notes/controllability.html)  
   Illustrates the equivalence between controllability and reachability.
 
 - [Frequency Analysis and Fourier Transform](./notes/frequency-response.html)  
   How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
 
-- [Robustness and Robust Control](./notes/robust_control.html)
+- [Robustness and Robust Control](./notes/robust_control.html)  
   Sensitive, complimentary Sensitivity, and robust control techniques
 
 - [Stability Analysis](./notes/stability.html)  
@@ -46,6 +49,10 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Model Predictive Control (MPC)](./notes/mpc.html)  
   Optimization-based control for constrained systems (intro-level overview).
 
+- [SVD](./notes/svd.html)
+
+- [Data Driven Control](./notes/data_driven_control.html)
+  Advanced control topics for Machine Learning based control
 ## 🛠️ Tools and Techniques
 
 - [Control System Design Workflow](./notes/workflow.html)  

@@ -9,8 +9,32 @@
 </head>
 <body>
   <h1 id="root-locus-analysis">Root Locus Analysis</h1>
+<h2 id="poles-and-zeros">Poles and Zeros</h2>
+<ol>
+  <li>The stability of an LTI system depends solely on the poles of its transfer function, including stability, speed of decay/growth, or natural oscillaitons.</li>
+  <li>Zeros (roots of the numerator) don’t directly affect stability because they don’t appear in the characteristic equation that governs the natural modes of the system.</li>
+</ol>
 
-<p>Coming soon…</p>
+<h3 id="what-do-zeros-do">What do Zeros do?</h3>
+
+<ol>
+  <li>Transient Shape and Overshoot
+    <ul>
+      <li>Zeros can introduce additional terms in the time response that can increase or decrease overshoot, depending on their location.</li>
+      <li>A zero close to the origin (s = 0) or near the imaginary axis can significantly change the transient waveform.</li>
+    </ul>
+  </li>
+  <li>Direction and Phase
+    <ul>
+      <li>Zeros affect the phase of the frequency response.</li>
+    </ul>
+  </li>
+  <li>Magnitude Shaping
+    <ul>
+      <li>Zeros can boost or attenuate specific frequency components, affecting bandwidth and disturbance rejection.</li>
+    </ul>
+  </li>
+</ol>
 
 </body>
 </html>

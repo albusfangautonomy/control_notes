@@ -33,5 +33,30 @@ We are able to change the actual dynamics of the system to stabilize it by selec
   <li>attenduate noise</li>
 </ol>
 
+<h1 id="why-is-open-loop-transfer-functions-important">Why is Open Loop Transfer Functions Important</h1>
+
+<ol>
+  <li><strong>Closed-loop stability depends on open-loop behavior</strong>
+    <ul>
+      <li>
+        <p>The closed-loop characteristic equation is:
+ \(1+L(s)=0\)
+ where \(L(s)\) is the open-loop transfer function.</p>
+      </li>
+      <li>
+        <p>All the closed-loop poles (which determine stability) come from this equation.</p>
+      </li>
+      <li>
+        <p>If \(L(s)\) has certain properties (like unstable poles or bad phase margins), the closed loop can become unstable.</p>
+      </li>
+    </ul>
+  </li>
+  <li>Open Loop Transfer Functions reveal robustness by Sensitivity and Complementary Sensitivity
+    <ul>
+      <li>The closer the Open Loop Transfer Function L gets to -I, the bigger Sensitivity gets, and the less stable the system gets</li>
+    </ul>
+  </li>
+</ol>
+
 </body>
 </html>

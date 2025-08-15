@@ -3,7 +3,78 @@ layout: default
 title: Frequency Response and Fourier Transform
 ---
 # Frequency Response and Fourier Transform
+
+## Quick Notes on Damping
+### Underdamped, Critically damped, and Overdamped 
+Underdamped: imgarinary poles
+
+Cirtically damped: repeated poles (eigenvalues)
+
+Overdamped: Real eigenvalues
+
+For a standard second-order transfer function:
+
+$$
+G(s) = \frac{\omega_n^2}{s^2 + 2\zeta \omega_n s + \omega_n^2}
+$$
+
+For a standard second-order system:
+
+$$
+\ddot{y}(t) + 2\zeta \omega_n \dot{y}(t) + \omega_n^2 y(t) = K \omega_n^2 u(t)
+$$
+
+---
+
+The standard second-order system in differential equation form is:
+
+$$
+\ddot{y}(t) + 2\zeta \omega_n \dot{y}(t) + \omega_n^2 y(t) = K \omega_n^2 u(t)
+$$
+
+
+
+**1. Underdamped** ($$0 < \zeta < 1$$):
+
+$$
+y(t) = e^{-\zeta \omega_n t} \left[ A \cos\left( \omega_n \sqrt{1 - \zeta^2} \, t \right) 
++ B \sin\left( \omega_n \sqrt{1 - \zeta^2} \, t \right) \right]
+$$
+
+
+
+**Critically damped** ($$\zeta = 1$$):
+
+$$
+y(t) = \left( A + Bt \right) e^{-\omega_n t}
+$$
+
+
+
+**Overdamped** ($$\zeta > 1$$):
+
+Let:
+$$
+r_{1,2} = -\omega_n \left( \zeta \pm \sqrt{\zeta^2 - 1} \right)
+$$
+
+Then:
+$$
+y(t) = A e^{r_1 t} + B e^{r_2 t}
+$$
+
+
+### Damping in higher order systems
+Damping behavior is only defined for second order systems. Dominant poles are investigated for general behavior for higher-order systems.
+### Damping and Bode plot
+A peak in the frequency response (magnitude plot) happens when the system has complex conjugate poles that are **lightly damped**.
+
+---
+
 ## Fourier and Laplace Transforms
+
+**Note:** In Laplace domain, $$s=\sigma + j\omega$$. When evaluating Laplace Transform at $$s=j\omega$$, Laplace Transform becomes Fourier Transform. **when you go from the Laplace transform $$F(s)$$ to the Fourier transform $$F(j\omega)$$, you’re essentially looking at the steady-state sinusoidal response of the system.**
+
 ### Laplace Transform
 $$
 \mathcal{L}\{f(t)\} = F(s) = \int_0^{\infty} e^{-st} f(t) \, dt
@@ -86,4 +157,4 @@ $$ ratio{\bar{x}}{\bar{u}}$$
 **Notes:** 
 1. The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency. 
 2. At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn't have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.
-Coming soon...
+

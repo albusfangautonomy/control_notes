@@ -9,7 +9,57 @@
 </head>
 <body>
   <h1 id="frequency-response-and-fourier-transform">Frequency Response and Fourier Transform</h1>
+
+<h2 id="quick-notes-on-damping">Quick Notes on Damping</h2>
+<h3 id="underdamped-critically-damped-and-overdamped">Underdamped, Critically damped, and Overdamped</h3>
+<p>Underdamped: imgarinary poles</p>
+
+<p>Cirtically damped: repeated poles (eigenvalues)</p>
+
+<p>Overdamped: Real eigenvalues</p>
+
+<p>For a standard second-order transfer function:</p>
+
+\[G(s) = \frac{\omega_n^2}{s^2 + 2\zeta \omega_n s + \omega_n^2}\]
+
+<p>For a standard second-order system:</p>
+
+\[\ddot{y}(t) + 2\zeta \omega_n \dot{y}(t) + \omega_n^2 y(t) = K \omega_n^2 u(t)\]
+
+<hr />
+
+<p>The standard second-order system in differential equation form is:</p>
+
+\[\ddot{y}(t) + 2\zeta \omega_n \dot{y}(t) + \omega_n^2 y(t) = K \omega_n^2 u(t)\]
+
+<p><strong>1. Underdamped</strong> (\(0 &lt; \zeta &lt; 1\)):</p>
+
+\[y(t) = e^{-\zeta \omega_n t} \left[ A \cos\left( \omega_n \sqrt{1 - \zeta^2} \, t \right) 
++ B \sin\left( \omega_n \sqrt{1 - \zeta^2} \, t \right) \right]\]
+
+<p><strong>Critically damped</strong> (\(\zeta = 1\)):</p>
+
+\[y(t) = \left( A + Bt \right) e^{-\omega_n t}\]
+
+<p><strong>Overdamped</strong> (\(\zeta &gt; 1\)):</p>
+
+<p>Let:
+\(r_{1,2} = -\omega_n \left( \zeta \pm \sqrt{\zeta^2 - 1} \right)\)</p>
+
+<p>Then:
+\(y(t) = A e^{r_1 t} + B e^{r_2 t}\)</p>
+
+<h3 id="damping-in-higher-order-systems">Damping in higher order systems</h3>
+<p>Damping behavior is only defined for second order systems. Dominant poles are investigated for general behavior for higher-order systems.</p>
+<h3 id="damping-and-bode-plot">Damping and Bode plot</h3>
+<p>A peak in the frequency response (magnitude plot) happens when the system has complex conjugate poles that are <strong>lightly damped</strong>.</p>
+
+<hr />
+
 <h2 id="fourier-and-laplace-transforms">Fourier and Laplace Transforms</h2>
+
+<p><strong>Note:</strong> In Laplace domain, \(s=\sigma + j\omega\). When evaluating Laplace Transform at \(s=j\omega\), Laplace Transform becomes Fourier Transform. <strong>when you go from the Laplace transform \(F(s)\) to the Fourier transform \(F(j\omega)\), you’re essentially looking at the steady-state sinusoidal response of the system.</strong></p>
+
 <h3 id="laplace-transform">Laplace Transform</h3>
 <p>\(\mathcal{L}\{f(t)\} = F(s) = \int_0^{\infty} e^{-st} f(t) \, dt\)</p>
 
@@ -71,9 +121,9 @@ Fourier Transform returns a complex number.</p>
 <strong>Notes:</strong></p>
 <ol>
   <li>The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency.</li>
-  <li>At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.
-Coming soon…</li>
+  <li>At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.</li>
 </ol>
+
 
 </body>
 </html>

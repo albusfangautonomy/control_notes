@@ -9,6 +9,7 @@
 </head>
 <body>
   <h1 id="pid-control">PID Control</h1>
+<p>This page only covers continuous-time PID control. For more advanced topics on discrete PID, visit Discrete Time Control page for more details.</p>
 
 <h2 id="which-controller-to-use">Which controller to use?</h2>
 <p>\(\begin{array}{c|c|c|c}
@@ -32,6 +33,47 @@ Example &amp; System Order &amp; Controller &amp; Reasoning\\
 <hr />
 
 <h2 id="strategies-for-tuning-a-pid-controller">Strategies for Tuning a PID Controller</h2>
+<p><img src="../figures/PID_tuning.png" alt="PID tuning chart" /></p>
+
+<h3 id="diagram-walkthrough">Diagram Walkthrough</h3>
+<ol>
+  <li>Model representation</li>
+</ol>
+
+<p><img src="../figures/model_repres.png" alt="What's a model" /></p>
+<ol>
+  <li>run input sequence
+    <ul>
+      <li>observe step response for Cohen-Coon</li>
+    </ul>
+  </li>
+  <li>Heuristic Methods:
+System model not required, only need to measure certain traits such as process gain, time constant. and dead time.
+    <ol>
+      <li>Cohen-Coon</li>
+      <li>Zeguler-Nichols (needs to be careful on hardware, due to oscillatory behavior)</li>
+    </ol>
+  </li>
+  <li>System Identification.
+    <ol>
+      <li>Measure step-response of system.</li>
+      <li>Tweak your model coefficients so step responses match.</li>
+      <li>Model needs to be defined beforehand.</li>
+    </ol>
+  </li>
+  <li>Tuning method with Model
+    <ul>
+      <li>manual tuning
+        <ol>
+          <li>pole placement</li>
+          <li>Loop Shaping</li>
+          <li>Heuristic Methods. (make model oscilatory NOT hardware)</li>
+        </ol>
+      </li>
+      <li>auto tuning</li>
+    </ul>
+  </li>
+</ol>
 
 <h3 id="manual-pid-tuning-strategy">Manual PID Tuning Strategy</h3>
 
@@ -96,8 +138,6 @@ based on when the system first starts oscillating.</p>
   </li>
 </ol>
 
-<hr />
-
 <h3 id="-use-these-tables-to-compute-gains">📐 Use these tables to compute gains:</h3>
 
 <table>
@@ -130,8 +170,6 @@ based on when the system first starts oscillating.</p>
     </tr>
   </tbody>
 </table>
-
-<hr />
 
 <table>
   <thead>
@@ -206,8 +244,6 @@ based on when the system first starts oscillating.</p>
 
 <hr />
 
-<hr />
-
 <h3 id="️-notes-for-drone-applications">⚠️ Notes for Drone Applications</h3>
 
 <ul>
@@ -219,6 +255,8 @@ based on when the system first starts oscillating.</p>
     </ul>
   </li>
 </ul>
+
+<hr />
 
 <h2 id="integral-windup">Integral Windup</h2>
 <p>Error builds up even though actuator saturates. takes take for negative error to be reflected in the controller</p>
@@ -238,7 +276,171 @@ based on when the system first starts oscillating.</p>
   <li>observer approach</li>
 </ol>
 
-<p>Coming soon…</p>
+<h2 id="derivative-control">Derivative Control</h2>
+<p>Derivative control “predicts the future” in constrast to integral control - a decrease in error gives a decrease in control input. Noise amplifies Derivative control output.</p>
+
+<h3 id="derivative-control-example">Derivative Control Example</h3>
+<p>Altitude Control for Quadcopter:
+Desired altitude 50m, as drone shoots up, error term decreases (negative derivative) -&gt; negative value from derivative term, slows motors down, reduce over shoot</p>
+
+<hr />
+
+<h2 id="how-to-derive-a-model">How to derive a model</h2>
+<h3 id="first-principles">First principles</h3>
+<p>This methods also works if one knows the individual components of the system.</p>
+<ol>
+  <li>Newtonian Mechanics</li>
+  <li>Lagrangian Mechanics</li>
+</ol>
+
+<h3 id="system-id">System ID</h3>
+<p>If the model is too complicated, system ID can work (black box method). No need to know the details of the system.</p>
+
+<hr />
+
+<h2 id="pid-pole-placement-lqg-and-loop-shaping-robust-control">PID Pole Placement (LQG) and Loop Shaping (Robust Control)</h2>
+
+<h3 id="pid-transfer-function">PID Transfer Function</h3>
+<p>\(C(s) = K_p + \frac{K_i}{s} + K_d s\)</p>
+
+<p><img src="../figures/pid_loopshaping_poleplacement.png" alt="PID pole placement and loop shaping png" /></p>
+
+<h3 id="how-does-pid-affect-loop-shaping-bode-plot">How does PID affect Loop Shaping (Bode Plot):</h3>
+<p><strong>1. Proportional term (\(K_p\))</strong></p>
+<ul>
+  <li>Simply scales the magnitude of the open-loop transfer function across all frequencies by \(K_p\) (shifts the Bode magnitude plot up or down).</li>
+  <li>No slope change, no phase lead/lag (phase stays the same as the plant’s at each frequency).</li>
+</ul>
+
+<p><strong>2. Integral term (\(\frac{K_i}{s}\))</strong></p>
+<ul>
+  <li>Adds a pole at \(s=0\) and a zero at \(s=-K_i/K_p\) (if expressed in standard form for PI control).</li>
+  <li>In the Bode plot: increases low-frequency gain slope by +20 dB/dec below the zero, giving <strong>better low-frequency tracking</strong> and disturbance rejection.</li>
+  <li>Phase: introduces <strong>–90° lag</strong> below the zero frequency (eventually reduced to 0° after the zero).</li>
+</ul>
+
+<p><strong>3. Derivative term (\(K_d s\))</strong></p>
+<ul>
+  <li>Adds a zero at the origin and a pole at infinity (in practice, implemented with a high-frequency roll-off to avoid noise).</li>
+  <li>In the Bode plot: increases high-frequency gain slope by +20 dB/dec above the zero’s frequency, giving <strong>phase lead</strong> and faster response.</li>
+  <li>Phase: can give up to +90° lead around its zero.</li>
+</ul>
+
+<p><strong>Putting them together in loop shaping:</strong></p>
+<ul>
+  <li><strong>Integral</strong> boosts the low-frequency magnitude to push the gain crossover lower and improve steady-state accuracy.</li>
+  <li><strong>Derivative</strong> boosts magnitude at mid-frequencies to increase phase margin, which can stabilize a plant with low natural phase margin.</li>
+  <li><strong>Proportional</strong> shifts the entire magnitude plot up or down to meet your crossover frequency and gain margin targets.</li>
+</ul>
+
+<hr />
+
+<h2 id="pid-effect-on-pole-placement">PID Effect on Pole Placement</h2>
+
+<h3 id="1️⃣-starting-point--closed-loop-poles-come-from-1--ls--0">1️⃣ Starting point — closed-loop poles come from \(1 + L(s) = 0\)</h3>
+
+<p>For unity feedback:</p>
+
+\[T(s) = \frac{C(s) G(s)}{1 + C(s) G(s)}\]
+
+<p>The <strong>closed-loop poles</strong> are the roots of:</p>
+
+\[1 + C(s) G(s) = 0\]
+
+<p>Adding a PID means replacing \(C(s)\) with:</p>
+
+\[C(s) = K_p + \frac{K_i}{s} + K_d s\]
+
+<p>That changes the polynomial \(1 + C(s) G(s) = 0\), which changes the pole locations.</p>
+
+<hr />
+
+<h3 id="2️⃣-how-each-term-influences-pole-placement">2️⃣ How each term influences pole placement</h3>
+
+<p><strong>(a) Proportional \(K_p\)</strong></p>
+<ul>
+  <li>Multiplies the plant’s transfer function by a constant.</li>
+  <li>Effect: Moves the closed-loop poles along the <em>root locus</em> without changing its shape.</li>
+  <li>Higher \(K_p\) → poles move toward/into the left-half plane faster (increasing speed) but can reduce stability margin.</li>
+</ul>
+
+<hr />
+
+<p><strong>(b) Integral \(\frac{K_i}{s}\)</strong></p>
+<ul>
+  <li>Adds a <strong>pole at the origin</strong> to the <em>open-loop</em> transfer function.</li>
+  <li>This changes the root locus shape, not just shifts along it.</li>
+  <li>Forces the steady-state error for step inputs to zero by making the closed-loop a <strong>Type 1</strong> system (or higher).</li>
+  <li>Because it adds a pole, it can also slow down the system and reduce damping unless compensated.</li>
+</ul>
+
+<hr />
+
+<p><strong>(c) Derivative \(K_d s\)</strong></p>
+<ul>
+  <li>Adds a <strong>zero</strong> to the open-loop transfer function.</li>
+  <li>Zeros bend the root locus toward themselves, which can move dominant poles to locations with higher damping ratio.</li>
+  <li>Used to improve transient response (overshoot, settling time) by pulling poles into a “nicer” part of the complex plane.</li>
+</ul>
+
+<hr />
+
+<h3 id="3️⃣-big-picture-pid-in-pole-placement-terms">3️⃣ Big picture: PID in pole placement terms</h3>
+
+<ul>
+  <li><strong>P</strong>: Changes <em>gain</em> → moves poles along an existing root-locus path.</li>
+  <li><strong>I</strong>: Adds a pole at origin → changes the <em>shape</em> of the root locus, introduces the integrator effect.</li>
+  <li><strong>D</strong>: Adds a zero → bends the root locus toward more desirable damping.</li>
+</ul>
+
+<p>The net effect is that PID changes <strong>both</strong>:</p>
+<ol>
+  <li>The <em>geometry</em> of the root locus (via added poles/zeros)</li>
+  <li>The <em>position</em> along that locus (via gain tuning)</li>
+</ol>
+
+<hr />
+
+<h2 id="important-advanced-pid-concepts-for-further-study">Important Advanced PID concepts for Further Study</h2>
+
+<h3 id="cascade-loops">Cascade Loops</h3>
+
+<p><img src="../figures/cascade_pid.png" alt="Cascade PID Diagram" /></p>
+
+<p>Why multiple loops?</p>
+<ol>
+  <li><strong>Inner loops can be tuned to respond quickly to local disturbances, the outer loop can be tuned more conservatively to reject sensor noise and increase stability</strong></li>
+  <li>Cascade approach makes it easier to isolate the problem</li>
+  <li>Multiple groups can work separate parts.
+    <ul>
+      <li>The motor you buy has a built-in controller</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<p>How to Tune Cascade loops</p>
+<ol>
+  <li>Case 1: Inner loop speed » outer loop speed
+    <ul>
+      <li>can be tuned separately. Assume the other loops not present and tune like normal</li>
+    </ul>
+  </li>
+  <li>Case 2: Inner loop speed \(\approx\) Outerloop speed
+    <ul>
+      <li>Tune inner loop with a guess</li>
+      <li>Tune outer loop</li>
+      <li>Iterate</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="discrete-pid">Discrete PID</h3>
+<p>There are three major characteristics of a digital system:  1. <strong>Sample Time</strong> 2. <strong>Quatization</strong> 3. <strong>Transport Delay</strong></p>
+
+<p><strong>Please check out discrete time control page for more details on discrete PID controller</strong></p>
+
 
 </body>
 </html>

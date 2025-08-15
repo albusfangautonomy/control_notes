@@ -98,6 +98,7 @@ where
 3. T needs to be small in maganitude for high frequencies, since noise $$ n $$ is generally high in frequency.
 4. $$ \omega_ {c} $$ denotes the **crossover frequency**, being the frequency at which Sensitivity starts to increase and Complementary Sensitivity begins to decrease. 
 5. $$ \omega_ {c} $$ can be tuned to be where the user thinks noise begin to overwhelm the system.
+6. **Peaks or bumps in Sensitivty transfer function is undesirable and needs to be attenuated**
 
 ### 4. **Relationship**
 
@@ -140,3 +141,50 @@ $$
 | $$ T(s) $$ | $$ \frac{K(s)G(s)}{1 + K(s)G(s)} $$ or $$ G(s)K(s)(I + G(s)K(s))^{-1} $$ | Response to reference / noise sensitivity |
 | Relation | $$ S + T = 1 $$ or $$ S + T = I $$ | Always holds |
 
+## Loop Shaping
+![Loop Shaping Diagram](../figures/loop_shaping_graph.png)
+
+
+1. The Bode plot of the Loop Transfer Function looks like an **Integrator**
+    - high gain at low frequencies for good reference tracking and noise rejection (S needs to be small so L needs to be big )
+    - low gain at high frequencies to attenuate noise
+    - **bode plot can be shifted left or right by multiplying transfer function by $$\omega_{s}/s$$**
+2. Loop shaping is a collection of several different design methods based on the idea of choosing a
+compensator that gives a loop transfer function with a desired shape.
+3.  One possibility is to start with the loop transfer function of the process and modify it by changing the gain and adding poles and zeros to the controller until the desired shape is obtained.
+
+
+If you have a model for the system and a desired Loop Transfer Function, MATLAB can tune **K, the controller transfer function** to robustify control system. No LQG needed.
+
+### Non-Robustness for Loop Shaping
+The peaks in Sensitivity graph is undesirable since the larger the peak, the closer the controller system gets to instability (-1 point on the Nyquist plot).
+
+![Loop Shaping Nyquist plot](../figures/nyquist_loop_shaping.png)
+
+where
+$$
+max|s|=1/m
+$$
+
+Therefore a larger peak in sensitivity **S** correspond to a closer distance to instability.
+
+The actual system dynamics can rotate the curve (Phase) or shift it left to make the system unstable.
+
+### Cone of Uncertainty
+![cone of uncertainty on Nyquist plot](../figures/cone_of_uncertainty.png)
+
+This takes into account of model uncertainty in P.
+
+### Causes of Non-Robustness and Unstability
+1. model uncertainty. The real system gain is smaller or bigger than the model
+2. **Time delays.**
+3. Right Half Plane (RHP) zeros of P (the system transfer function)
+
+**Important Note:** Time delay and RHP zeros of P give a **fundamental limit** on how small $$max(|S|)$$ can be!
+To satisfy these hard rules set by Time delay and RHP zeros, one needs to shift $$\omega_{c}$$ (the crossover frequency) to the left. This means the systems can only track low frequency references and reject lower frequency disturbances.
+
+Recall: a RHP zero would cause the system to go in the wrong direction before converging. (This behavior is similar to a time delay.)
+
+A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.
+
+Example: 1. Aircraft gaining altitude. 2. parallel park.
