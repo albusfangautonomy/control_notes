@@ -10,6 +10,10 @@ has_children: true
 Welcome to my personal collection of control systems notes. This site compiles essential topics, explanations, and formulas for quick reference and deeper learning.
 
 ## 📚 Core Topics
+
+- [Useful Tips](./notes/tips.html) \\
+  Important Intuitions for designing control systems
+
 - [Open-loop vs Close-loop control](./notes/openclose.html)\\
   A comparison between Open Loop control and Closed Loop control
 
@@ -25,19 +29,19 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Root Locus Analysis](./notes/root-locus.html)  
   Pole-zero placement and visualizing the impact of controller design.
 
-- [Optimal Pole Placement in Linear Systems](./notes/pole_placement)
+- [Optimal Pole Placement in Linear Systems](./notes/pole_placement) \\
   Introduces LQR and pole placement.
 
 - [LQE](./notes/state_estim.html)   
   Linear quadratic Estimator and Observability.
 
-- [Controllability and Reachability](./notes/controllability.html)  
+- [Controllability and Reachability](./notes/controllability.html)   \\
   Illustrates the equivalence between controllability and reachability.
 
 - [Frequency Analysis and Fourier Transform](./notes/frequency-response.html)  
   How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
 
-- [Robustness and Robust Control](./notes/robust_control.html)  
+- [Sensitivity, Robustness, and Robust Control](./notes/robust_control.html)  
   Sensitive, complimentary Sensitivity, and robust control techniques
 
 - [Stability Analysis](./notes/stability.html)  
@@ -51,8 +55,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [SVD](./notes/svd.html)
 
-- [Data Driven Control](./notes/data_driven_control.html)
+- [Data Driven Control](./notes/data_driven_control.html) \\
   Advanced control topics for Machine Learning based control
+
 ## 🛠️ Tools and Techniques
 
 - [Control System Design Workflow](./notes/workflow.html)  

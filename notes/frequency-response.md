@@ -153,7 +153,7 @@ Fourier Transform returns a complex number.
 ### Frequency Response
 ![frequency response of a mass-spring damper system](../figures/frequency_response.png)
 
-$$ ratio{\bar{x}}{\bar{u}}$$
+$$ frac{\bar{x}}{\bar{u}}$$
 **Notes:** 
 1. The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency. 
 2. At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn't have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.

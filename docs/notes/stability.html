@@ -10,6 +10,48 @@
 <body>
   <h1 id="stability-analysis">Stability Analysis</h1>
 
+<h2 id="stability-margins---gain-and-phase-margins">Stability Margins - Gain and Phase Margins</h2>
+<p>In simple terms, Gain and Phase margins are the safe net and the extra that protects us from instability.
+less margin = less stable</p>
+
+<p><strong>Note:</strong>
+<em>Gain</em> crossover frequency is used to caluclate <em>Phase</em> Margin.</p>
+
+<p><em>Phase</em> crossover frequency is used to caculate <em>Gain</em> Margin.</p>
+
+<p>The Gain and PhaseMargins are <strong>defined with respect to open-loop transfer function</strong>, but the margins are not intrinsic properties of the open-loop system alone, and are only meaningful for the corresponding closed-loop system.</p>
+
+<hr />
+
+<h3 id="gain-margin">Gain Margin</h3>
+
+<p>The gain margin (GM) is defined at the phase crossover frequency 
+\(\omega_{pc}  \text{ where } \angle L(j\omega_{pc}) = -180^\circ\):</p>
+
+\[GM = \frac{1}{|L(j\omega_{pc})|}\]
+
+<p>In decibels (dB):</p>
+
+\[GM_{\text{dB}} = -20 \log_{10} |L(j\omega_{pc})|\]
+
+<p>If there are multiple <strong>Phase crossover frequencies \(\omega_{pc}\)</strong>, use the most conservative Gain Margin.</p>
+
+<hr />
+<h3 id="phase-margin">Phase Margin</h3>
+
+<p>The phase margin (PM) is defined at the gain crossover frequency 
+\(\omega_{gc}\) where \(|L(j\omega_{gc})| = 1\):</p>
+
+\[PM = 180^\circ + \angle L(j\omega_{gc})\]
+
+<hr />
+
+<h3 id="margins-and-sensitivity">Margins and Sensitivity</h3>
+
+<p>Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.</p>
+
+<hr />
+
 <h2 id="nyquist-criterion--bodenyquist-terms-unity-feedback">Nyquist Criterion — Bode/Nyquist Terms (Unity Feedback)</h2>
 
 <p><strong>Setup.</strong> Let the open-loop transfer be \(G(s)\) for a unity-feedback loop with closed-loop characteristic \(1+G(s)=0\). Let:</p>
@@ -33,15 +75,10 @@ If \(G(s)\) has no RHP poles and no poles on the \(j\omega\)-axis (aside from al
 
 <h3 id="bode-plot-restatements-margins">Bode-plot restatements (margins)</h3>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Let \(\omega_{gc}\) be a gain-crossover frequency where $$</td>
-      <td>G(j\omega_{gc})</td>
-      <td>=1\(, and let\)\omega_{pc}\(be a phase-crossover frequency where\)\angle G(j\omega_{pc})=-180^\circ$$.</td>
-    </tr>
-  </tbody>
-</table>
+<p>Let \(\omega_{gc}\) be a gain-crossover frequency 
+where \(|G(j\omega_{gc})|=1\), 
+and let \(\omega_{pc}\) be a phase-crossover frequency
+ where \(\angle G(j\omega_{pc})=-180^\circ\).</p>
 
 <ul>
   <li>

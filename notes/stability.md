@@ -2,8 +2,57 @@
 layout: default
 title: Stability Analysis
 ---
-
 # Stability Analysis
+
+## Stability Margins - Gain and Phase Margins
+In simple terms, Gain and Phase margins are the safe net and the extra that protects us from instability.
+less margin = less stable
+
+**Note:**
+*Gain* crossover frequency is used to caluclate *Phase* Margin.
+
+*Phase* crossover frequency is used to caculate *Gain* Margin.
+
+The Gain and PhaseMargins are **defined with respect to open-loop transfer function**, but the margins are not intrinsic properties of the open-loop system alone, and are only meaningful for the corresponding closed-loop system.
+
+---
+
+### Gain Margin
+
+The gain margin (GM) is defined at the phase crossover frequency 
+$$ \omega_{pc}  \text{ where } \angle L(j\omega_{pc}) = -180^\circ $$:
+
+$$
+GM = \frac{1}{|L(j\omega_{pc})|}
+$$
+
+In decibels (dB):
+
+$$
+GM_{\text{dB}} = -20 \log_{10} |L(j\omega_{pc})|
+$$
+
+
+If there are multiple **Phase crossover frequencies $$\omega_{pc} $$**, use the most conservative Gain Margin.
+
+---
+### Phase Margin
+
+The phase margin (PM) is defined at the gain crossover frequency 
+$$ \omega_{gc} $$ where $$ |L(j\omega_{gc})| = 1 $$:
+
+$$
+PM = 180^\circ + \angle L(j\omega_{gc})
+$$
+
+---
+
+### Margins and Sensitivity
+
+Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
+
+
+---
 
 ## Nyquist Criterion — Bode/Nyquist Terms (Unity Feedback)
 
@@ -26,7 +75,10 @@ If $$G(s)$$ has no RHP poles and no poles on the $$j\omega$$-axis (aside from al
 
 ### Bode-plot restatements (margins)
 
-Let $$\omega_{gc}$$ be a gain-crossover frequency where $$|G(j\omega_{gc})|=1$$, and let $$\omega_{pc}$$ be a phase-crossover frequency where $$\angle G(j\omega_{pc})=-180^\circ$$.
+Let $$\omega_{gc}$$ be a gain-crossover frequency 
+where $$|G(j\omega_{gc})|=1$$, 
+and let $$\omega_{pc}$$ be a phase-crossover frequency
+ where $$\angle G(j\omega_{pc})=-180^\circ$$.
 
 - **Phase margin condition (at gain crossover):**
   $$
