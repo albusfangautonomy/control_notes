@@ -147,6 +147,8 @@ Fourier Transform returns a complex number.
 1. The magnitude of this number denotes how strong that frequency is in the signal
 2. The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.
 
+---
+
 ## Non-minimum Phase
 
 **Motivation**: For the same magnitude gain plot, phase plots can be drastically different. This is due to the fact that multiple transfer functions can produce the same magnitude gain plot, but have different phase profiles.

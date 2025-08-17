@@ -23,8 +23,21 @@
 <h1 id="controllability-and-observability-tips">Controllability and Observability Tips</h1>
 
 <ol>
-  <li>Unstable systems are not always uncontrollable. If unstable modes are controllable, then the system is <strong>stabilizable</strong>.</li>
+  <li>
+    <p>Unstable systems are not always uncontrollable. If unstable modes are controllable, then the system is <strong>stabilizable</strong>.</p>
+  </li>
+  <li>
+    <p>Degrees of controllability can be determined from the Controllability Gramian or the SVD of the controllability matrix.</p>
+  </li>
+  <li>
+    <p>Controllability = Reachability.</p>
+  </li>
+  <li>
+    <p>Degrees of Observability can be determined from the Observability Gramian or the SVD of the observability matrix.</p>
+  </li>
 </ol>
+
+<hr />
 
 <h1 id="transfer-function-and-frequency-analysis-tips">Transfer Function and Frequency Analysis tips</h1>
 
@@ -39,19 +52,12 @@
     <p>Bode plot shows the <strong>steady state response only</strong> (evaluating at \(s=j\omega\)). Transient response can only be investigated in <strong>time-domain</strong> since it is a time baseed phenomenon.</p>
   </li>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Avoid $$</td>
-          <td>L(s)</td>
-          <td>= 0 dB, \angle L(s) = -180^\circ, \text{ where }</td>
-          <td>L(s)</td>
-          <td>\text{ is the open-loop transfer function}\(. This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase =\)-180^\circ$$), which causes denominator of closed loop transfer function to be 0.</td>
-        </tr>
-      </tbody>
-    </table>
+    <p>Avoid 
+\(|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the open-loop transfer function}\). This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = \(-180^\circ\)), which causes denominator of closed loop transfer function to be 0.</p>
   </li>
-  <li>Non-miminum phase can be primarily caused by three phenomena: 1. Time delay \(e^{-sT}\) 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). <strong>Only RHP zeroes can cause frequency response of the system to go in the wrong direction first</strong>. Time delay only causes the frequency response to shift to the right.</li>
+  <li>
+    <p>Non-miminum phase can be primarily caused by three phenomena: 1. Time delay \(e^{-sT}\) 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). <strong>Only RHP zeroes can cause step response of the system to go in the wrong direction first</strong>. Time delay only causes the step response to shift to the right.</p>
+  </li>
 </ol>
 
 <hr />

@@ -15,6 +15,14 @@ title: Tips
 
 1. Unstable systems are not always uncontrollable. If unstable modes are controllable, then the system is **stabilizable**.
 
+2. Degrees of controllability can be determined from the Controllability Gramian or the SVD of the controllability matrix.
+
+3. Controllability = Reachability.
+
+4. Degrees of Observability can be determined from the Observability Gramian or the SVD of the observability matrix.
+
+---
+
 # Transfer Function and Frequency Analysis tips
 
 1. The **peaks** at resonance on bode plots are caused by the presence of **lightly damped poles**. A higher order bode plot can have multiple peaks since the system may have multiple **lightly damped poles**.
@@ -23,9 +31,10 @@ title: Tips
 
 3. Bode plot shows the **steady state response only** (evaluating at $$s=j\omega$$). Transient response can only be investigated in **time-domain** since it is a time baseed phenomenon.
 
-4. Avoid $$ |L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the open-loop transfer function}$$. This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = $$-180^\circ$$), which causes denominator of closed loop transfer function to be 0.
+4. Avoid 
+$$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the open-loop transfer function}$$. This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = $$-180^\circ$$), which causes denominator of closed loop transfer function to be 0.
 
-5. Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). **Only RHP zeroes can cause frequency response of the system to go in the wrong direction first**. Time delay only causes the frequency response to shift to the right.
+5. Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). **Only RHP zeroes can cause step response of the system to go in the wrong direction first**. Time delay only causes the step response to shift to the right.
 
 ---
 
