@@ -40,6 +40,26 @@ A system is stabilizable if and only if all unstable (or lightly damped) eigenve
 
 Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix.
 
+
+### Examples of Stabilizability
+
+1. Inverted Pendulum on a cart
+    - **Unstable Mode** the pendulum tiipping over (angle grows exponentially).
+    - **Why Stabilizable**:
+        - The cart can move left or right, providing a restoring torque - can be damped.
+
+2. Rocket During Takeoff
+    - **Unstable Mode**: pitch/roll drift - if thrust isn't perfectly aligned, rocket tips and diverges.
+    - **Why Stabilizable**:
+        - Thrust vector control changes the direction of the force relative to the center of mass. This gives direct control authority over the unstable angular dynamics.
+
+3. Drone in hover (quadcoptor)
+    - **Unstable Mode**: attitude - if it tilts slightly, gravity pulls it further, the drone accelerates away.
+    - **Why stabilizable**
+        - Each rotor produces torque about pitch, roll, and yaw.
+        - These torques directly act on the unstable angular states.
+        - Feedback (from IMU + controllers) lets you push those unstable poles into the stable LHP
+
 ---
 
 ## Controllability of Linear system

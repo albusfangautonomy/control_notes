@@ -11,6 +11,8 @@
   <h1 id="pid-control">PID Control</h1>
 <p>This page only covers continuous-time PID control. For more advanced topics on discrete PID, visit Discrete Time Control page for more details.</p>
 
+<p>PID by itself is a linear controller. Gain Scheduling, Anti-windup schemes, derivative filtering, gain scheduling can make it non-linear</p>
+
 <h2 id="which-controller-to-use">Which controller to use?</h2>
 <p>\(\begin{array}{c|c|c|c}
 Example &amp; System Order &amp; Controller &amp; Reasoning\\
@@ -398,6 +400,10 @@ Desired altitude 50m, as drone shoots up, error term decreases (negative derivat
   <li>The <em>geometry</em> of the root locus (via added poles/zeros)</li>
   <li>The <em>position</em> along that locus (via gain tuning)</li>
 </ol>
+
+<hr />
+
+<h2 id="gain-scheduling---control-systtems-in-practice">Gain Scheduling - Control Systtems in Practice</h2>
 
 <hr />
 

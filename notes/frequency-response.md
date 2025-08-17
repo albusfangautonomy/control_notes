@@ -147,6 +147,22 @@ Fourier Transform returns a complex number.
 1. The magnitude of this number denotes how strong that frequency is in the signal
 2. The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.
 
+## Non-minimum Phase
+
+**Motivation**: For the same magnitude gain plot, phase plots can be drastically different. This is due to the fact that multiple transfer functions can produce the same magnitude gain plot, but have different phase profiles.
+
+**Note**: Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future)
+
+Inverse-unstable systems (RHP in zero -> inverse system has RHP pole (unstable inverse))
+
+![non-minimum phase systems from time delay and RHP zeroes](../figures/nonminimum_phase.png)
+![frequency response for non-minimum phase systems from time delay and RHP zeroes](../figures/nmp_freqres.png)
+
+Green curve is for time delay, and red curve is for RHP zero.
+
+
+
+---
 
 ## Bode and Nyquist Plots
 

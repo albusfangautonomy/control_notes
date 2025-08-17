@@ -6,6 +6,8 @@ title: PID Control
 # PID Control
 This page only covers continuous-time PID control. For more advanced topics on discrete PID, visit Discrete Time Control page for more details. 
 
+PID by itself is a linear controller. Gain Scheduling, Anti-windup schemes, derivative filtering, gain scheduling can make it non-linear
+
 ## Which controller to use?
 $$
 \begin{array}{c|c|c|c}
@@ -264,6 +266,12 @@ That changes the polynomial $$1 + C(s) G(s) = 0$$, which changes the pole locati
 The net effect is that PID changes **both**:
 1. The *geometry* of the root locus (via added poles/zeros)
 2. The *position* along that locus (via gain tuning)
+
+---
+
+## Gain Scheduling - Control Systtems in Practice
+
+
 
 ---
 
