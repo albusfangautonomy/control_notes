@@ -405,6 +405,68 @@ Desired altitude 50m, as drone shoots up, error term decreases (negative derivat
 
 <h2 id="gain-scheduling---control-systtems-in-practice">Gain Scheduling - Control Systtems in Practice</h2>
 
+<h3 id="movivation">Movivation</h3>
+<p>Linear controllers may only work well under certain operating conditions but not all.</p>
+
+<p>Linear Parameter Varying systems:
+A fixed lienar transfer function but different parameters under different operating conditions.</p>
+
+<p><strong>How to deal with LPV systems?</strong></p>
+<ol>
+  <li>Build nonlinear controler.</li>
+  <li>Build linear robust controller. Drop in performance and may not even be possible.</li>
+  <li>Limit operations.</li>
+  <li>Gain scheduling.</li>
+</ol>
+
+<h3 id="visualization">Visualization</h3>
+<p><img src="../figures/gain_scheduling.png" alt="visualizing PID gain scheduling" /></p>
+
+<h3 id="implementation">Implementation</h3>
+<p>Steps</p>
+<ol>
+  <li>Linearize plant at each design operating condition. (linear controller for linear plant)
+    <ul>
+      <li>find a critical point in each of the regions that represents the whole area well</li>
+      <li>Linearize plant at the point</li>
+    </ul>
+  </li>
+  <li>Tune gains at each design point
+    <ul>
+      <li>Performance (or even stability in some cases) is only guaranteed at the design points</li>
+      <li>Either use a single gain for the entire area or <strong>Interpolate</strong> gains between two points</li>
+      <li>Make controller more robust or add more design points</li>
+    </ul>
+  </li>
+  <li>Choose the gain scheduling architecture
+    <ul>
+      <li>A switch system. However, it may produce some unintended transients at the switch condition</li>
+      <li>See next section for more details</li>
+    </ul>
+  </li>
+  <li>Assess the control performance
+    <ul>
+      <li>Often simulated</li>
+      <li>All critical transitions and corner cases should be covered</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="preventing-drastic-changes">Preventing drastic changes</h3>
+<p><strong>Scenario</strong> At the boundary points of the gain areas, errors don’t change much, but a discrete switch causes controller gain to change -&gt; causing erratic behavior.</p>
+
+<p><strong>Methods</strong></p>
+<ol>
+  <li>
+    <p>Transient-free Switch
+<img src="../figures/transient_free_switch.png" alt="Transient Free Switch" /></p>
+  </li>
+  <li>
+    <p>Gain curve (2D) and Gain Surface (3D)
+<img src="../figures/gain_surface.png" alt="Gain Curve and Gain Surface" /></p>
+  </li>
+</ol>
+
 <hr />
 
 <h2 id="important-advanced-pid-concepts-for-further-study">Important Advanced PID concepts for Further Study</h2>

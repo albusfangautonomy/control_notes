@@ -14,8 +14,8 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Useful Tips](./notes/tips.html) \\
   Important Intuitions for designing control systems
 
-- [Open-loop vs Close-loop control](./notes/openclose.html)\\
-  A comparison between Open Loop control and Closed Loop control
+- [Overview](./notes/overview.html)\\
+  A comparison between Open Loop control and Closed Loop control, and categorizing controllers
 
 - [Plot Reviews](./notes/important_plots.html)\\
   Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot

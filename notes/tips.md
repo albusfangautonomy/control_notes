@@ -25,16 +25,24 @@ title: Tips
 
 # Transfer Function and Frequency Analysis tips
 
+0. For an LTI system, the transfer function G(s) is the Laplace transform of the impulse response
+    - It can be derived either by equations or Testing with impulse response
+
+
 1. The **peaks** at resonance on bode plots are caused by the presence of **lightly damped poles**. A higher order bode plot can have multiple peaks since the system may have multiple **lightly damped poles**.
 
-2. The presence of **RHP zeroes** make the system **non-minimum phase** by introducing a non-causal phase lag, which means the transient response w.
+2. The presence of **RHP zeroes** make the system **non-minimum phase** by introducing a non-causal phase lag, which means the transient response w goes in the wrong direction first.
+    - **Each RHP zero cause the system to switch directions**.
 
 3. Bode plot shows the **steady state response only** (evaluating at $$s=j\omega$$). Transient response can only be investigated in **time-domain** since it is a time baseed phenomenon.
 
 4. Avoid 
 $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the open-loop transfer function}$$. This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = $$-180^\circ$$), which causes denominator of closed loop transfer function to be 0.
 
-5. Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). **Only RHP zeroes can cause step response of the system to go in the wrong direction first**. Time delay only causes the step response to shift to the right.
+5. Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). 
+    - **Only RHP zeroes can cause step response of the system to go in the wrong direction first**. Time delay only causes the step response to shift to the right.
+
+6. Easiest way to deal with RHP zeroes is to lower controller gain to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.
 
 ---
 
@@ -52,9 +60,11 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 
 1. Sensitivity plots also have peaks at resonance frequencies. These peaks occur where the **Open Loop Transfer Function** $$L(s)$$ is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to $$-180^\circ$$).
 
-2. Gain Crossover frequency is defined as the frequency $$\omega_{gc}$$ at which $$|L(j\omega)|=1$$
+2. Gain Crossover frequency is defined as the frequency 
+$$\omega_{gc}$$ at which $$|L(j\omega)|=1$$
 
-3. Time delay and Non-minimum phase place a **fundamental limit** on how small max(|S|) can be! This is a hard rule that needs to be satisfied. One can shift $$|omega_{gc}$$ to the left, which means the system can only track lowfrequency references and reject lower frequency disturbances. 
+3. Time delay and Non-minimum phase place a **fundamental limit** on how small
+$$ max(|S|)$$ can be! This is a hard rule that needs to be satisfied. One can shift $$\omega_{gc}$$ to the left, which means the system can only track low frequency references and reject lower frequency disturbances. 
 
 Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
 

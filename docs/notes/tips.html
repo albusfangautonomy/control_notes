@@ -42,11 +42,18 @@
 <h1 id="transfer-function-and-frequency-analysis-tips">Transfer Function and Frequency Analysis tips</h1>
 
 <ol>
+  <li>For an LTI system, the transfer function G(s) is the Laplace transform of the impulse response
+    <ul>
+      <li>It can be derived either by equations or Testing with impulse response</li>
+    </ul>
+  </li>
   <li>
     <p>The <strong>peaks</strong> at resonance on bode plots are caused by the presence of <strong>lightly damped poles</strong>. A higher order bode plot can have multiple peaks since the system may have multiple <strong>lightly damped poles</strong>.</p>
   </li>
-  <li>
-    <p>The presence of <strong>RHP zeroes</strong> make the system <strong>non-minimum phase</strong> by introducing a non-causal phase lag, which means the transient response w.</p>
+  <li>The presence of <strong>RHP zeroes</strong> make the system <strong>non-minimum phase</strong> by introducing a non-causal phase lag, which means the transient response w goes in the wrong direction first.
+    <ul>
+      <li><strong>Each RHP zero cause the system to switch directions</strong>.</li>
+    </ul>
   </li>
   <li>
     <p>Bode plot shows the <strong>steady state response only</strong> (evaluating at \(s=j\omega\)). Transient response can only be investigated in <strong>time-domain</strong> since it is a time baseed phenomenon.</p>
@@ -55,9 +62,12 @@
     <p>Avoid 
 \(|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the open-loop transfer function}\). This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = \(-180^\circ\)), which causes denominator of closed loop transfer function to be 0.</p>
   </li>
-  <li>
-    <p>Non-miminum phase can be primarily caused by three phenomena: 1. Time delay \(e^{-sT}\) 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). <strong>Only RHP zeroes can cause step response of the system to go in the wrong direction first</strong>. Time delay only causes the step response to shift to the right.</p>
+  <li>Non-miminum phase can be primarily caused by three phenomena: 1. Time delay \(e^{-sT}\) 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future).
+    <ul>
+      <li><strong>Only RHP zeroes can cause step response of the system to go in the wrong direction first</strong>. Time delay only causes the step response to shift to the right.</li>
+    </ul>
   </li>
+  <li>Easiest way to deal with RHP zeroes is to lower controller gain to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.</li>
 </ol>
 
 <hr />
@@ -85,27 +95,12 @@
     <p>Sensitivity plots also have peaks at resonance frequencies. These peaks occur where the <strong>Open Loop Transfer Function</strong> \(L(s)\) is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to \(-180^\circ\)).</p>
   </li>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Gain Crossover frequency is defined as the frequency \(\omega_{gc}\) at which $$</td>
-          <td>L(j\omega)</td>
-          <td>=1$$</td>
-        </tr>
-      </tbody>
-    </table>
+    <p>Gain Crossover frequency is defined as the frequency 
+\(\omega_{gc}\) at which \(|L(j\omega)|=1\)</p>
   </li>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>Time delay and Non-minimum phase place a <strong>fundamental limit</strong> on how small max(</td>
-          <td>S</td>
-          <td>) can be! This is a hard rule that needs to be satisfied. One can shift $$</td>
-          <td>omega_{gc}$$ to the left, which means the system can only track lowfrequency references and reject lower frequency disturbances.</td>
-        </tr>
-      </tbody>
-    </table>
+    <p>Time delay and Non-minimum phase place a <strong>fundamental limit</strong> on how small
+\(max(|S|)\) can be! This is a hard rule that needs to be satisfied. One can shift \(\omega_{gc}\) to the left, which means the system can only track low frequency references and reject lower frequency disturbances.</p>
   </li>
 </ol>
 

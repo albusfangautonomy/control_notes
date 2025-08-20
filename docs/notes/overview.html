@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open loop vs closed loop control</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="categorizing-controllers">Categorizing controllers</h1>
+
+<h2 id="classical-transfer-function-based-controllers">Classical (Transfer Function-Based) Controllers</h2>
+<ol>
+  <li>PID - most common in industry, time/frequency-domain based.
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>Plant dynamics are reasonable well-behaved (not too nonlinear not too fast)</li>
+          <li>No full state-space model (just input-output data)</li>
+          <li>Need something simple, reliable, and easy to tune</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>Lead-Lag Compensators – designed using Bode/Nyquist plots.
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>You want to shape frequency response to improve stability margins or transient response</li>
+          <li>You’re working in frequency domain (Bode Nyuquist)</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>Notch filters -suppress certain frequencies.</li>
+</ol>
+
+<h2 id="state-space-controllers">State-Space Controllers</h2>
+<ol>
+  <li>LQR and LQI
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>You have a full state-space model (A, B matices)</li>
+          <li>Need optimal trade-off between control effort and performance</li>
+          <li>The system is <strong>MIMO</strong></li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>LQG - LQR + Kalman for output feedback
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>Same as LQR but not all states are measurable</li>
+          <li>Need optimal performance with noisy <em>sensors</em></li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>Pole Placement - place closed-loop poles via state feedback
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>You want specific transient dynamics (settling time, damping, overshoot).</li>
+          <li>Model is known in state-space form</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>MPC
+    <ul>
+      <li>Use when:
+        <ol>
+          <li>Need to handle constraints (actuator limits, safety boundaries)</li>
+          <li>Computational resources are available</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="adaptive--nonlinear-controllers">Adaptive &amp; Nonlinear Controllers</h2>
+<ol>
+  <li>Model Reference Adaptive Control (MRAC) – adapts gains in real time.
+    <ul>
+      <li>Use when: Plant dynamics <strong>change over time</strong> or are partially unknown</li>
+    </ul>
+  </li>
+  <li>Sliding Mode Control - robust to disturbances, discontinuous control law
+    <ul>
+      <li>Use when: You need robustness against large uncertainties/disturbances</li>
+    </ul>
+  </li>
+  <li>Feedback Linearization – cancels nonlinearities with nonlinear control law.
+    <ul>
+      <li>Use when: System is strongly nonlinear but exact model is known.</li>
+    </ul>
+  </li>
+  <li>Backstepping - recursive Lyapunov-based design
+    <ul>
+      <li>Use when: dynamics are too complex or unkown for modeling</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="data-driven-modern-ai-controllers">Data-Driven Modern AI controllers</h2>
+<ol>
+  <li>RL controllers -learn optimal policies from data</li>
+  <li>Neural network controllers</li>
+</ol>
+
+<hr />
+
+<h1 id="open-loop-vs-closed-loop-control">Open Loop vs Closed Loop Control</h1>
+<p>Why feedback control?</p>
+<ol>
+  <li>Uncertainty (inherent in the system) in open loop system dynamics. Preplanned control inputs may fall flat against uncertainties.</li>
+  <li>Instability of the open loop system cann never be dealt with by open loop control. Feedback control allows us to directly change the dynamics of the system, inlcuding the eigenvalues of the system.</li>
+  <li>Disturbances (external forces) can be rejected by feedback.</li>
+  <li>Energy and efficiency.</li>
+</ol>
+
+<hr />
+
+<h2 id="fixing-instability-with-pole-placement">Fixing Instability with Pole Placement</h2>
+<p>\(\dot{x}=Ax + Bu\), \(y=Cx\), let \(u=-Kx\), \(\dot{x}=Ax-BKx=(A-BK)x\)
+<br />
+We are able to change the actual dynamics of the system to stabilize it by selecting appropriate \(B*K\).</p>
+
+<hr />
+<h2 id="an-ideal-controller">An Ideal Controller</h2>
+<ol>
+  <li>design for stability</li>
+  <li>compensate for uncertainty</li>
+  <li>reject diturbance</li>
+  <li>attenduate noise</li>
+</ol>
+
+<h2 id="why-is-open-loop-transfer-functions-important">Why is Open Loop Transfer Functions Important</h2>
+
+<ol>
+  <li><strong>Closed-loop stability depends on open-loop behavior</strong>
+    <ul>
+      <li>
+        <p>The closed-loop characteristic equation is:
+ \(1+L(s)=0\)
+ where \(L(s)\) is the open-loop transfer function.</p>
+      </li>
+      <li>
+        <p>All the closed-loop poles (which determine stability) come from this equation.</p>
+      </li>
+      <li>
+        <p>If \(L(s)\) has certain properties (like unstable poles or bad phase margins), the closed loop can become unstable.</p>
+      </li>
+    </ul>
+  </li>
+  <li>Open Loop Transfer Functions reveal robustness by Sensitivity and Complementary Sensitivity
+    <ul>
+      <li>The closer the Open Loop Transfer Function L gets to -I, the bigger Sensitivity gets, and the less stable the system gets</li>
+    </ul>
+  </li>
+</ol>
+
+</body>
+</html>

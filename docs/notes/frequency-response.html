@@ -127,6 +127,54 @@ Fourier Transform returns a complex number.</p>
 
 <p>Green curve is for time delay, and red curve is for RHP zero.</p>
 
+<h3 id="why-does-rhp-zeroes-cause-system-to-go-the-opposite-way-first">Why does RHP zeroes cause system to go the opposite way first</h3>
+
+<p>Long story short, RHP zeroes take derivative on the input with the \(-S\) term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting.</p>
+
+<p><img src="../figures/rhp_zero_behavior.png" alt="RHP zeroes behavior" /></p>
+
+<h2 id="why-is-rhp-zero-undesirable-and-what-makes-it-hard-to-control">Why is RHP zero undesirable and what makes it hard to control</h2>
+
+<ol>
+  <li>
+    <p>Moving in the opposite way first slows down the response</p>
+  </li>
+  <li>
+    <p>Increasing the controller gain can make it unstable. (cart keeps going to the left initially because of increased error, which causes increased control effort, which in turn makes the cart keep going in the wrong way before full throttle to the right.)</p>
+  </li>
+  <li>
+    <p>NMP systems have smaller phase margins because of the additional phase lag.</p>
+  </li>
+  <li>
+    <p>NMP systems are more susceptible to the gain. Increasing the gain increases the gain crossover frequency, which decreases phase margin.</p>
+  </li>
+</ol>
+
+<h3 id="rhp-examples">RHP examples</h3>
+
+<ol>
+  <li>
+    <p>Inverted pendulum: System: x coordinate of the cart. behavior: the cart goes left first, causing the pendulum to to slightly right, before moving right again and causing the pendulum to balance.</p>
+  </li>
+  <li>
+    <p>Aircraft altitude control: System: altitude of the aircraft. behavior: to gain altitude, the aircraft needs to drop the elevator first before rising.</p>
+  </li>
+</ol>
+
+<h3 id="how-to-deal-with-rhp-zeroes-with-controller">How to deal with RHP zeroes with controller</h3>
+
+<ol>
+  <li>
+    <p>Having a pole in the controller that cancels out the zero in the plant is risky since the output of the controller can be unbounded even though the output of the plant (the entire system) can be stable.</p>
+  </li>
+  <li>
+    <p>Predictive or nonlinear controllers</p>
+  </li>
+  <li>
+    <p>Easiest: lower controller gain to maintain stability and increase phase margin.</p>
+  </li>
+</ol>
+
 <hr />
 
 <h2 id="bode-and-nyquist-plots">Bode and Nyquist Plots</h2>

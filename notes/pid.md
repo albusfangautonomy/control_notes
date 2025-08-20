@@ -271,6 +271,50 @@ The net effect is that PID changes **both**:
 
 ## Gain Scheduling - Control Systtems in Practice
 
+### Movivation
+Linear controllers may only work well under certain operating conditions but not all.
+
+Linear Parameter Varying systems:
+A fixed lienar transfer function but different parameters under different operating conditions.
+
+**How to deal with LPV systems?**
+1. Build nonlinear controler.
+2. Build linear robust controller. Drop in performance and may not even be possible.
+3. Limit operations.
+4. Gain scheduling.
+
+### Visualization
+![visualizing PID gain scheduling](../figures/gain_scheduling.png)
+
+
+### Implementation
+Steps
+1. Linearize plant at each design operating condition. (linear controller for linear plant)
+   - find a critical point in each of the regions that represents the whole area well
+   - Linearize plant at the point
+
+2. Tune gains at each design point
+   - Performance (or even stability in some cases) is only guaranteed at the design points
+   - Either use a single gain for the entire area or **Interpolate** gains between two points
+   - Make controller more robust or add more design points
+
+3. Choose the gain scheduling architecture
+   - A switch system. However, it may produce some unintended transients at the switch condition
+   - See next section for more details
+
+4. Assess the control performance
+   - Often simulated
+   - All critical transitions and corner cases should be covered
+
+### Preventing drastic changes
+**Scenario** At the boundary points of the gain areas, errors don't change much, but a discrete switch causes controller gain to change -> causing erratic behavior.
+
+**Methods** 
+1. Transient-free Switch
+![Transient Free Switch](../figures/transient_free_switch.png)
+
+2. Gain curve (2D) and Gain Surface (3D)
+![Gain Curve and Gain Surface](../figures/gain_surface.png)
 
 
 ---

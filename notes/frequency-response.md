@@ -162,7 +162,35 @@ Inverse-unstable systems (RHP in zero -> inverse system has RHP pole (unstable i
 
 Green curve is for time delay, and red curve is for RHP zero.
 
+### Why does RHP zeroes cause system to go the opposite way first
 
+Long story short, RHP zeroes take derivative on the input with the $$-S$$ term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting.
+
+![RHP zeroes behavior](../figures/rhp_zero_behavior.png)
+
+## Why is RHP zero undesirable and what makes it hard to control
+
+1. Moving in the opposite way first slows down the response
+
+2. Increasing the controller gain can make it unstable. (cart keeps going to the left initially because of increased error, which causes increased control effort, which in turn makes the cart keep going in the wrong way before full throttle to the right.)
+
+3. NMP systems have smaller phase margins because of the additional phase lag.
+
+4. NMP systems are more susceptible to the gain. Increasing the gain increases the gain crossover frequency, which decreases phase margin.
+
+### RHP examples
+
+1. Inverted pendulum: System: x coordinate of the cart. behavior: the cart goes left first, causing the pendulum to to slightly right, before moving right again and causing the pendulum to balance.
+
+2. Aircraft altitude control: System: altitude of the aircraft. behavior: to gain altitude, the aircraft needs to drop the elevator first before rising.
+
+### How to deal with RHP zeroes with controller
+
+1. Having a pole in the controller that cancels out the zero in the plant is risky since the output of the controller can be unbounded even though the output of the plant (the entire system) can be stable.
+
+2. Predictive or nonlinear controllers
+
+3. Easiest: lower controller gain to maintain stability and increase phase margin.
 
 ---
 
