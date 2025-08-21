@@ -11,6 +11,38 @@ title: Tips
 ---
 
 
+# Bode, Nyquist, Nichols, Root Locus Tips
+
+1. Nyquist plot is primarily for analysing open-loop system graph to determine closed loop stability - hence the -1 point
+
+2. The root locus method, the poles and zeroes you start with are those of the open-loop transfer function.
+
+    - The root locus then shows how the closed-loop poles move in the s-plane as the gain K varies
+    - The plotted pole/zero markers themselves are always the open-loop ones.
+
+3. When designing a controller, Bode plot you work with is almost always for the open-loop transfer function $$G(s)H(s)$$
+
+
+## Bode plot tips
+
+1. Peaks in Bode plots impact closed-loop stability
+
+    - Phase Margin reduction: At the peak, the phase often drops sharply, since the system oscillates more and delays response. If the peak is near the gain crossover frequency, this can push the phase margin down, making the closed-loop system more oscillatory or unstable.
+
+    - Lower gain margin: If the peak height is close to or above 0 dB, it takes less additional loop gain to cross into instability.
+
+    - Poor disturbance rejection: Peaks mean the system will amplify disturbances at those frequencies in closed-loop.
+
+    - High overshoot / ringing: 
+
+## Nyquist Plot tips
+
+1. Nyquist plots are plotted in **polar coordinates**, in contrast to Bode and Nichols
+
+## Root Locus Tips
+
+---
+
 # Controllability and Observability Tips
 
 1. Unstable systems are not always uncontrollable. If unstable modes are controllable, then the system is **stabilizable**.
@@ -42,7 +74,9 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 5. Non-miminum phase can be primarily caused by three phenomena: 1. Time delay $$e^{-sT}$$ 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). 
     - **Only RHP zeroes can cause step response of the system to go in the wrong direction first**. Time delay only causes the step response to shift to the right.
 
-6. Easiest way to deal with RHP zeroes is to lower controller gain to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.
+6. Easiest way to deal with RHP zeroes is to lower controller gain (shift magnitude plot down, thereby shifting x axis intercept to the left) to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.
+
+7. **Dominant Poles** are typically those with the **smallest damping** since the impulse response of poles with larger real parts quickly disappears.
 
 ---
 

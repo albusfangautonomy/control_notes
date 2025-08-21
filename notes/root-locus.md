@@ -62,6 +62,8 @@ q=order of repeated pole or zero\\
 $$\psi_{p} = \text{angle from a pole}$$. Connect each pole with the pole/zero of interest, the angle between that line and positive x axis is $$\psi_p$$ \\
 $$\psi_{z} = \text{angle from a zero}$$. Connect each zero with the pole/zero of interest, the angle between that line and positive x axis is $$\psi_z$$ 
 
+A root refers to a **closed-loop pole** of the system for a particular value of the gain **K**.
+
 **Rule 1**: There are **n** lines (loci), where $$ n = max(deg(Q), deg(P)) $$
 
 **Rule 2**: As K increases from 0 to $$\infty$$, the closed loop poles move from the poles of open loop $$G(s)$$ to the zeroes of open loop $$G(s)$$\\
@@ -95,3 +97,7 @@ $$\psi_{z} = \text{angle from a zero}$$. Connect each zero with the pole/zero of
 ### More details on the 10 rules
 
 **Rule 2:** $$P(s) +KQ(s) = 0$$ by re-arranging the terms. When K = 0, P(s) = 0, which is the definition of poles for G(s). As K increases, more emphasis is put on Q(s)
+
+**Rule 9:**
+
+![Rule 9](../figures/root_locus_rule_9.png)

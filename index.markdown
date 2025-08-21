@@ -17,8 +17,17 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Overview](./notes/overview.html)\\
   A comparison between Open Loop control and Closed Loop control, and categorizing controllers
 
+- [Design Workflow](./notes/workflow.html) \\
+  Typical design requirements and design actions 
+
 - [Plot Reviews](./notes/important_plots.html)\\
   Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot
+  
+- [Performance Specifications](./notes/performance_specs.html)  
+  Rise time, settling time, overshoot, **Steady-State Error** (error constants, system type, examples).
+
+- [Laplace Transform Tools](./notes/laplace_tools.html)  
+  **Final Value Theorem** (statement, validity conditions), using FVT to compute SSE.
 
 - [PID Control](./notes/pid.html)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.

@@ -20,6 +20,58 @@
 
 <hr />
 
+<h1 id="bode-nyquist-nichols-root-locus-tips">Bode, Nyquist, Nichols, Root Locus Tips</h1>
+
+<ol>
+  <li>
+    <p>Nyquist plot is primarily for analysing open-loop system graph to determine closed loop stability - hence the -1 point</p>
+  </li>
+  <li>
+    <p>The root locus method, the poles and zeroes you start with are those of the open-loop transfer function.</p>
+
+    <ul>
+      <li>The root locus then shows how the closed-loop poles move in the s-plane as the gain K varies</li>
+      <li>The plotted pole/zero markers themselves are always the open-loop ones.</li>
+    </ul>
+  </li>
+  <li>
+    <p>When designing a controller, Bode plot you work with is almost always for the open-loop transfer function \(G(s)H(s)\)</p>
+  </li>
+</ol>
+
+<h2 id="bode-plot-tips">Bode plot tips</h2>
+
+<ol>
+  <li>
+    <p>Peaks in Bode plots impact closed-loop stability</p>
+
+    <ul>
+      <li>
+        <p>Phase Margin reduction: At the peak, the phase often drops sharply, since the system oscillates more and delays response. If the peak is near the gain crossover frequency, this can push the phase margin down, making the closed-loop system more oscillatory or unstable.</p>
+      </li>
+      <li>
+        <p>Lower gain margin: If the peak height is close to or above 0 dB, it takes less additional loop gain to cross into instability.</p>
+      </li>
+      <li>
+        <p>Poor disturbance rejection: Peaks mean the system will amplify disturbances at those frequencies in closed-loop.</p>
+      </li>
+      <li>
+        <p>High overshoot / ringing:</p>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="nyquist-plot-tips">Nyquist Plot tips</h2>
+
+<ol>
+  <li>Nyquist plots are plotted in <strong>polar coordinates</strong>, in contrast to Bode and Nichols</li>
+</ol>
+
+<h2 id="root-locus-tips">Root Locus Tips</h2>
+
+<hr />
+
 <h1 id="controllability-and-observability-tips">Controllability and Observability Tips</h1>
 
 <ol>
@@ -67,7 +119,10 @@
       <li><strong>Only RHP zeroes can cause step response of the system to go in the wrong direction first</strong>. Time delay only causes the step response to shift to the right.</li>
     </ul>
   </li>
-  <li>Easiest way to deal with RHP zeroes is to lower controller gain to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.</li>
+  <li>
+    <p>Easiest way to deal with RHP zeroes is to lower controller gain (shift magnitude plot down, thereby shifting x axis intercept to the left) to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable.</p>
+  </li>
+  <li><strong>Dominant Poles</strong> are typically those with the <strong>smallest damping</strong> since the impulse response of poles with larger real parts quickly disappears.</li>
 </ol>
 
 <hr />

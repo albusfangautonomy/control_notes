@@ -43,6 +43,205 @@ phase lag compensators add negative phase to the output, so the output lags behi
 <p>A differentiator circuit introduces a positive phase shift of 90 degrees</p>
 
 <h3 id="phase-lag">Phase Lag</h3>
+<p>Example: Integrator</p>
+
+<hr />
+
+<h2 id="lead-lag-compensator-formulae">Lead Lag Compensator Formulae</h2>
+<p><img src="../figures/lead_lag_compensators.png" alt="Lead Lag compensator formula" /></p>
+
+<hr />
+
+<h2 id="lead-compensator">Lead Compensator</h2>
+
+<h3 id="formula">Formula</h3>
+<p>\(\frac{\omega_p}{\omega_z} * \frac{s+\omega_z}{s+\omega_p}\) or
+\(\frac{s+\omega_z}{\omega_z} * \frac{\omega_p}{s+\omega_p}\)</p>
+
+<ol>
+  <li>1 pole and 1 zero</li>
+  <li><strong>\(\omega_z &lt; \omega_p\)</strong></li>
+</ol>
+
+<h3 id="bode-plot">Bode Plot</h3>
+
+<p><img src="../figures/lead_compensator.png" alt="Lead Compensator Bode Plot" /></p>
+
+<ol>
+  <li>Lead Compensators <em>increases gain at high frequencies</em> <strong>but not as much as a real zero = less noise amplification</strong></li>
+  <li>Lead Compensator adds phase (phase lead) between the corner frequencies \(\omega_z \text{ and } \omega_p\) and nowhere else. By adjusting the corner frequencies, you can move the phase lead around</li>
+</ol>
+
+<h3 id="intuition">Intuition</h3>
+
+<p><img src="../figures/lead_asymptote.png" alt="Lead moves asymptote to the left of root locus" /></p>
+
+<ol>
+  <li>
+    <p>Lead Compensator (phase lead) drags the asymptotes and the closed loop poles to the left, which adds stability.</p>
+
+    <ul>
+      <li>lead compensated system is more stable and have a faster rise time.</li>
+      <li>lead companestor shapes the root locus</li>
+    </ul>
+  </li>
+  <li>
+    <p>Lag Compensator is typically <strong>not</strong> used for dragging asymptopes closer to imaginary axis, but rather for reducing steady state errors.</p>
+
+    <ul>
+      <li>we want to reduce steady state errors without changing the pole locations</li>
+      <li>lag compensator doesn’t shape the root locus plot</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="notes-on-lead-compansators">Notes on Lead Compansators</h3>
+<ol>
+  <li>A lead compensator doesn’t guarantee stability</li>
+  <li>Lead compensator can be tried if PID doesn’t work</li>
+  <li>Faster response means responding to noise</li>
+</ol>
+
+<hr />
+
+<h2 id="lag-compensator">Lag Compensator</h2>
+
+<h3 id="formula-1">Formula</h3>
+<p>\(\frac{\omega_p}{\omega_z} * \frac{s+\omega_z}{s+\omega_p}\) or
+\(\frac{s+\omega_z}{\omega_z} * \frac{\omega_p}{s+\omega_p}\)</p>
+
+<ol>
+  <li>1 poles and 1 zero</li>
+  <li><strong>\(\omega_z &lt; \omega_p\)</strong></li>
+</ol>
+
+<h3 id="lag-compensator-bode-plot">Lag Compensator Bode Plot</h3>
+<p><img src="../figures/lag_compensator.png" alt="Bode plot of Lag Compensator" /></p>
+
+<h3 id="how-does-lag-compensator-reduce-sse">How does Lag compensator reduce SSE</h3>
+
+<p>Lag compensator can only reduce SSE but not eliminate it. To eliminate, change system Type.</p>
+
+<h3 id="lag-compensator-step-response">Lag Compensator Step Response</h3>
+<p><img src="../figures/lag_compensator_step.png" alt="Lag Compensator Step" /></p>
+
+<p>\(E_{ssc}\) is the desired steady state error given by spec.</p>
+
+<p>\(\frac{z}{p}\) is the zero-to-pole ratio and can be calculated. However the exact location needs further analysis</p>
+
+<h3 id="where-should-you-place-the-zero-and-pole-given-zero-to-pole-ratio">Where should you place the zero and pole given zero-to-pole ratio</h3>
+
+<p>A locus exists where the angles add to 180 degrees. We do NOT want to move the dominant pole much with lag compensators. We want to place them in such a way that the angles of the compensator zero and pole cancel each other out.</p>
+
+<ul>
+  <li>
+    <p>If we place the zero and pole to the left of the dominant poles, the difference between the two angles will be significant, which will drag the dominant poles to the right (undesirable behavior).</p>
+  </li>
+  <li>
+    <p>If we place the zero and pole close to the imaginary axis but keep zero-to-pole ratio \(\frac{z}{p}\)</p>
+  </li>
+</ul>
+
+<p><strong>Rule of Thumb</strong></p>
+<ol>
+  <li>Maintain \(\frac{z}{p}\) needed for steady state error</li>
+  <li>Place lag compensator as close to imaginary axis as possible to reduce moving the roots.
+    <ul>
+      <li>Not too close since it’s hard to implement</li>
+      <li>Zero should be \(Z_{lag} = \frac{real(Dominant Pole)}{50}\)</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="lead-lag-compensator">Lead Lag Compensator</h2>
+<p><img src="../figures/lead_lag_bode.png" alt="Lead Lag bode" /></p>
+
+<hr />
+
+<h2 id="designing-a-lead-lag-compensator-with-root-locus">Designing a Lead-Lag compensator with Root Locus</h2>
+
+<h3 id="designing-lead-first">Designing Lead first</h3>
+
+<ol>
+  <li>
+    <p>Decide on desired poles given criteria (making the system appear second order) (e.g. rise time, damping ratio)</p>
+  </li>
+  <li>
+    <p>Place lead zero in a position that minimizes effect on dominant closed loop poles</p>
+
+    <ul>
+      <li>
+        <p>Keep zero left of closed loop poles OR</p>
+      </li>
+      <li>
+        <p>Cancel an existing system pole</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Find where lead pole need to be placed to get desired poles on root locus</p>
+
+    <ul>
+      <li>
+        <p>for a desired pole (either one of the complex conjugate, answers are the same), ignoring its complex conjugate pole in the following formula:
+  \(\Sigma \theta_z - \Sigma \theta_p = -180^\circ\)</p>
+      </li>
+      <li>
+        <p>Use trignometry to figure out \(l\) and \(\theta\), distance between each open loop pole and zero and angle bewteen the line that connects a desired pole to each of the open loop pole or zero and the positive x axis, respectively.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Find what gain (K) this desired pole corresponds to:</p>
+
+    <ul>
+      <li>
+        <p>\(K = \frac{\Pi L_{poles}}{\Pi L_{zeroes}}\), where \(\Pi\) is the multiplication function OR</p>
+      </li>
+      <li>
+\[K = \frac{1}{|GH|}\]
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="designing-lag">Designing Lag</h3>
+
+<ol>
+  <li>Calculate SSE with lead controller using Final Value Theorem and determining the <strong>type</strong> of the system
+    <ul>
+      <li>lag compensator will reduce SSE</li>
+    </ul>
+  </li>
+  <li>Find ratio \(\frac{z}{p}\) from SSE criteria where \(e_{lead\_lag}\) is the desired SSE given by spec.
+    <ul>
+      <li>
+\[\frac{e_{lead}}{e_{lead\_lag}} = \frac{z}{p}\]
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Pick \(P_{lag}\) or \(Z_{lag}\) so it is close to the origin, typically \(Z_{lag}\).</p>
+  </li>
+  <li>Caclulate \(P_{lag}\) given the ratio \(\frac{z}{p}\). Should end up with \(Z_{lag}\) and \(P_{lag}\) very close to each other to have pole-zero cancellation and an almost unchanged root locus plot</li>
+</ol>
+
+<h3 id="dominant-poles-and-system-requirement-constraints">Dominant poles and System Requirement Constraints</h3>
+
+<p>Many system requirements pertaining to transient response (rise time, overshoot, settling time) are only well defined for a second order systems. It is therefore important to determine where the dominant poles should reside to resemble a second order system.</p>
+
+<h3 id="pole-placement">Pole Placement</h3>
+<ol>
+  <li>
+    <p>If the dominant poles are to the <strong>left</strong> of the uncompensated root-locus, then <strong>lead</strong> must be added to the system.</p>
+  </li>
+  <li>
+    <p>If the dominant poles are to the <strong>right</strong> of the uncompensated root-locus, then <strong>lag</strong> must be added to the system.</p>
+  </li>
+</ol>
+
 
 </body>
 </html>

@@ -175,6 +175,8 @@ The actual system dynamics can rotate the curve (Phase) or shift it left to make
 
 This takes into account of model uncertainty in P.
 
+---
+
 ### Causes of Non-Robustness and Unstability
 1. model uncertainty. The real system gain is smaller or bigger than the model
 2. **Time delays.**
