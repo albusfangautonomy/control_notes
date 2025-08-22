@@ -358,7 +358,7 @@
   },"51": {
     "doc": "Control Notes",
     "title": "📚 Core Topics",
-    "content": ". | Useful Tips Important Intuitions for designing control systems . | Overview A comparison between Open Loop control and Closed Loop control, and categorizing controllers . | Design Workflow Typical design requirements and design actions . | Plot Reviews Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot . | Performance Specifications Rise time, settling time, overshoot, Steady-State Error (error constants, system type, examples). | Stability Analysis Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights. | Sensor Fusion Common Sensor Fusion algorithms . | PID Control Overview of Proportional-Integral-Derivative control, tuning methods, use cases. | Lead, Lag, and Lead-Lag Compensators Frequency domain intuition, Bode plot effects, stability and performance improvement. | Root Locus Analysis Pole-zero placement and visualizing the impact of controller design. | Optimal Pole Placement in Linear Systems Introduces LQR and pole placement. | LQE Linear quadratic Estimator and Observability. | Controllability and Reachability Illustrates the equivalence between controllability and reachability. | Frequency Analysis and Fourier Transform How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots. | Sensitivity, Robustness, and Robust Control Sensitive, complimentary Sensitivity, and robust control techniques . | Discrete-Time Control Z-transform, digital implementation of controllers, sampling effects. | Model Predictive Control (MPC) Optimization-based control for constrained systems (intro-level overview). | SVD . | Data Driven Control Advanced control topics for Machine Learning based control . | . ",
+    "content": ". | Useful Tips Important Intuitions for designing control systems . | Overview A comparison between Open Loop control and Closed Loop control, and categorizing controllers . | Design Workflow Typical design requirements and design actions . | Plot Reviews Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot . | Performance Specifications Rise time, settling time, overshoot, Steady-State Error (error constants, system type, examples). | Stability Analysis Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights. | Sensor Fusion Common Sensor Fusion algorithms . | PID Control Overview of Proportional-Integral-Derivative control, tuning methods, use cases. | Lead, Lag, and Lead-Lag Compensators Frequency domain intuition, Bode plot effects, stability and performance improvement. | Root Locus Analysis Pole-zero placement and visualizing the impact of controller design. | Optimal Pole Placement in Linear Systems Introduces LQR and pole placement. | State Observers Linear quadratic Estimator and Observability. | Controllability and Reachability Illustrates the equivalence between controllability and reachability. | Frequency Analysis and Fourier Transform How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots. | Sensitivity, Robustness, and Robust Control Sensitive, complimentary Sensitivity, and robust control techniques . | Discrete-Time Control Z-transform, digital implementation of controllers, sampling effects. | Model Predictive Control (MPC) Optimization-based control for constrained systems (intro-level overview). | SVD . | Data Driven Control Advanced control topics for Machine Learning based control . | . ",
     "url": "/control_notes/#-core-topics",
     
     "relUrl": "/#-core-topics"
@@ -799,228 +799,256 @@
   },"114": {
     "doc": "Stability Analysis",
     "title": "Tracking Multiple Remote Objects",
-    "content": " ",
+    "content": ". Challenges of multi-object tracking . Date Association Problem . | Uncertainty in observations and predictions play a major role in the challenges. | Objects can be close enough to accurately attribute a measurement to an object. | Uncertainty can be great enough that a measurement can be of more than one object. | . Track Maintanence Problem . | The number of objects being tracked is not fixed. | Sometimes tracks need to be created or removed (stop tracking when plane lands). | False positive or missed detection measurements | . Diagram Breakdown . | Observations . | Measured Quantities: range, range rate, line of sight | Measured Attributes: target type, ID number, object shape | . | Assignment: Matching an Observation to a Tracked Object . | Mahalanobis distance: the closest probability distance (normalized by stadard deviation) | Joint Probabilistic Data Association (JPDA): does not commit to a single observation and assgin one object to one track but instead make a weighted combinations of all neighboring observations (closer ones have bigger weight) | . | Track Maintenance (deleting and creating track) . | Delete a track if not detected at least P times in R updates with R and P tunable. | Create a track: tentative track an observation not assigned to an object. Confirm trakc if object has been detected M times in N updates. | . | Estimation Filters . | Each filter runs. Fused measured state \\(\\hat{x}\\) and fused covariance \\(\\bar{P}\\) are captured. | . | Gating . | Screens all detections to detect which detections are feasible to look at for assignment. | Ignores detections outside of a region, also called “gate”. | . | . ",
     "url": "/control_notes/notes/senser_fusion.html#tracking-multiple-remote-objects",
     
     "relUrl": "/notes/senser_fusion.html#tracking-multiple-remote-objects"
   },"115": {
+    "doc": "Stability Analysis",
+    "title": "Track Level Fusion",
+    "content": "Central-level tracking vs Sensor-level Tracking and Track Level Fusion . source tracks provide their own track with distribution. The track fuser determines if these are the same object or different objects . sensor level tracking: . ",
+    "url": "/control_notes/notes/senser_fusion.html#track-level-fusion",
+    
+    "relUrl": "/notes/senser_fusion.html#track-level-fusion"
+  },"116": {
+    "doc": "Stability Analysis",
+    "title": "Advantages and Challenges of Track Level Fusion",
+    "content": "Advantages . | Access to data . | TLF is necessary if you don’t have access to raw sensor data. For instance, a Lidar sensor that doesn’t return point cloud but instead the tracks. No track level data available | . | Bandwidth . | Transmitting data from sensors in real time to computing centers that runs tracking. | Track level fusion data is smaller than raw sensor data. | . | Compute . | Local computer can pre-process data to reduce processing time. | . | Specialize . | TLF allows sensor level trackers to be specialized to the particular sensor type. | Since these trackers need motion and sensor models. Track maintenance needs to be tuned. | . | . Challengs of TLF . | Reduced Accuracy . | Track distills sensor raw data to a lot less info. We may remove useful info. | . | Correlated noise . | If tracks are correlated, then we can’t multiply the probabilities like Kalman. | . | . ",
+    "url": "/control_notes/notes/senser_fusion.html#advantages-and-challenges-of-track-level-fusion",
+    
+    "relUrl": "/notes/senser_fusion.html#advantages-and-challenges-of-track-level-fusion"
+  },"117": {
+    "doc": "Stability Analysis",
+    "title": "Appendix",
+    "content": " ",
+    "url": "/control_notes/notes/senser_fusion.html#appendix",
+    
+    "relUrl": "/notes/senser_fusion.html#appendix"
+  },"118": {
+    "doc": "Stability Analysis",
+    "title": "IMM walkthrough",
+    "content": "Interacting Multiple Model (IMM): One Cycle . | Model-conditioned reinitialization (mixing), for each model \\( m_i \\in \\mathcal{M} \\) . | Predicted model probability \\[ \\mu_{k|k-1}^{(i)} = \\sum_{j} \\pi_{ji}\\,\\mu_{k-1}^{(j)} \\] | Mixing probabilities (previous model \\(j\\) given current \\(i\\)) \\[ \\mu_{k-1}^{j|i} = \\frac{\\pi_{ji}\\,\\mu_{k-1}^{(j)}}{\\mu_{k|k-1}^{(i)}} \\] | Mixed initial state \\[ \\bar{x}_{k-1|k-1}^{(i)} = \\sum_{j} \\hat{x}_{k-1|k-1}^{(j)} \\,\\mu_{k-1}^{j|i} \\] | Mixed initial covariance \\[ \\bar{P}_{k-1|k-1}^{(i)} = \\sum_{j}\\Big( P_{k-1|k-1}^{(j)} + (\\bar{x}_{k-1|k-1}^{(i)}-\\hat{x}_{k-1|k-1}^{(j)}) (\\bar{x}_{k-1|k-1}^{(i)}-\\hat{x}_{k-1|k-1}^{(j)})^\\top \\Big)\\,\\mu_{k-1}^{j|i} \\] | . | Model-conditioned filtering (per model) . | Prediction \\[ \\hat{x}_{k|k-1}^{(i)} = F_{k-1}^{(i)}\\,\\bar{x}_{k-1|k-1}^{(i)},\\qquad P_{k|k-1}^{(i)} = F_{k-1}^{(i)}\\,\\bar{P}_{k-1|k-1}^{(i)}\\,(F_{k-1}^{(i)})^\\top + Q_{k-1}^{(i)} \\] | Update \\[ \\tilde{z}_{k}^{(i)} = z_k - H_{k}^{(i)} \\hat{x}_{k|k-1}^{(i)},\\qquad S_{k}^{(i)} = H_{k}^{(i)} P_{k|k-1}^{(i)} (H_{k}^{(i)})^\\top + R_{k}^{(i)} \\] \\[ K_{k}^{(i)} = P_{k|k-1}^{(i)} (H_{k}^{(i)})^\\top (S_{k}^{(i)})^{-1} \\] \\[ \\hat{x}_{k|k}^{(i)} = \\hat{x}_{k|k-1}^{(i)} + K_{k}^{(i)} \\tilde{z}_{k}^{(i)},\\qquad P_{k|k}^{(i)} = P_{k|k-1}^{(i)} - K_{k}^{(i)} S_{k}^{(i)} (K_{k}^{(i)})^\\top \\] | . | Model probability update (per model) . | Likelihood \\[ L_{k}^{(i)} = \\mathcal{N}\\!\\big(\\tilde{z}_{k}^{(i)};\\; 0,\\; S_{k}^{(i)}\\big) \\] | Bayesian update \\[ \\mu_{k}^{(i)} = \\frac{\\mu_{k|k-1}^{(i)}\\, L_{k}^{(i)}}{\\sum_{j} \\mu_{k|k-1}^{(j)}\\, L_{k}^{(j)}} \\] | . | Estimate fusion . \\[ \\hat{x}_{k|k} = \\sum_{i} \\hat{x}_{k|k}^{(i)} \\,\\mu_{k}^{(i)} \\] \\[ P_{k|k} = \\sum_{i}\\Big( P_{k|k}^{(i)} + (\\hat{x}_{k|k}-\\hat{x}_{k|k}^{(i)})(\\hat{x}_{k|k}-\\hat{x}_{k|k}^{(i)})^\\top \\Big)\\,\\mu_{k}^{(i)} \\] | . Symbol notes . | \\(\\pi_{ji}\\): probability of switching from model \\(j\\) to model \\(i\\) | \\(\\mu_{k}^{(i)}\\): probability model \\(i\\) is correct at time \\(k\\) | \\(\\hat{x}, P\\): state mean and covariance; bars \\((\\bar{\\cdot})\\) denote mixed (pre-prediction) quantities | \\(F^{(i)}, Q^{(i)}\\): dynamics and process noise for model \\(i\\) | \\(H^{(i)}, R^{(i)}\\): measurement model and noise for model \\(i\\) | \\(\\tilde{z}\\): measurement residual; \\(S\\): residual covariance; \\(K\\): Kalman gain | . ",
+    "url": "/control_notes/notes/senser_fusion.html#imm-walkthrough",
+    
+    "relUrl": "/notes/senser_fusion.html#imm-walkthrough"
+  },"119": {
     "doc": "Stability Analysis",
     "title": "Stability Analysis",
     "content": " ",
     "url": "/control_notes/notes/senser_fusion.html",
     
     "relUrl": "/notes/senser_fusion.html"
-  },"116": {
+  },"120": {
     "doc": "Stability Analysis",
     "title": "Stability Analysis",
     "content": " ",
     "url": "/control_notes/notes/stability.html",
     
     "relUrl": "/notes/stability.html"
-  },"117": {
+  },"121": {
     "doc": "Stability Analysis",
     "title": "Stability Margins - Gain and Phase Margins",
     "content": "In simple terms, Gain and Phase margins are the safe net and the extra that protects us from instability. less margin = less stable . Note: Gain crossover frequency is used to caluclate Phase Margin. Phase crossover frequency is used to caculate Gain Margin. The Gain and PhaseMargins are defined with respect to open-loop transfer function, but the margins are not intrinsic properties of the open-loop system alone, and are only meaningful for the corresponding closed-loop system. Gain Margin . The gain margin (GM) is defined at the phase crossover frequency \\(\\omega_{pc} \\text{ where } \\angle L(j\\omega_{pc}) = -180^\\circ\\): . \\[GM = \\frac{1}{|L(j\\omega_{pc})|}\\] In decibels (dB): . \\[GM_{\\text{dB}} = -20 \\log_{10} |L(j\\omega_{pc})|\\] If there are multiple Phase crossover frequencies \\(\\omega_{pc}\\), use the most conservative Gain Margin. Phase Margin . The phase margin (PM) is defined at the gain crossover frequency \\(\\omega_{gc}\\) where \\(|L(j\\omega_{gc})| = 1\\): . \\[PM = 180^\\circ + \\angle L(j\\omega_{gc})\\] Margins and Sensitivity . Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak. ",
     "url": "/control_notes/notes/stability.html#stability-margins---gain-and-phase-margins",
     
     "relUrl": "/notes/stability.html#stability-margins---gain-and-phase-margins"
-  },"118": {
+  },"122": {
     "doc": "Stability Analysis",
     "title": "Closed Loop Stability",
     "content": "In a non-unity feedback system whose feedback transfer function is \\(H(s)\\), the closed loop transfer function is \\(\\frac{G(s)}{1+GH}\\). We can study the stability of the closed loop transfer function by identifying the zeros of \\(1+GH\\). Adding 1 to the Nyquist plot of the open loop transfer function shift the plot to the right by 1 . ",
     "url": "/control_notes/notes/stability.html#closed-loop-stability",
     
     "relUrl": "/notes/stability.html#closed-loop-stability"
-  },"119": {
+  },"123": {
     "doc": "Stability Analysis",
     "title": "Nyquist Criterion — Bode/Nyquist Terms (Unity Feedback)",
     "content": "Setup. Let the open-loop transfer be \\(G(s)\\) for a unity-feedback loop with closed-loop characteristic \\(1+G(s)=0\\). Let: . | \\(P\\) = number of open-loop poles of \\(G(s)\\) in the right-half plane (RHP), | \\(N\\) = number of clockwise encirclements of the Nyquist critical point \\(-1+0j\\) by the Nyquist plot of \\(G(j\\omega)\\) (standard Nyquist contour), | \\(Z\\) = number of closed-loop poles in the RHP. | . General Nyquist criterion. \\(Z = N + P.\\) The closed loop is stable iff \\(Z=0\\). Equivalently, the Nyquist plot must encircle \\(-1\\) clockwise exactly \\(N=-P\\) times. Common special case (open-loop stable, i.e., \\(P=0\\)). If \\(G(s)\\) has no RHP poles and no poles on the \\(j\\omega\\)-axis (aside from allowable integrators handled with the modified contour), then: . | Closed loop is stable iff the Nyquist plot of \\(G(j\\omega)\\) does not encircle \\(-1+0j\\) (i.e., \\(N=0 \\Rightarrow Z=0\\)). | . Bode-plot restatements (margins) . Let \\(\\omega_{gc}\\) be a gain-crossover frequency where \\(|G(j\\omega_{gc})|=1\\), and let \\(\\omega_{pc}\\) be a phase-crossover frequency where \\(\\angle G(j\\omega_{pc})=-180^\\circ\\). | Phase margin condition (at gain crossover): \\(|G(j\\omega_{gc})|=1 \\quad \\Rightarrow \\quad \\angle G(j\\omega_{gc}) &gt; -180^\\circ\\) (positive phase margin). This ensures the Nyquist plot does not cross the real axis at or left of \\(-1\\). | Gain margin condition (at phase crossover): \\(\\angle G(j\\omega_{pc})=-180^\\circ \\quad \\Rightarrow \\quad |G(j\\omega_{pc})| &lt; 1\\) (positive gain margin). This keeps the Nyquist locus inside the unit circle when it is at \\(-180^\\circ\\), avoiding the point \\(-1\\). | . If both conditions hold for all relevant crossovers and \\(P=0\\), the loop has positive stability margins and the closed loop is stable. Notes/Caveats . | If \\(P&gt;0\\) (open-loop unstable), you must have exactly \\(N=-P\\) clockwise encirclements of \\(-1\\). Simple “margin checks” at crossovers are insufficient without accounting for \\(P\\). | Poles on the imaginary axis (e.g., pure integrators) require the standard indentation in the Nyquist contour; apply the modified criterion accordingly. | The above statements presume unity feedback; for non-unity feedback, apply the criterion to the appropriate open-loop function that multiplies the feedback path. | . ",
     "url": "/control_notes/notes/stability.html#nyquist-criterion--bodenyquist-terms-unity-feedback",
     
     "relUrl": "/notes/stability.html#nyquist-criterion--bodenyquist-terms-unity-feedback"
-  },"120": {
+  },"124": {
     "doc": "State Space Representation",
     "title": "State Space Representation",
     "content": "Coming soon… . ",
     "url": "/control_notes/notes/state-space.html",
     
     "relUrl": "/notes/state-space.html"
-  },"121": {
+  },"125": {
     "doc": "State Estimation",
     "title": "State Estimation",
     "content": " ",
     "url": "/control_notes/notes/state_estim.html",
     
     "relUrl": "/notes/state_estim.html"
-  },"122": {
+  },"126": {
     "doc": "State Estimation",
     "title": "Measurement Model",
     "content": "\\(\\dot{x}=Ax+Bu, y=Cx, x\\in\\mathbb{R^n}, y \\in\\mathbb{R^p}\\) . ",
     "url": "/control_notes/notes/state_estim.html#measurement-model",
     
     "relUrl": "/notes/state_estim.html#measurement-model"
-  },"123": {
+  },"127": {
     "doc": "State Estimation",
     "title": "Observability",
     "content": "In simple terms, observability is if any state in x can be reproduced and deduced from measurements y(t) . ",
     "url": "/control_notes/notes/state_estim.html#observability",
     
     "relUrl": "/notes/state_estim.html#observability"
-  },"124": {
+  },"128": {
     "doc": "State Estimation",
     "title": "Observability Matrix",
     "content": "\\(\\mathbb{O} = \\begin{bmatrix} C \\\\ CA \\\\ CA^2 \\\\ \\vdots \\\\ CA^{n-1} \\end{bmatrix}\\) This is a tall matrix and therefore its rank is the column rank. Note that the C matrices are measurement matrices, not controllability matrices. | The system is observable if rank(O)=n. | The full state x can be estimated from y. | Degrees of Observability can be calculated from the Observability Gramian and the SVD | . ",
     "url": "/control_notes/notes/state_estim.html#observability-matrix",
     
     "relUrl": "/notes/state_estim.html#observability-matrix"
-  },"125": {
+  },"129": {
     "doc": "State Estimation",
     "title": "Kalman Filter (Linear Quadratic Estimator)",
     "content": "Notes . | Both Kalman Filter and LQR solve an algebraic Riccati Equation, yielding a closed-form solution | The algebraic Riccati Equation for Kalman filter is very similar to that of LQR. | Kalman filter gain (\\(K_{k}\\)) is derived by minimizing the estimate coveriance matrix \\(P_{k}\\) | . Kalman is a Full State Estimator that measures full state $x(t)$ given the knowledge of the measurement \\(y(t)\\) and control input \\(u(t)\\). The eigenvalues of the Kalman filter signifies how fast estimates converge to the true state. Pole placement can be performed on Kalman to find the optimal eigenvalues. More aggressive poles means Kalman will be more susceptible to external noise. Kalman Cost Function . \\(J= \\mathbb{E}[(x-\\hat{x})^T(x-\\hat{x})]\\) . Measurement Noise . \\(\\epsilon = x - \\hat{x} \\\\ \\dot{\\epsilon}=(A-KC) \\epsilon + w_{d} - Kw_{n}\\), where K is the Kalman gain and C is the measurement matrix, W_{d} is the process noise from system dynamics and w_{n} is the sensor noise . Two Major noises . | Model Noise \\(w_{d}\\) | Measurement Noise \\(w_{n}\\) if one is high, trust the other more. | . ",
     "url": "/control_notes/notes/state_estim.html#kalman-filter-linear-quadratic-estimator",
     
     "relUrl": "/notes/state_estim.html#kalman-filter-linear-quadratic-estimator"
-  },"126": {
+  },"130": {
     "doc": "SVD",
     "title": "Intuitive Interpretations",
     "content": " ",
     "url": "/control_notes/notes/svd.html#intuitive-interpretations",
     
     "relUrl": "/notes/svd.html#intuitive-interpretations"
-  },"127": {
+  },"131": {
     "doc": "SVD",
     "title": "Rotation, coordinate scaling, and reflection",
     "content": " ",
     "url": "/control_notes/notes/svd.html#rotation-coordinate-scaling-and-reflection",
     
     "relUrl": "/notes/svd.html#rotation-coordinate-scaling-and-reflection"
-  },"128": {
+  },"132": {
     "doc": "SVD",
     "title": "🎯 SVD Geometry Summary",
     "content": "For a real matrix M, the Singular Value Decomposition is: . \\[\\mathbf{M} = \\mathbf{U} \\boldsymbol{\\Sigma} \\mathbf{V}^*\\] 🔷 Square Matrix Case: \\(\\mathbf{M} \\in \\mathbb{R}^{m \\times m}\\) . | U and V* are real orthogonal matrices (rotations/reflections) | Σ scales each coordinate by singular values \\(\\sigma_i\\) | Geometrically: rotation/reflection → scaling → rotation/reflection | . 🔸 Determinant Interpretation . | \\(\\det(\\mathbf{M}) &gt; 0\\): U and \\(V^*\\) are both rotations or both reflections | \\(\\det(\\mathbf{M}) &lt; 0\\): One of U or \\(V^*\\) must involve reflection | \\(\\det(\\mathbf{M}) = 0\\): U and \\(V^*\\) can independently be rotations or reflections | . 🔷 Rectangular Matrix Case: $\\mathbf{M} \\in \\mathbb{R}^{m \\times n}$ . | M maps \\(\\mathbb{R}^n \\to \\mathbb{R}^m\\) | U and V* act on $\\mathbb{R}^m$ and $\\mathbb{R}^n$ respectively | Σ: . | Scales the first $\\min(m, n)$ coordinates | Extends (pads) or truncates vector dimensions appropriately | . | . This decomposition reveals how any linear transformation can be interpreted geometrically using rotations/reflections and scaling. ",
     "url": "/control_notes/notes/svd.html#-svd-geometry-summary",
     
     "relUrl": "/notes/svd.html#-svd-geometry-summary"
-  },"129": {
+  },"133": {
     "doc": "SVD",
     "title": "SVD",
     "content": "SVD works on any matrix . ",
     "url": "/control_notes/notes/svd.html",
     
     "relUrl": "/notes/svd.html"
-  },"130": {
+  },"134": {
     "doc": "Tips",
     "title": "Stability Tips",
     "content": ". | The Gain and Phase Margins are defined with respect to open-loop transfer function, but the margins are not intrinsic properties of the open-loop system alone, and are only meaningful for the corresponding closed-loop system. | Margins are local properties measured at specific crossover points. It is very possible for a higher-order system to have multiple crossover frequencies and therefore multiple Stability Margins. Conservative Rule the smallest (worst-case) margin dictates stability. | . ",
     "url": "/control_notes/notes/tips.html#stability-tips",
     
     "relUrl": "/notes/tips.html#stability-tips"
-  },"131": {
+  },"135": {
     "doc": "Tips",
     "title": "Bode, Nyquist, Nichols, Root Locus Tips",
     "content": ". | Nyquist plot is primarily for analysing open-loop system graph to determine closed loop stability - hence the -1 point . | The root locus method, the poles and zeroes you start with are those of the open-loop transfer function. | The root locus then shows how the closed-loop poles move in the s-plane as the gain K varies | The plotted pole/zero markers themselves are always the open-loop ones. | . | When designing a controller, Bode plot you work with is almost always for the open-loop transfer function \\(G(s)H(s)\\) . | . ",
     "url": "/control_notes/notes/tips.html#bode-nyquist-nichols-root-locus-tips",
     
     "relUrl": "/notes/tips.html#bode-nyquist-nichols-root-locus-tips"
-  },"132": {
+  },"136": {
     "doc": "Tips",
     "title": "Bode plot tips",
     "content": ". | Peaks in Bode plots impact closed-loop stability . | Phase Margin reduction: At the peak, the phase often drops sharply, since the system oscillates more and delays response. If the peak is near the gain crossover frequency, this can push the phase margin down, making the closed-loop system more oscillatory or unstable. | Lower gain margin: If the peak height is close to or above 0 dB, it takes less additional loop gain to cross into instability. | Poor disturbance rejection: Peaks mean the system will amplify disturbances at those frequencies in closed-loop. | High overshoot / ringing: . | . | . ",
     "url": "/control_notes/notes/tips.html#bode-plot-tips",
     
     "relUrl": "/notes/tips.html#bode-plot-tips"
-  },"133": {
+  },"137": {
     "doc": "Tips",
     "title": "Nyquist Plot tips",
     "content": ". | Nyquist plots are plotted in polar coordinates, in contrast to Bode and Nichols. | Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower. | . ",
     "url": "/control_notes/notes/tips.html#nyquist-plot-tips",
     
     "relUrl": "/notes/tips.html#nyquist-plot-tips"
-  },"134": {
+  },"138": {
     "doc": "Tips",
     "title": "Root Locus Tips",
     "content": ". | Use lead compansator to drag your asymptotes further to the left, increasing stability and transient response. | Asymptotes are important because they’re the trajectories of closed-loop poles. | . | Never use lag compensator for shaping, only for SSE requirements. Rule of thumb is to place the zero of the lag compensator to be 50 times less than the real part of the dominant pole. | . ",
     "url": "/control_notes/notes/tips.html#root-locus-tips",
     
     "relUrl": "/notes/tips.html#root-locus-tips"
-  },"135": {
+  },"139": {
     "doc": "Tips",
     "title": "Controllability and Observability Tips",
     "content": ". | Unstable systems are not always uncontrollable. If unstable modes are controllable, then the system is stabilizable. | Degrees of controllability can be determined from the Controllability Gramian or the SVD of the controllability matrix. | Controllability = Reachability. | Degrees of Observability can be determined from the Observability Gramian or the SVD of the observability matrix. | . ",
     "url": "/control_notes/notes/tips.html#controllability-and-observability-tips",
     
     "relUrl": "/notes/tips.html#controllability-and-observability-tips"
-  },"136": {
+  },"140": {
     "doc": "Tips",
     "title": "Transfer Function and Frequency Analysis tips",
     "content": ". | For an LTI system, the transfer function G(s) is the Laplace transform of the impulse response . | It can be derived either by equations or Testing with impulse response | . | The peaks at resonance on bode plots are caused by the presence of lightly damped poles. A higher order bode plot can have multiple peaks since the system may have multiple lightly damped poles. | The presence of RHP zeroes make the system non-minimum phase by introducing a non-causal phase lag, which means the transient response w goes in the wrong direction first. | Each RHP zero cause the system to switch directions. | . | Bode plot shows the steady state response only (evaluating at \\(s=j\\omega\\)). Transient response can only be investigated in time-domain since it is a time baseed phenomenon. | Avoid \\(|L(s)| = 0 dB, \\angle L(s) = -180^\\circ, \\text{ where } |L(s)| \\text{ is the open-loop transfer function}\\). This is the boundary of stability. At this point gain = -1 (magnitude = 1, phase = \\(-180^\\circ\\)), which causes denominator of closed loop transfer function to be 0. | Non-miminum phase can be primarily caused by three phenomena: 1. Time delay \\(e^{-sT}\\) 2. RHP zeroes 3. Non-causal/Inverse-unstable Dynamics (Non-causal systems depend on input in the future). | Only RHP zeroes can cause step response of the system to go in the wrong direction first. Time delay only causes the step response to shift to the right. | . | Easiest way to deal with RHP zeroes is to lower controller gain (shift magnitude plot down, thereby shifting x axis intercept to the left) to maintain stability and increase phase margin. Allocating a pole to cancel out RHP zero at the plant is risky since the output of the controller can be unbounded even if output of the plant (ie entire system) is stable. | Dominant Poles are typically those with the smallest damping since the impulse response of poles with larger real parts quickly disappears. | . ",
     "url": "/control_notes/notes/tips.html#transfer-function-and-frequency-analysis-tips",
     
     "relUrl": "/notes/tips.html#transfer-function-and-frequency-analysis-tips"
-  },"137": {
+  },"141": {
     "doc": "Tips",
     "title": "LQG and Extended Kalman Tips",
     "content": ". | An LQG controller does not have any guarantee on robustness. | LQR and LQR solves an Algebraic Riccati Equation to calculate an analytical solution to the problem given Q and R. | If the system is observable, LQE can deduce all states from a few measurable states. Degrees of observability would be helpful when desining an observer. | . ",
     "url": "/control_notes/notes/tips.html#lqg-and-extended-kalman-tips",
     
     "relUrl": "/notes/tips.html#lqg-and-extended-kalman-tips"
-  },"138": {
+  },"142": {
     "doc": "Tips",
     "title": "Sensitivity and Complementary Sensitivity Tips",
     "content": ". | Sensitivity plots also have peaks at gain crossover frequencies. These peaks occur where the Open Loop Transfer Function \\(L(s)\\) is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to \\(-180^\\circ\\)). | Complementary sensitivity plots have bumps at open-loop resonance frequencies. | . | Gain Crossover frequency is defined as the frequency \\(\\omega_{gc}\\) at which \\(|L(j\\omega)|=1\\) . | Time delay and Non-minimum phase place a fundamental limit on how small \\(max(|S|)\\) can be! This is a hard rule that needs to be satisfied. One can shift \\(\\omega_{gc}\\) to the left, which means the system can only track low frequency references and reject lower frequency disturbances. | Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak. | . ",
     "url": "/control_notes/notes/tips.html#sensitivity-and-complementary-sensitivity-tips",
     
     "relUrl": "/notes/tips.html#sensitivity-and-complementary-sensitivity-tips"
-  },"139": {
+  },"143": {
     "doc": "Tips",
     "title": "Loop shaping Tips",
     "content": ". | Loop shaping is a technique that tries to shape the Open Loop Transfer Function \\(L(s)\\), according to the desired shape - an integrator. The Transfer Function on the bode plot can be shifted left or right by multiplying \\(L(s)\\) with \\(\\omega_{s}\\) to change the gain at low and high frequencies. | . ",
     "url": "/control_notes/notes/tips.html#loop-shaping-tips",
     
     "relUrl": "/notes/tips.html#loop-shaping-tips"
-  },"140": {
+  },"144": {
     "doc": "Tips",
     "title": "Tips",
     "content": " ",
     "url": "/control_notes/notes/tips.html",
     
     "relUrl": "/notes/tips.html"
-  },"141": {
+  },"145": {
     "doc": "Control Tools",
     "title": "Control Using Simulink &amp; Python",
     "content": "Coming soon… . ",
     "url": "/control_notes/notes/tools.html#control-using-simulink--python",
     
     "relUrl": "/notes/tools.html#control-using-simulink--python"
-  },"142": {
+  },"146": {
     "doc": "Control Tools",
     "title": "Control Tools",
     "content": " ",
     "url": "/control_notes/notes/tools.html",
     
     "relUrl": "/notes/tools.html"
-  },"143": {
+  },"147": {
     "doc": "Control System Design Workflow",
     "title": "Control System Specs → Design Actions Cheat Sheet",
     "content": "| Requirement / Spec | What It Means | Design Adjustments | . | Steady-State Error (Ess) | Final tracking error to step/ramp inputs | Increase system type (add integrator), adjust Ki in PID, or use lag compensator | . | Rise Time (tr) | Speed to reach near-final value | Increase system bandwidth, add lead compensator, increase Kp | . | Overshoot (Mp) | How much output exceeds target | Increase damping ratio (reduce Kp, increase Kd), use lead-lag tuning | . | Settling Time (ts) | Time to stay within ±X% band | Increase natural frequency, increase damping via derivative gain or lead compensation | . | Damping Ratio (ζ) | Oscillation level in transient | Adjust Kd or use lead to increase phase margin | . | Gain Margin (GM) | How much gain can increase before instability | Add phase lead, reduce open-loop gain | . | Phase Margin (PM) | Extra phase lag before instability | Add phase lead, adjust crossover frequency | . | Bandwidth | Frequency range of good tracking | Increase gain/lead for faster response, but watch noise | . | Disturbance Rejection | Suppress low/high frequency disturbances | Add integrator for low-freq rejection, notch filters for specific frequencies | . | Noise Sensitivity | Avoid amplifying sensor noise | Reduce bandwidth, use low-pass filter on derivative term | . | Control Effort Limit | Actuator magnitude/rate constraints | Add rate limiter, reduce aggressive gains, use anti-windup | . ",
     "url": "/control_notes/notes/workflow.html#control-system-specs--design-actions-cheat-sheet",
     
     "relUrl": "/notes/workflow.html#control-system-specs--design-actions-cheat-sheet"
-  },"144": {
+  },"148": {
     "doc": "Control System Design Workflow",
     "title": "Quick Tuning Tips",
     "content": ". | Too slow? → Increase Kp, add lead, raise bandwidth. | Too oscillatory? → Increase damping (Kd), reduce Kp, add lag. | Steady-state error too high? → Add integrator (Ki) or lag compensation. | Noisy response? → Lower bandwidth, filter derivative term. | . ",
     "url": "/control_notes/notes/workflow.html#quick-tuning-tips",
     
     "relUrl": "/notes/workflow.html#quick-tuning-tips"
-  },"145": {
+  },"149": {
     "doc": "Control System Design Workflow",
     "title": "Quick Tuning Tips",
     "content": ". | Too slow? → Increase Kp, add lead, raise bandwidth. | Too oscillatory? → Increase damping (Kd), reduce Kp, add lag. | Steady-state error too high? → Add integrator (Ki) or lag compensation. | Noisy response? → Lower bandwidth, filter derivative term. | . ",
     "url": "/control_notes/notes/workflow.html#quick-tuning-tips-1",
     
     "relUrl": "/notes/workflow.html#quick-tuning-tips-1"
-  },"146": {
+  },"150": {
     "doc": "Control System Design Workflow",
     "title": "Control System Design Workflow",
     "content": " ",

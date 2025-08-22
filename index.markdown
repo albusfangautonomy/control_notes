@@ -44,7 +44,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Optimal Pole Placement in Linear Systems](./notes/pole_placement) \\
   Introduces LQR and pole placement.
 
-- [LQE](./notes/state_estim.html)   
+- [State Observers](./notes/state_estim.html)   
   Linear quadratic Estimator and Observability.
 
 - [Controllability and Reachability](./notes/controllability.html)   \\

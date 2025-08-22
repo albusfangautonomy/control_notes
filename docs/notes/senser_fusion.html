@@ -181,5 +181,259 @@ If GPS reading needs to be accurate and fast velocity constantly changing, addin
 
 <h2 id="tracking-multiple-remote-objects">Tracking Multiple Remote Objects</h2>
 
+<p><img src="../figures/multi_object_tracking.png" alt="Multi-Object Tracking" /></p>
+
+<h3 id="challenges-of-multi-object-tracking">Challenges of multi-object tracking</h3>
+
+<p>Date Association Problem</p>
+<ol>
+  <li>Uncertainty in observations and predictions play a major role in the challenges.</li>
+  <li>Objects can be close enough to accurately attribute a measurement to an object.</li>
+  <li>Uncertainty can be great enough that a measurement can be of more than one object.</li>
+</ol>
+
+<p>Track Maintanence Problem</p>
+<ol>
+  <li>The number of objects being tracked is not fixed.</li>
+  <li>Sometimes tracks need to be created or removed (stop tracking when plane lands).</li>
+  <li>False positive or missed detection measurements</li>
+</ol>
+
+<h3 id="diagram-breakdown">Diagram Breakdown</h3>
+<ol>
+  <li>
+    <p>Observations</p>
+
+    <ul>
+      <li>Measured Quantities: range, range rate, line of sight</li>
+      <li>Measured Attributes: target type, ID number, object shape</li>
+    </ul>
+  </li>
+  <li>
+    <p>Assignment: Matching an Observation to a Tracked Object</p>
+
+    <ul>
+      <li>Mahalanobis distance: the closest probability distance (normalized by stadard deviation)</li>
+      <li>Joint Probabilistic Data Association (JPDA): does not commit to a single observation and assgin one object to one track but instead make a weighted combinations of all neighboring observations (closer ones have bigger weight)</li>
+    </ul>
+
+    <p><img src="../figures/jpda.png" alt="jpda" /></p>
+  </li>
+  <li>
+    <p>Track Maintenance (deleting and creating track)</p>
+
+    <ul>
+      <li>Delete a track if not detected at least P times in R updates with R and P tunable.</li>
+      <li>Create a track: tentative track an observation not assigned to an object. Confirm trakc if object has been detected M times in N updates.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Estimation Filters</p>
+
+    <ul>
+      <li>Each filter runs. Fused measured state \(\hat{x}\) and fused covariance \(\bar{P}\) are captured.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Gating</p>
+
+    <ul>
+      <li>Screens all detections to detect which detections are feasible to look at for assignment.</li>
+      <li>Ignores detections outside of a region, also called “gate”.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="track-level-fusion">Track Level Fusion</h1>
+
+<p>Central-level tracking vs Sensor-level Tracking and Track Level Fusion</p>
+
+<p><img src="../figures/central_vs_sensor_level.png" alt="central vs sensor level tracking" /></p>
+
+<p>source tracks provide their own track with distribution. The track fuser determines if these are the same object or different objects</p>
+
+<p>sensor level tracking:</p>
+
+<p><img src="../figures/sensor_level_tracking.png" alt="sensor level tracking" /></p>
+
+<h2 id="advantages-and-challenges-of-track-level-fusion">Advantages and Challenges of Track Level Fusion</h2>
+
+<h3 id="advantages">Advantages</h3>
+
+<ol>
+  <li>
+    <p>Access to data</p>
+
+    <ul>
+      <li>TLF is necessary if you don’t have access to raw sensor data. For instance, a Lidar sensor that doesn’t return point cloud but instead the tracks. No track level data available</li>
+    </ul>
+
+    <p><img src="../figures/track_level_access_to_data.png" alt="track level access to data" /></p>
+  </li>
+  <li>
+    <p>Bandwidth</p>
+
+    <ul>
+      <li>Transmitting data from sensors in real time to computing centers that runs tracking.</li>
+      <li>Track level fusion data is smaller than raw sensor data.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Compute</p>
+
+    <ul>
+      <li>Local computer can pre-process data to reduce processing time.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Specialize</p>
+
+    <ul>
+      <li>TLF allows sensor level trackers to be specialized to the particular sensor type.</li>
+      <li>Since these trackers need motion and sensor models. Track maintenance needs to be tuned.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="../figures/track_level_specialize.png" alt="track level specialize" /></p>
+
+<h3 id="challengs-of-tlf">Challengs of TLF</h3>
+
+<ol>
+  <li>
+    <p>Reduced Accuracy</p>
+
+    <ul>
+      <li>Track distills sensor raw data to a lot less info. We may remove useful info.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Correlated noise</p>
+
+    <ul>
+      <li>If tracks are correlated, then we can’t multiply the probabilities like Kalman.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="appendix">Appendix</h1>
+
+<h2 id="imm-walkthrough">IMM walkthrough</h2>
+
+<section id="imm-one-cycle">
+  <h3>Interacting Multiple Model (IMM): One Cycle</h3>
+  <ol>
+    <li>
+      <h3>Model-conditioned reinitialization (mixing), for each model \( m_i \in \mathcal{M} \)</h3>
+      <ol>
+        <li>
+          <strong>Predicted model probability</strong><br />
+          \[
+            \mu_{k|k-1}^{(i)} = \sum_{j} \pi_{ji}\,\mu_{k-1}^{(j)}
+          \]
+        </li>
+        <li>
+          <strong>Mixing probabilities</strong> (previous model \(j\) given current \(i\))<br />
+          \[
+            \mu_{k-1}^{j|i} = \frac{\pi_{ji}\,\mu_{k-1}^{(j)}}{\mu_{k|k-1}^{(i)}}
+          \]
+        </li>
+        <li>
+          <strong>Mixed initial state</strong><br />
+          \[
+            \bar{x}_{k-1|k-1}^{(i)} = \sum_{j} \hat{x}_{k-1|k-1}^{(j)} \,\mu_{k-1}^{j|i}
+          \]
+        </li>
+        <li>
+          <strong>Mixed initial covariance</strong><br />
+          \[
+            \bar{P}_{k-1|k-1}^{(i)} =
+            \sum_{j}\Big(
+              P_{k-1|k-1}^{(j)}
+              + (\bar{x}_{k-1|k-1}^{(i)}-\hat{x}_{k-1|k-1}^{(j)})
+                (\bar{x}_{k-1|k-1}^{(i)}-\hat{x}_{k-1|k-1}^{(j)})^\top
+            \Big)\,\mu_{k-1}^{j|i}
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Model-conditioned filtering (per model)</h3>
+      <ol>
+        <li>
+          <strong>Prediction</strong><br />
+          \[
+            \hat{x}_{k|k-1}^{(i)} = F_{k-1}^{(i)}\,\bar{x}_{k-1|k-1}^{(i)},\qquad
+            P_{k|k-1}^{(i)} = F_{k-1}^{(i)}\,\bar{P}_{k-1|k-1}^{(i)}\,(F_{k-1}^{(i)})^\top + Q_{k-1}^{(i)}
+          \]
+        </li>
+        <li>
+          <strong>Update</strong><br />
+          \[
+            \tilde{z}_{k}^{(i)} = z_k - H_{k}^{(i)} \hat{x}_{k|k-1}^{(i)},\qquad
+            S_{k}^{(i)} = H_{k}^{(i)} P_{k|k-1}^{(i)} (H_{k}^{(i)})^\top + R_{k}^{(i)}
+          \]
+          \[
+            K_{k}^{(i)} = P_{k|k-1}^{(i)} (H_{k}^{(i)})^\top (S_{k}^{(i)})^{-1}
+          \]
+          \[
+            \hat{x}_{k|k}^{(i)} = \hat{x}_{k|k-1}^{(i)} + K_{k}^{(i)} \tilde{z}_{k}^{(i)},\qquad
+            P_{k|k}^{(i)} = P_{k|k-1}^{(i)} - K_{k}^{(i)} S_{k}^{(i)} (K_{k}^{(i)})^\top
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Model probability update (per model)</h3>
+      <ol>
+        <li>
+          <strong>Likelihood</strong><br />
+          \[
+            L_{k}^{(i)} = \mathcal{N}\!\big(\tilde{z}_{k}^{(i)};\; 0,\; S_{k}^{(i)}\big)
+          \]
+        </li>
+        <li>
+          <strong>Bayesian update</strong><br />
+          \[
+            \mu_{k}^{(i)} =
+            \frac{\mu_{k|k-1}^{(i)}\, L_{k}^{(i)}}{\sum_{j} \mu_{k|k-1}^{(j)}\, L_{k}^{(j)}}
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Estimate fusion</h3>
+      \[
+        \hat{x}_{k|k} = \sum_{i} \hat{x}_{k|k}^{(i)} \,\mu_{k}^{(i)}
+      \]
+      \[
+        P_{k|k} = \sum_{i}\Big(
+          P_{k|k}^{(i)}
+          + (\hat{x}_{k|k}-\hat{x}_{k|k}^{(i)})(\hat{x}_{k|k}-\hat{x}_{k|k}^{(i)})^\top
+        \Big)\,\mu_{k}^{(i)}
+      \]
+    </li>
+  </ol>
+
+  <details>
+    <summary><strong>Symbol notes</strong></summary>
+    <ul>
+      <li>\(\pi_{ji}\): probability of switching from model \(j\) to model \(i\)</li>
+      <li>\(\mu_{k}^{(i)}\): probability model \(i\) is correct at time \(k\)</li>
+      <li>\(\hat{x}, P\): state mean and covariance; bars \((\bar{\cdot})\) denote mixed (pre-prediction) quantities</li>
+      <li>\(F^{(i)}, Q^{(i)}\): dynamics and process noise for model \(i\)</li>
+      <li>\(H^{(i)}, R^{(i)}\): measurement model and noise for model \(i\)</li>
+      <li>\(\tilde{z}\): measurement residual; \(S\): residual covariance; \(K\): Kalman gain</li>
+    </ul>
+  </details>
+</section>
+
 </body>
 </html>
