@@ -65,10 +65,23 @@
 <h2 id="nyquist-plot-tips">Nyquist Plot tips</h2>
 
 <ol>
-  <li>Nyquist plots are plotted in <strong>polar coordinates</strong>, in contrast to Bode and Nichols</li>
+  <li>Nyquist plots are plotted in <strong>polar coordinates</strong>, in contrast to Bode and Nichols.</li>
+  <li>Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.</li>
 </ol>
 
 <h2 id="root-locus-tips">Root Locus Tips</h2>
+<ol>
+  <li>
+    <p>Use lead compansator to drag your asymptotes further to the left, increasing stability and transient response.</p>
+
+    <ul>
+      <li>Asymptotes are important because they’re the trajectories of <strong>closed-loop poles</strong>.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Never use lag compensator for shaping, only for SSE requirements. Rule of thumb is to place the zero of the lag compensator to be 50 times less than the real part of the dominant pole.</p>
+  </li>
+</ol>
 
 <hr />
 
@@ -147,7 +160,11 @@
 
 <ol>
   <li>
-    <p>Sensitivity plots also have peaks at resonance frequencies. These peaks occur where the <strong>Open Loop Transfer Function</strong> \(L(s)\) is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to \(-180^\circ\)).</p>
+    <p>Sensitivity plots also have peaks at gain crossover frequencies. These peaks occur where the <strong>Open Loop Transfer Function</strong> \(L(s)\) is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to \(-180^\circ\)).</p>
+
+    <ul>
+      <li>Complementary sensitivity plots have bumps at open-loop resonance frequencies.</li>
+    </ul>
   </li>
   <li>
     <p>Gain Crossover frequency is defined as the frequency 
@@ -157,9 +174,10 @@
     <p>Time delay and Non-minimum phase place a <strong>fundamental limit</strong> on how small
 \(max(|S|)\) can be! This is a hard rule that needs to be satisfied. One can shift \(\omega_{gc}\) to the left, which means the system can only track low frequency references and reject lower frequency disturbances.</p>
   </li>
+  <li>
+    <p>Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.</p>
+  </li>
 </ol>
-
-<p>Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.</p>
 
 <h2 id="loop-shaping-tips">Loop shaping Tips</h2>
 

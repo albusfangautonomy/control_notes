@@ -22,12 +22,15 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Plot Reviews](./notes/important_plots.html)\\
   Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot
-  
-- [Performance Specifications](./notes/performance_specs.html)  
+
+- [Performance Specifications](./notes/performance_specs.html)  \\
   Rise time, settling time, overshoot, **Steady-State Error** (error constants, system type, examples).
 
-- [Laplace Transform Tools](./notes/laplace_tools.html)  
-  **Final Value Theorem** (statement, validity conditions), using FVT to compute SSE.
+- [Stability Analysis](./notes/stability.html)  \\
+  Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
+
+- [Sensor Fusion](./notes/senser_fusion.html) \\
+  Common Sensor Fusion algorithms
 
 - [PID Control](./notes/pid.html)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
@@ -53,9 +56,6 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Sensitivity, Robustness, and Robust Control](./notes/robust_control.html)  
   Sensitive, complimentary Sensitivity, and robust control techniques
 
-- [Stability Analysis](./notes/stability.html)  
-  Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
-
 - [Discrete-Time Control](./notes/discrete-control.html)  
   Z-transform, digital implementation of controllers, sampling effects.
 
@@ -78,6 +78,8 @@ Welcome to my personal collection of control systems notes. This site compiles e
 ## Interview Prep
 
 - [Kodiak Autonomous Trucking](./interview_prep/kodiak.html)
+
+- [Drone Control](./interview_prep/drone_control.html)
 
 ---
 

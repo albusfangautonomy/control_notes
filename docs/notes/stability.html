@@ -36,7 +36,6 @@ less margin = less stable</p>
 
 <p>If there are multiple <strong>Phase crossover frequencies \(\omega_{pc}\)</strong>, use the most conservative Gain Margin.</p>
 
-<hr />
 <h3 id="phase-margin">Phase Margin</h3>
 
 <p>The phase margin (PM) is defined at the gain crossover frequency 
@@ -44,11 +43,17 @@ less margin = less stable</p>
 
 \[PM = 180^\circ + \angle L(j\omega_{gc})\]
 
-<hr />
-
 <h3 id="margins-and-sensitivity">Margins and Sensitivity</h3>
 
 <p>Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.</p>
+
+<hr />
+
+<h2 id="closed-loop-stability">Closed Loop Stability</h2>
+
+<p>In a non-unity feedback system whose feedback transfer function is \(H(s)\), the closed loop transfer function is \(\frac{G(s)}{1+GH}\). We can study the stability of the closed loop transfer function by identifying the <strong>zeros</strong> of \(1+GH\).</p>
+
+<p><strong>Adding 1 to the Nyquist plot of the open loop transfer function shift the plot to the right by 1</strong></p>
 
 <hr />
 

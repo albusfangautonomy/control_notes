@@ -35,7 +35,7 @@ $$
 
 If there are multiple **Phase crossover frequencies $$\omega_{pc} $$**, use the most conservative Gain Margin.
 
----
+
 ### Phase Margin
 
 The phase margin (PM) is defined at the gain crossover frequency 
@@ -45,11 +45,19 @@ $$
 PM = 180^\circ + \angle L(j\omega_{gc})
 $$
 
----
+
 
 ### Margins and Sensitivity
 
 Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
+
+---
+
+## Closed Loop Stability
+
+In a non-unity feedback system whose feedback transfer function is $$H(s)$$, the closed loop transfer function is $$\frac{G(s)}{1+GH}$$. We can study the stability of the closed loop transfer function by identifying the **zeros** of $$1+GH$$.
+
+**Adding 1 to the Nyquist plot of the open loop transfer function shift the plot to the right by 1**
 
 
 ---

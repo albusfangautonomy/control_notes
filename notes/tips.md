@@ -37,9 +37,15 @@ title: Tips
 
 ## Nyquist Plot tips
 
-1. Nyquist plots are plotted in **polar coordinates**, in contrast to Bode and Nichols
+1. Nyquist plots are plotted in **polar coordinates**, in contrast to Bode and Nichols.
+2. Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.
 
 ## Root Locus Tips
+1. Use lead compansator to drag your asymptotes further to the left, increasing stability and transient response.
+
+    - Asymptotes are important because they're the trajectories of **closed-loop poles**.
+
+2. Never use lag compensator for shaping, only for SSE requirements. Rule of thumb is to place the zero of the lag compensator to be 50 times less than the real part of the dominant pole.
 
 ---
 
@@ -92,7 +98,9 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 
 ## Sensitivity and Complementary Sensitivity Tips
 
-1. Sensitivity plots also have peaks at resonance frequencies. These peaks occur where the **Open Loop Transfer Function** $$L(s)$$ is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to $$-180^\circ$$).
+1. Sensitivity plots also have peaks at gain crossover frequencies. These peaks occur where the **Open Loop Transfer Function** $$L(s)$$ is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to $$-180^\circ$$).
+
+    - Complementary sensitivity plots have bumps at open-loop resonance frequencies.
 
 2. Gain Crossover frequency is defined as the frequency 
 $$\omega_{gc}$$ at which $$|L(j\omega)|=1$$
@@ -100,7 +108,7 @@ $$\omega_{gc}$$ at which $$|L(j\omega)|=1$$
 3. Time delay and Non-minimum phase place a **fundamental limit** on how small
 $$ max(|S|)$$ can be! This is a hard rule that needs to be satisfied. One can shift $$\omega_{gc}$$ to the left, which means the system can only track low frequency references and reject lower frequency disturbances. 
 
-Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
+4. Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
 
 ## Loop shaping Tips
 

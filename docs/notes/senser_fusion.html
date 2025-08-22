@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stability Analysis</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="sensor-fusion">Sensor Fusion</h1>
+
+<h2 id="definition">Definition</h2>
+<p>Sensor fusion is a technique that combines two or more data sources in a way taht geneartes a more consistent, accurate, and dependable understanding of the system.</p>
+
+<h2 id="advantages-and-use-cases">Advantages and Use Cases</h2>
+<ol>
+  <li>
+    <p>It can increase the quality of the data by fusing either two sensors of either the same type or different types together.</p>
+  </li>
+  <li>
+    <p>It can increase reliability.</p>
+  </li>
+  <li>
+    <p>It can estimate unmeasured states.</p>
+  </li>
+  <li>
+    <p>It can be used to increase coverage.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="sensor-fusion-examples">Sensor Fusion Examples</h1>
+
+<h2 id="attitude-and-heading-reference-system-ahrs">Attitude and heading reference system (AHRS)</h2>
+<p>To defin an orientation:</p>
+<ol>
+  <li>
+    <p>Reference Frame</p>
+  </li>
+  <li>
+    <p>Specify rotation</p>
+  </li>
+</ol>
+
+<h3 id="measuring-attitude-and-heading">Measuring Attitude and Heading</h3>
+
+<h3 id="sensors---imu-magnometer-accelerometer-and-gyro">Sensors - IMU (Magnometer, Accelerometer, and Gyro)</h3>
+<p>The absolute orientation for a static object can be determined just with M and A and taking cross products.</p>
+
+<p><strong>Magnometer</strong> measures the strength and direction of a magnetic field and determines heading relative to the Earth’s magnetic north.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- readings can be corrupted by other magnetic sources.
+- Hard Iron sources (Magnet or Coil) shift the sphere, soft irons (nails) distorts the sphere. Sphere refers to 
+- needs to calibrate by rotate the device around
+</code></pre></div></div>
+
+<p><strong>Accelerometer</strong> measures acceleration</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- if the accelerometer is not at center of rotation, readings can be off.
+- linear acceleration can corrcupt Acc measurement of "down"
+</code></pre></div></div>
+
+<p><strong>Gyro</strong> measures angular rate
+    - Dead reckoning refers to integrating gyro readings (integration is a low pass filter, which filters out high frequency noise)
+    - Gyros have drift</p>
+
+<h3 id="sensor-fusion-algorithm-for-imu">Sensor Fusion algorithm for IMU</h3>
+<ol>
+  <li>Initialize attitude</li>
+  <li>Use mag field and gravity to correct gyro drift</li>
+</ol>
+
+<p>In <strong>complementary filter</strong>, the user decides how much accel+mag and gyro data need to be trusted. Kalman filter automatically computes the confidence.</p>
+
+<hr />
+
+<h2 id="sensor-fusion-with-gps-and-imu-algorithm---extended-kalman">Sensor Fusion with GPS and IMU: Algorithm - Extended Kalman</h2>
+<p>GPS measured velocity and position.
+If GPS reading doesn’t need to be very accurate or fast, adding IMU is not helping much. (driving with google maps)
+If GPS reading needs to be accurate and fast velocity constantly changing, adding IMU helps. (drone flying around obstacles)</p>
+
+<p><strong>Estimating the sensor bias is extremely imporant</strong> because bias drifts over time.</p>
+
+<h3 id="step-1-initializing-the-filter">Step 1: Initializing the filter</h3>
+
+<p><strong>28 state kalman state vector:</strong></p>
+<ol>
+  <li>Orientation (4 states quaternion)</li>
+  <li>Angular Velocity(XYZ) (3) where XYZ means angular rates about body x,y,z, axes</li>
+  <li>Position (NED) (3)</li>
+  <li>Velocity (NED) (3)</li>
+  <li>Acceleration (NED) (3)</li>
+  <li>Accelerometer Bias (XYZ) (3)</li>
+  <li>Geomagnetic Field Vector (NED) (3)</li>
+  <li>Magnetometer Bias (XYZ) (3)</li>
+</ol>
+
+<p>If no estimates of sensor bias is available at system start, let the kalman filter converge to the correct solution while the vehicle is stationary.</p>
+
+<p><img src="../figures/sensor_bias.png" alt="sensor bias over time" /></p>
+
+<p><strong>Note:</strong> Extended Kalman linearizes the nonlinear model at current estimate and uses the linear model to predict state into the future. If the filter is not initialized close to the true state, the linearization result would deviate and estimate would not converge.</p>
+
+<p>Initializing a real system</p>
+
+<p><img src="../figures/initialize_filter_real_system.png" alt="Initializing filter for a real system" /></p>
+
+<h3 id="step-2-kalman">Step 2: Kalman</h3>
+<p><strong>Predict</strong> and <strong>Correct</strong></p>
+
+<ol>
+  <li>
+    <p>Predict the state based on model and keep track of confidence (Process Noise). When new measurement comes in with measurement noise, the filter compare the measurement with predicted model and corrects its estimate based on the confidence.</p>
+  </li>
+  <li>
+    <p>If there is an update from any of the sensors, update the state based on the relative confidence based on the estimate and the measurement.</p>
+
+    <ul>
+      <li>The sensor can therefore run with <strong>asyncronous measurements</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="tracking-remote-objects">Tracking Remote Objects</h1>
+
+<h2 id="interacting-multiple-model-filter-imm---how-to-track-a-single-remote-object-with-remote-sensors">Interacting Multiple Model Filter (IMM) - How to track a single remote object with remote sensors</h2>
+
+<p>Tracking a remote object. Key difference: with Kalman filters, one knows the state model to predict the future state of an object. However, when tracking a remote object, we typically don’t have access to the input to the plant.</p>
+
+<p>Cooperative Tracking: tracked object shares control input.</p>
+
+<p><img src="../figures/cooperative_tracking.png" alt="cooperative tracking" /></p>
+
+<p>Unkown inputs are taken into account by <strong>process noise</strong>.</p>
+
+<p>Uncoorperative Tracking: tracked object does not share control input.</p>
+
+<p><img src="../figures/uncooperative_tracking.png" alt="Uncooperative Tracking" /></p>
+
+<hr />
+
+<h3 id="uncooperative-tracking-with-a-remote-object">Uncooperative tracking with a remote object</h3>
+
+<p>Trade-off between High process noise and low process noise.</p>
+
+<p>Example: constant velocity model but don’t know the exact control inputs</p>
+
+<p>Scheme: Increase Process noise to trust prediction less and trust measurement more. This would reduce noise when the actual dynamics is not constant velocity. However, this comes at the cost of error for area which the model predicts the dynamics well (constant velocity case).</p>
+
+<p><img src="../figures/process_noise_tradeoff.png" alt="Process Noise trade-off" /></p>
+
+<hr />
+
+<h3 id="interactive-multiple-model-filter-single-object-tracking">Interactive Multiple Model Filter (single object tracking)</h3>
+<p>To have one model for each type of motion. Allowing each model to interact to reduce transient error</p>
+
+<p><img src="../figures/imm.png" alt="IMM" /></p>
+
+<p>Interactive Multi-Model filter vs Multi-Model Filter</p>
+<ol>
+  <li>IMM reduces transient error compared to independent models in Multi-Model filters</li>
+  <li>IMM blends all models together based on the likelihood of each representing the true motion</li>
+</ol>
+
+<h3 id="disadvantages-of-too-many-models-in-imm">Disadvantages of too many models in IMM</h3>
+<p>A large number of models for IMM can introduce both computationall cost and performance hit</p>
+
+<p>Performance:</p>
+<ol>
+  <li>More models means more transitions between models</li>
+  <li>Harder to know when to make a transitions</li>
+</ol>
+
+<p>Try to find the <strong>smallest number</strong> of models that adequetly predicts the possible motion of the object you’re tracking.</p>
+
+<hr />
+
+<h2 id="tracking-multiple-remote-objects">Tracking Multiple Remote Objects</h2>
+
+</body>
+</html>
