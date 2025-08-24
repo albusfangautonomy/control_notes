@@ -364,25 +364,25 @@
     "relUrl": "/#-core-topics"
   },"52": {
     "doc": "Control Notes",
-    "title": "🛠️ Tools and Techniques",
-    "content": ". | Control System Design Workflow From modeling to simulation to real-world tuning. | Control Using Simulink &amp; Python Practical guides using Simulink, Python (control, matplotlib, etc.). | . ",
-    "url": "/control_notes/#%EF%B8%8F-tools-and-techniques",
-    
-    "relUrl": "/#️-tools-and-techniques"
-  },"53": {
-    "doc": "Control Notes",
     "title": "Domain Specific Control",
     "content": ". | Quadcoptor Control . | Autonomous Cars . | . ",
     "url": "/control_notes/#domain-specific-control",
     
     "relUrl": "/#domain-specific-control"
-  },"54": {
+  },"53": {
     "doc": "Control Notes",
     "title": "Interview Prep",
-    "content": ". | Kodiak Autonomous Trucking . | Drone Control . | . Made using Jekyll . ",
+    "content": ". | Kodiak Autonomous Trucking . | Drone Control . | . ",
     "url": "/control_notes/#interview-prep",
     
     "relUrl": "/#interview-prep"
+  },"54": {
+    "doc": "Control Notes",
+    "title": "🛠️ Tools and Techniques",
+    "content": ". | Control System Design Workflow From modeling to simulation to real-world tuning. | Control Using Simulink &amp; Python Practical guides using Simulink, Python (control, matplotlib, etc.). | . Made using Jekyll . ",
+    "url": "/control_notes/#%EF%B8%8F-tools-and-techniques",
+    
+    "relUrl": "/#️-tools-and-techniques"
   },"55": {
     "doc": "Control Notes",
     "title": "Control Notes",

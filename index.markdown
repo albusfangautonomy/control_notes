@@ -70,13 +70,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Data Driven Control](./notes/data_driven_control.html) \\
   Advanced control topics for Machine Learning based control
 
-## 🛠️ Tools and Techniques
 
-- [Control System Design Workflow](./notes/workflow.html)  
-  From modeling to simulation to real-world tuning.
-
-- [Control Using Simulink & Python](./notes/tools.html)  
-  Practical guides using Simulink, Python (`control`, `matplotlib`, etc.).
 
 ## Domain Specific Control
 
@@ -84,11 +78,20 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Autonomous Cars](./domain_specific_control/car.html)
 
+
 ## Interview Prep
 
 - [Kodiak Autonomous Trucking](./interview_prep/kodiak.html)
 
 - [Drone Control](./interview_prep/drone_control.html)
+
+## 🛠️ Tools and Techniques
+
+- [Control System Design Workflow](./notes/workflow.html)  
+  From modeling to simulation to real-world tuning.
+
+- [Control Using Simulink & Python](./notes/tools.html)  
+  Practical guides using Simulink, Python (`control`, `matplotlib`, etc.).
 
 ---
 
