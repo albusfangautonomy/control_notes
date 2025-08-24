@@ -41,7 +41,7 @@ title: Tips
 2. Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.
 
 ## Root Locus Tips
-1. Use lead compansator to drag your asymptotes further to the left, increasing stability and transient response.
+1. Use lead compansator to drag your asymptotes further to the left, increasing stability and decreases transient response time in time domain.
 
     - Asymptotes are important because they're the trajectories of **closed-loop poles**.
 
@@ -69,7 +69,7 @@ title: Tips
 
 1. The **peaks** at resonance on bode plots are caused by the presence of **lightly damped poles**. A higher order bode plot can have multiple peaks since the system may have multiple **lightly damped poles**.
 
-2. The presence of **RHP zeroes** make the system **non-minimum phase** by introducing a non-causal phase lag, which means the transient response w goes in the wrong direction first.
+2. The presence of **RHP zeroes** make the system **non-minimum phase** by introducing a non-causal phase lag, which means the transient response and step response go in the wrong direction first in time domain.
     - **Each RHP zero cause the system to switch directions**.
 
 3. Bode plot shows the **steady state response only** (evaluating at $$s=j\omega$$). Transient response can only be investigated in **time-domain** since it is a time baseed phenomenon.
@@ -110,6 +110,13 @@ $$ max(|S|)$$ can be! This is a hard rule that needs to be satisfied. One can sh
 
 4. Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
 
+5. Design requirements in time domain can be characterized by features in frequency domain. Since $$ T_r \omega_b=2$$, where $$T_r$$ is the rise time and $$\omega_b$$ is the bandwidth, increasing rise time is the same as increasing bandwidth.
+    - 
+
 ## Loop shaping Tips
 
 1. Loop shaping is a technique that tries to shape the **Open Loop Transfer Function** $$L(s)$$, according to the desired shape - an **integrator**. The Transfer Function on the bode plot can be shifted left or right by multiplying $$L(s)$$ with $$\omega_{s}$$ to change the gain at low and high frequencies.
+
+2. One of the key limitations of loop shaping occurs when we have the possibility of cancellation of right half plane poles and zeros. The canceled poles and zeros do not appear in the loop transfer function but they can appear in the transfer functions from disturbances to outputs or control signals.
+    
+    - Non-minimum phase systems impose severe restrictions on possible crossover frequencies according to the crossoverfrequency inequality.

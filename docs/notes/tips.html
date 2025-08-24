@@ -72,7 +72,7 @@
 <h2 id="root-locus-tips">Root Locus Tips</h2>
 <ol>
   <li>
-    <p>Use lead compansator to drag your asymptotes further to the left, increasing stability and transient response.</p>
+    <p>Use lead compansator to drag your asymptotes further to the left, increasing stability and decreases transient response time in time domain.</p>
 
     <ul>
       <li>Asymptotes are important because they’re the trajectories of <strong>closed-loop poles</strong>.</li>
@@ -115,7 +115,7 @@
   <li>
     <p>The <strong>peaks</strong> at resonance on bode plots are caused by the presence of <strong>lightly damped poles</strong>. A higher order bode plot can have multiple peaks since the system may have multiple <strong>lightly damped poles</strong>.</p>
   </li>
-  <li>The presence of <strong>RHP zeroes</strong> make the system <strong>non-minimum phase</strong> by introducing a non-causal phase lag, which means the transient response w goes in the wrong direction first.
+  <li>The presence of <strong>RHP zeroes</strong> make the system <strong>non-minimum phase</strong> by introducing a non-causal phase lag, which means the transient response and step response go in the wrong direction first in time domain.
     <ul>
       <li><strong>Each RHP zero cause the system to switch directions</strong>.</li>
     </ul>
@@ -177,12 +177,27 @@
   <li>
     <p>Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.</p>
   </li>
+  <li>
+    <p>Design requirements in time domain can be characterized by features in frequency domain. Since \(T_r \omega_b=2\), where \(T_r\) is the rise time and \(\omega_b\) is the bandwidth, increasing rise time is the same as increasing bandwidth.</p>
+    <ul>
+      <li></li>
+    </ul>
+  </li>
 </ol>
 
 <h2 id="loop-shaping-tips">Loop shaping Tips</h2>
 
 <ol>
-  <li>Loop shaping is a technique that tries to shape the <strong>Open Loop Transfer Function</strong> \(L(s)\), according to the desired shape - an <strong>integrator</strong>. The Transfer Function on the bode plot can be shifted left or right by multiplying \(L(s)\) with \(\omega_{s}\) to change the gain at low and high frequencies.</li>
+  <li>
+    <p>Loop shaping is a technique that tries to shape the <strong>Open Loop Transfer Function</strong> \(L(s)\), according to the desired shape - an <strong>integrator</strong>. The Transfer Function on the bode plot can be shifted left or right by multiplying \(L(s)\) with \(\omega_{s}\) to change the gain at low and high frequencies.</p>
+  </li>
+  <li>
+    <p>One of the key limitations of loop shaping occurs when we have the possibility of cancellation of right half plane poles and zeros. The canceled poles and zeros do not appear in the loop transfer function but they can appear in the transfer functions from disturbances to outputs or control signals.</p>
+
+    <ul>
+      <li>Non-minimum phase systems impose severe restrictions on possible crossover frequencies according to the crossoverfrequency inequality.</li>
+    </ul>
+  </li>
 </ol>
 
 </body>

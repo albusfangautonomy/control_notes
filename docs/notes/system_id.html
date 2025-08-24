@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System ID</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="motivation">Motivation</h1>
+
+<h2 id="model">Model</h2>
+
+<h3 id="use-cases">Use Cases</h3>
+<ol>
+  <li>Controller Design 2. State Estimation 3. Formal Analysis 5. Simulation</li>
+</ol>
+
+<h3 id="model-components">Model Components</h3>
+<ol>
+  <li>Structure - e.g. second order differential equations, frequency response, process model (with time delay), neural networks</li>
+  <li>Parameters - e.g. physical quantities - mass, spring constant</li>
+</ol>
+
+<h3 id="how-to-create-a-model">How to create a model</h3>
+<p>Scenario 1: You know a lot about the physical system -&gt; <strong>white box</strong> approach: create model directly from <strong>first principles</strong></p>
+
+<p>Scenario 2: You don’t know much about the system -&gt; <strong>black box</strong> approach: <strong>pure system ID</strong></p>
+
+<p>Scenario 3: You combine first principles with fitting -&gt;<strong>grey box</strong> approach: use first principles to derive structure and fit parameters</p>
+
+<hr />
+
+<h1 id="linear-system-identification">Linear System Identification</h1>
+<p>Linear, Nonlinear, Online and Recursive system ID. System ID is a data driven method</p>
+
+<p>Choose a model structure that represents the system dynamics and fit a model to the data by picking the parameters</p>
+
+<h2 id="system-id-vs-curve-fit">System ID vs Curve fit</h2>
+
+<h3 id="curve-fit-yft">Curve fit \(y=f(t)\)</h3>
+
+<p>Curve fit only describes the sequence of data but doesn’t describe the underlying mechanisms that created the data. For instance, curve fitting cannot predict the data if system was initialized at different state or even different inputs.</p>
+
+<h3 id="system-id-yfuyt">System ID $$y=f(u,y,t)</h3>
+
+<p>System ID takes into account of correlation between the data points, which depends on previous system state.</p>
+
+<h2 id="typical-system-id-model-candidates">Typical System ID model candidates</h2>
+<p><img src="../figures/system_id_models.png" alt="system id model candidates" /></p>
+
+<hr />
+
+<h1 id="system-id-workflow">System ID workflow</h1>
+
+
+</body>
+</html>

@@ -12,25 +12,28 @@ Welcome to my personal collection of control systems notes. This site compiles e
 ## 📚 Core Topics
 
 - [Useful Tips](./notes/tips.html) \\
-  Important Intuitions for designing control systems
+  Important Intuitions for designing control systems.
 
 - [Overview](./notes/overview.html)\\
-  A comparison between Open Loop control and Closed Loop control, and categorizing controllers
+  A comparison between Open Loop control and Closed Loop control, and categorizing controllers.
 
 - [Design Workflow](./notes/workflow.html) \\
-  Typical design requirements and design actions 
+  Typical design requirements and design actions.
 
 - [Plot Reviews](./notes/important_plots.html)\\
-  Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot
+  Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot.
 
 - [Performance Specifications](./notes/performance_specs.html)  \\
   Rise time, settling time, overshoot, **Steady-State Error** (error constants, system type, examples).
+
+- [System ID](./notes/system_id.html)
+  Linear, Nonlinear, Online and recursive system identification.
 
 - [Stability Analysis](./notes/stability.html)  \\
   Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
 
 - [Sensor Fusion](./notes/senser_fusion.html) \\
-  Common Sensor Fusion algorithms
+  Common Sensor Fusion algorithms.
 
 - [PID Control](./notes/pid.html)  
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
@@ -51,10 +54,10 @@ Welcome to my personal collection of control systems notes. This site compiles e
   Illustrates the equivalence between controllability and reachability.
 
 - [Frequency Analysis and Fourier Transform](./notes/frequency-response.html)  
-  How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots.
+  How to interpret system behavior in the frequency domain, including Fourier Transform and Bode Plots. Non-minimum phase
 
 - [Sensitivity, Robustness, and Robust Control](./notes/robust_control.html)  
-  Sensitive, complimentary Sensitivity, and robust control techniques
+  Sensitive, complimentary Sensitivity, and robust control techniques.
 
 - [Discrete-Time Control](./notes/discrete-control.html)  
   Z-transform, digital implementation of controllers, sampling effects.
@@ -74,6 +77,12 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Control Using Simulink & Python](./notes/tools.html)  
   Practical guides using Simulink, Python (`control`, `matplotlib`, etc.).
+
+## Domain Specific Control
+
+- [Quadcoptor Control](./domain_specific_control/drone.html)
+
+- [Autonomous Cars](./domain_specific_control/car.html)
 
 ## Interview Prep
 
