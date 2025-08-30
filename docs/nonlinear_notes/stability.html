@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lyapunov Stability</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="chain-rule--lie-derivative--lyapunov-stability-autonomous-systems">Chain Rule → Lie Derivative → Lyapunov Stability (Autonomous Systems)</h1>
+
+<h2 id="setup">Setup</h2>
+<p>Consider an <strong>autonomous</strong> system
+\(\dot x = f(x),\quad x\in\mathbb{R}^n,\)
+and a scalar candidate \(V:\mathbb{R}^n\to\mathbb{R}\) (no explicit time dependence).</p>
+
+<hr />
+
+<h2 id="chain-rule-along-trajectories">Chain rule along trajectories</h2>
+<p>Let \(x(t)\) be a trajectory of \(\dot x=f(x)\). Since \(V=V(x)\) has no explicit \(t\),
+\(\frac{d}{dt}V\big(x(t)\big)
+= \nabla V(x)^\top \dot x
+= \nabla V(x)^\top f(x).\)</p>
+
+<hr />
+
+<h2 id="lie-derivative">Lie derivative</h2>
+<p>The <strong>Lie derivative</strong> of \(V\) along \(f\) is the directional derivative
+\(\mathcal{L}_f V(x) \; =  \nabla V(x)^\top f(x).\)
+Hence, along solutions,
+\(\boxed{\ \dot V(x) \equiv \frac{d}{dt}V(x(t)) = \mathcal{L}_f V(x)\ }.\)</p>
+
+<hr />
+
+<h2 id="lyapunov-stability-equilibrium-at-the-origin">Lyapunov stability (equilibrium at the origin)</h2>
+<p>Assume \(x^\star=0\) is an equilibrium: \(f(0)=0\). Let \(\alpha_i\) be class-\(\mathcal{K}_\infty\) functions.</p>
+
+<h3 id="stability-lyapunov">Stability (Lyapunov)</h3>
+<p>If there exists \(V:\mathbb{R}^n\to\mathbb{R}_{\ge 0}\) and \(\alpha_1,\alpha_2\in\mathcal{K}_\infty\) such that, in a neighborhood of \(0\),
+\(\alpha_1(\|x\|)\le V(x)\le \alpha_2(\|x\|),\quad
+\dot V(x)=\mathcal{L}_f V(x)\le 0,\)
+then \(x=0\) is <strong>stable</strong>.</p>
+
+<h3 id="asymptotic-stability">Asymptotic stability</h3>
+<p>If, in addition, there exists \(\alpha_3\in\mathcal{K}_\infty\) with
+\(\dot V(x)=\mathcal{L}_f V(x)\le -\,\alpha_3(\|x\|)\quad(\text{for }x\neq 0),\)
+then \(x=0\) is <strong>asymptotically stable</strong>.</p>
+
+<h3 id="exponential-stability-sufficient-condition">Exponential stability (sufficient condition)</h3>
+<p>If there exist \(c&gt;0\) and \(\alpha_1,\alpha_2\in\mathcal{K}_\infty\) such that
+\(\alpha_1(\|x\|)\le V(x)\le \alpha_2(\|x\|),\quad
+\dot V(x)\le -\,c\,V(x),\)
+then \(x=0\) is <strong>(locally) exponentially stable</strong>.</p>
+
+<h3 id="global-versions">Global versions</h3>
+<p>If the above properties hold for all \(x\in\mathbb{R}^n\) and \(V\) is <strong>radially unbounded</strong>
+(\(V(x)\to\infty\) as \(\|x\|\to\infty\)),
+then the corresponding stability property is <strong>global</strong>.</p>
+
+<h3 id="lasalles-invariance-principle-autonomous">LaSalle’s invariance principle (autonomous)</h3>
+<p>If \(V\) is positive definite and \(\dot V(x)=\mathcal{L}_f V(x)\le 0\),
+then every trajectory approaches the largest invariant set contained in
+\(\mathcal{S} \;=\; \{\,x:\ \mathcal{L}_f V(x)=0\,\}.\)
+If the only invariant set in \(\mathcal{S}\) is \(\{0\}\), then the origin is <strong>asymptotically stable</strong>.</p>
+
+<hr />
+
+<h2 id="quick-checklist">Quick checklist</h2>
+<ul>
+  <li>\(V(0)=0\), \(V(x)&gt;0\) for \(x\neq 0\) (positive definite); preferably radially unbounded.</li>
+  <li>Compute \(\dot V=\mathcal{L}_f V=\nabla V^\top f\).</li>
+  <li>Aim for \(\dot V\le 0\) (stability), \(\dot V&lt;0\) or LaSalle conditions (asymptotic), or \(\dot V\le -cV\) (exponential).</li>
+</ul>
+
+</body>
+</html>

@@ -29,10 +29,10 @@ To defin an orientation:
 
 ### Measuring Attitude and Heading
 
-### Sensors - IMU (Magnometer, Accelerometer, and Gyro)
+### Sensors - IMU (Magnetometer, Accelerometer, and Gyro)
 The absolute orientation for a static object can be determined just with M and A and taking cross products.
 
-**Magnometer** measures the strength and direction of a magnetic field and determines heading relative to the Earth's magnetic north.
+**Magnetometer** measures the strength and direction of a magnetic field and determines heading relative to the Earth's magnetic north.
 
     - readings can be corrupted by other magnetic sources.
     - Hard Iron sources (Magnet or Coil) shift the sphere, soft irons (nails) distorts the sphere. Sphere refers to 

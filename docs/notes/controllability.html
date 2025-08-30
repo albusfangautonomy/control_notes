@@ -14,13 +14,13 @@
   <li>Arbitrary Eigenvalue (Pole) placement is allowed
     <ul>
       <li>
-\[u = -Kx =&gt; \dot{x} = (A-BK)x\]
+\[u = -Kx \Rightarrow \dot{x} = (A-BK)x\]
       </li>
     </ul>
   </li>
-  <li>Reachability (full in R^{n})
+  <li>Reachability (full in \(\mathbb{R}^n\))
     <ul>
-      <li>Theorectically one can drive from Massachusetts to California in a second</li>
+      <li>Theoretically one can drive from Massachusetts to California in a second</li>
       <li>This can be proven by Cayley-Hamilton theorem</li>
     </ul>
   </li>
@@ -42,19 +42,19 @@ By replacing the scalar variable \(\lambda\) with the matrix \(A\), we define th
 
 <h2 id="stabilizability">Stabilizability</h2>
 
-<p>Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as</p>
+<p>Controllability for a large dimension space may be too extreme and sometimes unrealistic. For this purpose, stabilizability is defined as:</p>
 
-<p><strong>Stabilizability</strong>
-A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controlable subspace. (Anything unstable can be damped)</p>
+<p><strong>Stabilizability</strong><br />
+A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controllable subspace. (Anything unstable can be damped)</p>
 
-<p>Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix.</p>
+<p>Actuator B should be designed so that the unstable dynamic directions correspond to the big singular vector of the controllability matrix.</p>
 
 <h3 id="examples-of-stabilizability">Examples of Stabilizability</h3>
 
 <ol>
   <li>Inverted Pendulum on a cart
     <ul>
-      <li><strong>Unstable Mode</strong> the pendulum tiipping over (angle grows exponentially).</li>
+      <li><strong>Unstable Mode</strong>: the pendulum tipping over (angle grows exponentially).</li>
       <li><strong>Why Stabilizable</strong>:
         <ul>
           <li>The cart can move left or right, providing a restoring torque - can be damped.</li>
@@ -72,10 +72,10 @@ A system is stabilizable if and only if all unstable (or lightly damped) eigenve
       </li>
     </ul>
   </li>
-  <li>Drone in hover (quadcoptor)
+  <li>Drone in hover (quadcopter)
     <ul>
       <li><strong>Unstable Mode</strong>: attitude - if it tilts slightly, gravity pulls it further, the drone accelerates away.</li>
-      <li><strong>Why stabilizable</strong>
+      <li><strong>Why stabilizable</strong>:
         <ul>
           <li>Each rotor produces torque about pitch, roll, and yaw.</li>
           <li>These torques directly act on the unstable angular states.</li>
@@ -90,37 +90,34 @@ A system is stabilizable if and only if all unstable (or lightly damped) eigenve
 
 <h2 id="controllability-of-linear-system">Controllability of Linear system</h2>
 <p>\(\dot{x}=Ax+Bu\)
-\(y=Cx\)
+\(y=Cx\)<br />
 This system is controllable if and only if the controllability matrix \(C=[B\ AB\ A^2B\ ...\ A^{n-1}B]\) is of full column rank</p>
 
-<p><strong>Note</strong> This is a binary check. To see how controllable this system is, investigate the SVD of C.</p>
+<p><strong>Note</strong>: This is a binary check. To see how controllable this system is, investigate the SVD of C.</p>
 
 <h2 id="degrees-of-controllability">Degrees of Controllability</h2>
 <p>The Singular Value Decomposition (SVD) of the controllability matrix provides deep insight into the degree and direction of controllability of a linear system:</p>
 <ol>
   <li>
-    <p>Controllability Rank
- If 𝐶 has full rank (i.e. rank = number of states 𝑛), the system is completely controllable.</p>
+    <p>Controllability Rank<br />
+ If \(C\) has full rank (i.e. rank = number of states \(n\)), the system is completely controllable.</p>
 
-    <p>The number of nonzero singular values = the rank of 𝐶.</p>
+    <p>The number of nonzero singular values = the rank of \(C\).</p>
   </li>
   <li>
-    <p>Strength of Controllability (Conditioning)
+    <p>Strength of Controllability (Conditioning)<br />
  The magnitude of the singular values tells you how “strongly” controllable the system is in different directions:</p>
 
-    <p>Large singular values → easy to move the system in that direction.</p>
-
-    <p>Tiny singular values → very difficult to control (require large input energy).</p>
-
-    <p>Zero singular values → system not controllable in that direction.</p>
+    <p>Large singular values → easy to move the system in that direction.<br />
+ Tiny singular values → very difficult to control (require large input energy).<br />
+ Zero singular values → system not controllable in that direction.</p>
   </li>
   <li>
-    <p>Controllable Directions
- The right singular vectors V from \(𝐶 = 𝑈Σ𝑉^𝑇\) span the input space.</p>
+    <p>Controllable Directions<br />
+ The right singular vectors \(V\) from \(C = U \Sigma V^\top\) span the input space.<br />
+ The left singular vectors \(U\) represent orthogonal directions in the state space.</p>
 
-    <p>The left singular vectors 𝑈 represent orthogonal directions in the state space.</p>
-
-    <p>Directions associated with large singular values in 𝑈 are the most controllable.</p>
+    <p>Directions associated with large singular values in \(U\) are the most controllable.</p>
   </li>
 </ol>
 
@@ -129,8 +126,8 @@ This system is controllable if and only if the controllability matrix \(C=[B\ AB
 <h2 id="controllability-gramian">Controllability Gramian</h2>
 <p><strong>The eigenvectors of the Gramian (\(W_t\)) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix</strong></p>
 
-<p>\(W_{t} \approx CC^T\)
-The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal to noise ratio</strong></p>
+<p>\(W_{t} \approx CC^T\)<br />
+The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal-to-noise ratio</strong>.</p>
 
 <p>The <strong>controllability Gramian</strong> is a matrix that quantifies how easily a system’s state can be driven by the input. It measures the <strong>energy</strong> required to move the system from the origin to a particular state.</p>
 
@@ -146,7 +143,7 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 
 \[W_c(T) = \int_0^T e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
 
-<p>If (A) is stable and \(T \to \infty\), the <strong>infinite-horizon controllability Gramian</strong> is:</p>
+<p>If \(A\) is stable and \(T \to \infty\), the <strong>infinite-horizon controllability Gramian</strong> is:</p>
 
 \[W_c = \int_0^\infty e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
 
@@ -163,11 +160,11 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 
 <h4 id="-2-energy-to-reach-a-state">⚡ 2. Energy to Reach a State</h4>
 
-<p>The <strong>minimum energy</strong> to reach a state ( x_f ) from the origin is:</p>
+<p>The <strong>minimum energy</strong> to reach a state \(x_f\) from the origin is:</p>
 
 \[E = x_f^\top W_c^{-1} x_f\]
 
-<p>States in directions with <strong>small eigenvalues</strong> of (W_c) require <strong>more energy</strong> to reach.</p>
+<p>States in directions with <strong>small eigenvalues</strong> of \(W_c\) require <strong>more energy</strong> to reach.</p>
 
 <h4 id="-3-geometric-interpretation">📐 3. Geometric Interpretation</h4>
 
@@ -184,16 +181,16 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 <p><strong>Notes</strong></p>
 <ol>
   <li>The controllability Gramian is only defined for <strong>linear</strong> systems and often assumes zero initial state.</li>
-  <li>The controllability Gramian is symmetric and positive semi-definite</li>
+  <li>The controllability Gramian is symmetric and positive semi-definite.</li>
 </ol>
 
 <h2 id="pbh-test">PBH Test</h2>
 <p>(A,B) is controllable if and only if
-\(rank[(A-\lambda I)\ B] = n \forall \lambda \in \mathbb{C}\)</p>
+\(\text{rank}[(A-\lambda I)\ B] = n \quad \forall \lambda \in \mathbb{C}\)</p>
 <ol>
-  <li>\(rank(A-\lambda I)=n\) except for eigenvalues \(\lambda\)</li>
-  <li>B needs to have some component in each eigenvector directions</li>
-  <li>(Advanced) a random vector B would make (A,B) controllably with high probability</li>
+  <li>\(\text{rank}(A-\lambda I)=n\) except for eigenvalues \(\lambda\)</li>
+  <li>B needs to have some component in each eigenvector direction</li>
+  <li>(Advanced) A random vector B would make (A,B) controllable with high probability</li>
 </ol>
 
 <hr />
@@ -223,7 +220,8 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 
 \[\mathcal{R} = \begin{bmatrix} B &amp; AB &amp; A^2B &amp; \cdots &amp; A^{n-1}B \end{bmatrix}\]
 
-<p>If \(\mathcal{R}\) has <strong>full rank</strong> (i.e., \(\text{rank}(\mathcal{R}) = n\)), then the system is reachable</p>
+<p>If \(\mathcal{R}\) has <strong>full rank</strong> (i.e., \(\text{rank}(\mathcal{R}) = n\)), then the system is reachable.</p>
+
 <h3 id="-reachability-set">🎯 Reachability Set</h3>
 
 <p>The <strong>reachability set</strong> (or reachable set) at time \(t_f\) is the set of all states that the system can reach from an initial state \(x(0)\) under some admissible input \(u(t)\) over the time interval \([0, t_f]\).</p>
@@ -249,7 +247,6 @@ The determinant of the Gramian indicates the volume of the ellipsoid and the <st
 \[\mathcal{R}_d(N) = \left\{ x[N] = \sum_{i=0}^{N-1} A^i B u[N-1-i] \;\middle|\; u[i] \in \mathbb{R}^m \right\}\]
 
 <p>The union of all such sets over all \(t_f\) (or \(N\) in discrete time) is the <strong>total reachable set</strong> from the origin.</p>
-
 
 </body>
 </html>

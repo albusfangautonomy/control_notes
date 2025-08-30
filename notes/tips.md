@@ -39,6 +39,11 @@ title: Tips
 
 1. Nyquist plots are plotted in **polar coordinates**, in contrast to Bode and Nichols.
 2. Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.
+3. If the open loop system is stable (ie. $$L(s)$$ doesn't have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.
+4. If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point $$N = Z - P$$ times **clockwise**. This way the closed loop system is stable and the open loop system is called stabilizable.
+5. For a **strictly proper** or **non-strictly proper** transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane
+  1. For strictly proper systems, that point is the origin.
+  2. For nonstrictly proper systems, that point is a non-zero constant with **no phase** ie the point lies on the positive x-axis.
 
 ## Root Locus Tips
 1. Use lead compansator to drag your asymptotes further to the left, increasing stability and decreases transient response time in time domain.
@@ -84,15 +89,7 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 
 7. **Dominant Poles** are typically those with the **smallest damping** since the impulse response of poles with larger real parts quickly disappears.
 
----
 
-## LQG and Extended Kalman Tips
-
-1. An LQG controller does not have any guarantee on robustness.
-
-2. LQR and LQR solves an Algebraic Riccati Equation to calculate an analytical solution to the problem given Q and R.
-
-3. If the system is observable, LQE can deduce all states from a few measurable states. Degrees of observability would be helpful when desining an observer. 
 
 --- 
 
@@ -120,3 +117,28 @@ $$ max(|S|)$$ can be! This is a hard rule that needs to be satisfied. One can sh
 2. One of the key limitations of loop shaping occurs when we have the possibility of cancellation of right half plane poles and zeros. The canceled poles and zeros do not appear in the loop transfer function but they can appear in the transfer functions from disturbances to outputs or control signals.
     
     - Non-minimum phase systems impose severe restrictions on possible crossover frequencies according to the crossoverfrequency inequality.
+
+---
+
+# State Space Tips
+
+## State Space Matrix Tips
+
+1. In a linear time-invariant system with feedthrough (D*u) term. The poles of the system are only dependent on the eigenvalues of the A matrix, while the zeroes are dependent on all A, B, C, D matrices.
+
+    - To change the poles, you need to re-design the system (dictated by eigenvalues of A).
+
+    - To change the zeros, you can change the sensors.
+
+2. Zero appears whenever there is a frequency at which the system's input-output path completely cancels out - a nonzero input produces no output in the steady state response.
+
+3. 
+
+## LQG and Extended Kalman Tips
+
+1. An LQG controller does not have any guarantee on robustness.
+
+2. LQR and LQR solves an Algebraic Riccati Equation to calculate an analytical solution to the problem given Q and R.
+
+3. If the system is observable, LQE can deduce all states from a few measurable states. Degrees of observability would be helpful when desining an observer.
+

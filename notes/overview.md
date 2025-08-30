@@ -99,3 +99,9 @@ We are able to change the actual dynamics of the system to stabilize it by selec
 
 2. Open Loop Transfer Functions reveal robustness by Sensitivity and Complementary Sensitivity
     - The closer the Open Loop Transfer Function L gets to -I, the bigger Sensitivity gets, and the less stable the system gets
+
+---
+
+# Domains
+
+![All Domains](../figures/all_domains.png)

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drone Control</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h1 id="drone-control-and-complementary-filter">Drone Control and Complementary Filter</h1>
+
+<h2 id="imu">IMU</h2>
+<h3 id="gyroscope-gyro">Gyroscope (Gyro)</h3>
+<ul>
+  <li><strong>Measures</strong>: <em>Angular velocity</em> (rate of rotation) around each axis (x, y, z).</li>
+  <li><strong>Units</strong>: degrees/second (°/s) or radians/second (rad/s).</li>
+  <li>
+    <p><strong>Strengths</strong>:</p>
+
+    <ul>
+      <li>Very good at detecting quick, short-term changes in orientation.</li>
+      <li>Not affected by linear acceleration (e.g., if you shake the sensor).</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Weaknesses</strong>:</p>
+
+    <ul>
+      <li>Needs integration to get orientation → causes <strong>drift</strong> over time.</li>
+      <li>Small constant errors (bias) accumulate when integrated.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-accelerometer">2. Accelerometer</h3>
+<ul>
+  <li><strong>Measures</strong>: <em>Specific force</em> along each axis (x, y, z) — includes <strong>gravity</strong> and <strong>linear acceleration</strong>.</li>
+  <li><strong>Units</strong>: meters/second² (m/s²) or g (1 g ≈ 9.81 m/s²).</li>
+  <li><strong>Strengths</strong>:
+    <ul>
+      <li>Can give <strong>absolute tilt/orientation</strong> relative to gravity if stationary or moving slowly.</li>
+      <li>No drift over time.</li>
+    </ul>
+  </li>
+  <li><strong>Weaknesses</strong>:
+    <ul>
+      <li>Very noisy during movement or vibration.</li>
+      <li>Can’t distinguish between gravity and actual movement acceleration.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="continuous-time-complementary-filter">Continuous Time Complementary Filter</h2>
+<p>A complementary filter is a simple sensor fusion technique that combines measurements from two (or more) sensors in a way that uses each sensor’s strengths while compensating for its weaknesses.</p>
+
+<h3 id="complementary-filter-example---measuring-roll-with-imu">Complementary Filter Example - Measuring roll with IMU</h3>
+<ol>
+  <li>
+    <p>Dead Reckoning</p>
+
+    <ul>
+      <li>Integrating rate of change at each measurement step by adding it to the current measurement</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Many sensors have trade-offs:</strong></p>
+
+<p>Accelerometers: Good at measuring long-term orientation (low-frequency information), but noisy and sensitive to vibration.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Cannot be trusted at a given second.
+</code></pre></div></div>
+
+<p>Gyroscopes: Good at measuring short-term changes (high-frequency information), but drift over time.</p>
+
+<p><strong>The complementary filter</strong> blends them:</p>
+
+<p><img src="../figures/complementary_filter.png" alt="continuous complementary filter" /></p>
+
+<p>Simplified filter diagram in practice:</p>
+
+<p><img src="../figures/simplifiying_complementary_filter.png" alt="Simplified complementary filter" /></p>
+
+<p><strong>Low-pass filter</strong> the accelerometer → keeps slow, long-term trends (reduces noise).</p>
+
+<p><strong>High-pass filter</strong> the gyroscope → keeps fast, short-term changes (reduces drift).</p>
+
+<h2 id="discrete-complementary-filter">Discrete Complementary Filter</h2>
+
+<p><img src="../figures/discrete_complementary_filter.png" alt="discrete complementary filter" /></p>
+
+<p>By believe the Gyro more, we are allowing short-term agility to make it through and also adding a small amount of accelerometer data to nudge it back to prevent drifting</p>
+
+<hr />
+
+<h1 id="drone-control-in-practice">Drone Control in practice</h1>
+
+<h2 id="sensors">Sensors</h2>
+<ol>
+  <li>Ultrasound sensor - measures altitude or distance above a surface</li>
+  <li>Camera - measures horizontal motion and speed</li>
+  <li>Pressure Sensor - Altitude</li>
+  <li>IMU - Angular rate and Acc</li>
+</ol>
+
+<h2 id="hardware">Hardware</h2>
+<p>Opposing motors rotate in the same way but different from adjacent motors. This means <strong>Thrust, roll, pitch, and yaw can be commanded independently</strong>.</p>
+
+<p>This design is due to the way yaw interacts with roll and pitch.</p>
+
+<h3 id="how-to-command-yaw">How to command yaw</h3>
+<p><img src="../figures/drone_yaw_diagram.png" alt="command drone yaw" /></p>
+
+<p>To change yaw, slow a pair of motors that spin in the same direction down and speed the other pair up. This will still counteract gravity but total torque is not 0. This Design allows drone to yaw without changing thrust, pitch, or roll.</p>
+
+<h3 id="how-to-command-roll">How to command roll</h3>
+<p><img src="../figures/drone_roll_diagram.png" alt="command drone roll" />
+Decrease either left or right pairs of motors spinning in the opposite direction, causing a rolling torque.</p>
+
+<h3 id="how-to-command-thrust">How to command thrust</h3>
+<p>Set all motors to the same speed.</p>
+
+<h3 id="motor-mixing-algorithm">Motor Mixing Algorithm</h3>
+<p><img src="../figures/drone_motor_mixing_algorithm.png" alt="drone motor mixing" /></p>
+
+<h3 id="unactuated-directions">Unactuated Directions</h3>
+<p>Forward, backward, left, and right are unactuated.</p>
+
+<h3 id="maintaining-altitude-while-going-in-un-actuated-directions">Maintaining Altitude while going in un-actuated directions</h3>
+<p>To go left, tilt the drone so its thrust force partially counteracts gravity, partially points left. Increase thrust so the vertical component counteracts gravity completely.</p>
+
+<hr />
+
+<h2 id="control-diagram">Control Diagram</h2>
+
+<p><img src="../figures/drone_control_diagram.png" alt="Drone Control Diagram" /></p>
+
+<p>There are our actuators, four sensors, six degrees of freedom (x, y, z, roll, pitch, yaw).
+<strong>This is an underactuated system.</strong> Since we don’t have an actuator for every motion, some some directions are uncontrollable at any given time.
+we are going to develop a controller that couples thrust with rotational dynamics</p>
+
+<hr />
+
+<h3 id="control-scheme">Control Scheme</h3>
+
+<p>Plant: Drone</p>
+
+<p>Desired output: hovering at fixed altitude.</p>
+
+<p>Design goal: how to manipulate the four actuators to maintain altitude.</p>
+
+<h3 id="why-a-simple-pid-for-altitude-control-wouldnt-work">Why a simple PID for altitude control wouldn’t work</h3>
+<p>A PID for altitude (same as thrust) control cannot take into account wind gust and other disturbances. Since increasing thrust can only make the drone travel along its <strong>local z axis (pointing down)</strong>. We therefore needs to ensure a level flight. This motivates the next part.</p>
+
+<h3 id="why-a-decoupled-four-indenpendent-controller-control-scheme-wouldnt-work">Why a decoupled four-indenpendent-controller control scheme wouldn’t work</h3>
+
+<p><img src="../figures/independent_drone_controller.png" alt="Undesirable decoupled independent controller control scheme" /></p>
+
+<p>This is <strong>undesirable</strong> since <strong>Reference Pitch and Roll may need to be non-zero while hovering</strong>, the drone needs to lean into the wind
+    - wind gust can still cause the drone to drift away from its starting coordinates even though the drone would be level.</p>
+
+<p>We <strong>need to couple position errors with roll and pitch</strong> because left, right, forward, and backward movements are not actuated</p>
+
+<hr />
+
+<h2 id="drone-altitude-controller">Drone Altitude Controller</h2>
+
+<p><img src="../figures/drone_altitude_controller.png" alt="drone altitude controller" /></p>
+
+<p><strong>Note:</strong> We can command <strong>thrust, roll, pitch, and yaw independently</strong>. We can thereby create a feedback controller for each one. To ensure the drone doesn’t drift away from the original (x,y) coordinates due to disturbance, we add a cascade loop for position control.</p>
+
+<h3 id="important-notes-on-drone-altitude-controller">Important notes on Drone Altitude Controller</h3>
+<ol>
+  <li>
+    <p>We need estimated yaw for position controller, due to the fact that we need to coordinate-transform world coordinate of the starting position to drone body frame.</p>
+  </li>
+  <li>We have five parameters that require estimates for: yaw, pitch, roll, altitude, (x, y)
+    <ul>
+      <li>Sensor fuse the 4 sensors we have to estimate.</li>
+    </ul>
+  </li>
+  <li>We have 6 PIDs to tune with 4 in cascade.
+    <ul>
+      <li>We need a great model to simulate drone dynamics</li>
+    </ul>
+  </li>
+  <li>The position controller takes the position error as input and output roll and pitch.</li>
+</ol>
+
+<hr />
+
+<h1 id="altitude-controller-walkthrough">Altitude Controller Walkthrough</h1>
+<p><strong>Scenario starts</strong>: Altitude correct, but position is a bit off to the left -&gt; position error.
+Step 1: P controller of PID request roll angle to fly right, which gives a reference roll angle.
+Step 2: Inner loop roll PID takes the reference roll angle from previous step and calculate rolling torque.
+Step 3: Motor-Mix-Algorithm takes rolling torque as input and outputs motor commands, making motors on the left speed up and motors on the right slow down.
+<strong>Scenario prgoresses</strong>: Step 3 makes the drone roll to the right, but since the vertical component of the thrust is slightly smaller than gravity when rolled, the drone loses altitude.
+Step 4: Altitude controller senses this altitude error and increases thrust.
+Step 5: Position error decreases as drone moves to the right, the requested roll angle also drops.
+Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
+
+<hr />
+
+<h1 id="flight-code-and-simulation">Flight code and simulation</h1>
+<p><img src="../figures/drone_control_workflow.png" alt="drone control workflow" /></p>
+
+<p>This diagram shows the four components of the Flight Code Software (FCS)</p>
+
+<h2 id="flight-code-software">Flight code software</h2>
+<p><img src="../figures/drone_block_diagram.png" alt="drone control FCS" /></p>
+
+<h2 id="simulate-flight-dynamics">Simulate Flight Dynamics</h2>
+<p><img src="../figures/drone_model_design.png" alt="Drone model design process" /></p>
+<ol>
+  <li>A high fidelity nonlinear model to simulate the real world</li>
+  <li>A linear model to test linear controllers</li>
+</ol>
+
+<h3 id="whats-inside-the-model-block">What’s inside the model block?</h3>
+<p><img src="../figures/drone_model_detail.png" alt="Drone model details" /></p>
+
+<hr />
+
+<h1 id="tuning-the-pid-controller">Tuning the PID controller</h1>
+
+<p>start with the simplest model possible</p>
+<ol>
+  <li>Focus on altitude control only (thrust control) first by setting inputs to MMA for roll, pitch, and yaw to 0</li>
+  <li>Assume sensor model plays no role first.</li>
+</ol>
+
+<hr />
+
+<h1 id="geometric-controller">Geometric Controller</h1>
+<p>Reference:</p>
+
+<p><a href="https://vnav.mit.edu/material/06-Control1-notes.pdf">Control 1 Notes (MIT VNAV)</a></p>
+
+<p><a href="https://vnav.mit.edu/material/07-Control2-notes.pdf">Geometric controller</a></p>
+
+<h2 id="inputs-and-outputs-of-the-geometric-controller">Inputs and Outputs of the Geometric Controller</h2>
+
+<h3 id="inputs">Inputs</h3>
+<ol>
+  <li>Desired state \(p_{d}^{w}, \tilde{x}_{d}^{w}\), and current state \(x, \dot{x}, R, \omega\). Compute Tracking Error.</li>
+  <li>Positive Constants \(K_p (\text{ or } K_{x}), K_v, K_R, K_\omega\), for gains.</li>
+  <li>Vehicle params: mass m, inertia J, gravity g.</li>
+</ol>
+
+<h3 id="outputs-of-the-geometric-controller">Outputs of the Geometric Controller</h3>
+<ol>
+  <li>Collective thrust (scalar), a force along body (\(b_3\))</li>
+  <li>Body moments(vector) \(M \in \mathcal{R}^3\)</li>
+</ol>
+
+<hr />
+
+<h2 id="tracking-error">Tracking Error</h2>
+
+<ul>
+  <li>
+    <p><strong>Position error</strong><br />
+\(e_p = p_w - p_w^d\)</p>
+  </li>
+  <li>
+    <p><strong>Linear velocity error</strong><br />
+\(e_v = v_w - v_w^d\)</p>
+  </li>
+  <li>
+    <p><strong>Rotation error</strong><br />
+\(e_R = \frac{1}{2} \left[ (R_w^d)^T R_w^B - (R_w^B)^T R_w^d \right]^\vee\)</p>
+  </li>
+  <li>
+    <p><strong>Angular velocity error</strong><br />
+\(e_\omega = \omega_B - (R_w^B)^T R_w^d \, \omega_d\)</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="control-commands-per-tick">Control commands (per tick)</h2>
+<h3 id="translational-side">Translational Side</h3>
+<p>Let \(R \in SO(3)\) be the body→world rotation matrix,<br />
+\(\Omega \in \mathbb{R}^3\) the body-frame angular velocity,<br />
+\(e_3 = [0,\,0,\,1]^\top\), \(m\) the mass, \(J\) the inertia matrix.</p>
+
+<p><strong>Position/velocity errors:</strong>
+\(e_p = x - x_d, \quad e_v = \dot{x} - \dot{x}_d\)</p>
+
+<p><strong>Commanded acceleration:</strong>
+\(a_c = -K_p e_p - K_v e_v + g\,e_3 + \ddot{x}_d\)</p>
+
+<p><strong>Collective thrust:</strong>
+\(u_1 = m\, a_c^\top (R\,e_3)\)</p>
+
+<h3 id="rotational-side">Rotational Side</h3>
+
+<p><strong>Attitude/angular velocity errors:</strong>
+\(e_R = \frac{1}{2} \big(R_d^\top R - R^\top R_d\big)^\vee\),
+\(e_\Omega = \Omega - R^\top R_d \,\Omega_d\)</p>
+
+<p><strong>Moment command:</strong>
+\(M = -K_R e_R - K_\Omega e_\Omega 
+    + \Omega \times (J\Omega) 
+    - J\left( \hat{\Omega} R^\top R_d \Omega_d - R^\top R_d \dot{\Omega}_d \right)\)</p>
+
+<p>Where:</p>
+<ul>
+  <li>\((\cdot)^\wedge\) is the hat map: \(\hat{a}b = a \times b\)</li>
+  <li>\((\cdot)^\vee\) is the inverse of the hat map</li>
+</ul>
+
+<hr />
+
+<h2 id="geometric-controller-tuning-guide">Geometric Controller Tuning Guide</h2>
+
+<h3 id="step-a--attitude-loop-gains-k_r-k_ω">Step A – Attitude Loop Gains (\(k_R\), \(k_Ω\))</h3>
+
+<p><strong>Goal:</strong> Make the vehicle track attitude commands quickly and without overshoot.</p>
+
+<ol>
+  <li><strong>Freeze position loop</strong>:
+    <ul>
+      <li>Hold position constant or give manual attitude commands.</li>
+    </ul>
+  </li>
+  <li><strong>Initial values</strong>:
+    <ul>
+      <li>Start small so the response is gentle.</li>
+      <li>Example starting point:
+\(k_R ≈ 8 * J_{diag}
+k_Ω ≈ 2 * sqrt(k_R * J_{diag})\)
+where \(J_{diag}\) are diagonal elements of the inertia matrix.</li>
+    </ul>
+  </li>
+  <li><strong>Tune \(k_R\)</strong>:
+    <ul>
+      <li>Increase until rotations toward commanded attitude are crisp but not oscillatory.</li>
+    </ul>
+  </li>
+  <li><strong>Tune \(k_Ω\)</strong>:
+    <ul>
+      <li>Increase to damp rotation overshoot (derivative-like effect).</li>
+    </ul>
+  </li>
+  <li><strong>Target</strong>:
+    <ul>
+      <li>Step response in ~0.2–0.4 s, no sustained oscillations.</li>
+      <li>Watch for motor torque saturation.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="step-b--position-loop-gains-k_x-k_v">Step B – Position Loop Gains (\(k_x\), \(k_v\))</h3>
+
+<p><strong>Goal:</strong> Track position without excessive attitude demands or overshoot.</p>
+
+<ol>
+  <li><strong>Fix attitude loop</strong>:
+    <ul>
+      <li>Keep \(k_R\) and \(k_Ω\) from Step A.</li>
+    </ul>
+  </li>
+  <li><strong>Start small</strong>:
+    <ul>
+      <li>Small \(k_x\) for gentle acceleration toward waypoint.</li>
+      <li>Add \(k_v\) to damp oscillations.</li>
+    </ul>
+  </li>
+  <li><strong>Increase \(k_x\)</strong>:
+    <ul>
+      <li>Raise until position response is as fast as desired without saturating thrust.</li>
+    </ul>
+  </li>
+  <li><strong>Tune \(k_v\)</strong>:
+    <ul>
+      <li>For near-critical damping:
+\(k_v ≈ 2 * \sqrt{(k_x * m)}\)
+where \(m\) is the mass.</li>
+    </ul>
+  </li>
+</ol>
+
+</body>
+</html>

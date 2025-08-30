@@ -11,6 +11,8 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 ## 📚 Core Topics
 
+### Linear Control
+
 - [Useful Tips](./notes/tips.html) \\
   Important Intuitions for designing control systems.
 
@@ -70,6 +72,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Data Driven Control](./notes/data_driven_control.html) \\
   Advanced control topics for Machine Learning based control
 
+### Nonlinear Control
+
+- [Lyapunov Stability Principle](./nonlinear_notes/stability.html)
 
 
 ## Domain Specific Control
@@ -84,6 +89,11 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Kodiak Autonomous Trucking](./interview_prep/kodiak.html)
 
 - [Drone Control](./interview_prep/drone_control.html)
+
+## Data Driven Control
+
+- []
+
 
 ## 🛠️ Tools and Techniques
 

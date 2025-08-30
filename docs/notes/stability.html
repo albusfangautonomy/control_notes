@@ -49,6 +49,62 @@ less margin = less stable</p>
 
 <hr />
 
+<h2 id="why-use-disk-margin">Why use Disk Margin?</h2>
+<ol>
+  <li>
+    <p>Even though increasing delay or increasing gain individually (reducing GM and PM respectively) may not cause the system to be unstable, adding a mix of the two can unstabilize the system. The disk margin therefore needs to be considered. To anaylze the effect of adding phase and gain, use Nyquist Plot.</p>
+  </li>
+  <li>
+    <p>Disk margin can be used on MIMO.</p>
+  </li>
+</ol>
+
+<h2 id="disk-margin">Disk Margin</h2>
+
+<p><img src="../figures/disk_margin_complex_plane.png" alt="disk margin" width="700" /></p>
+
+<p>The disk reads “Given \(e=0.0\), the maximum disk margin is 0.56”</p>
+
+<h3 id="parameters-of-the-disk">Parameters of the disk</h3>
+<p>The disk must be fit entirely in the stable region and includes the nominal point \(f =1 + 0i\)</p>
+<ol>
+  <li>Skew factor \(e\). how far off the center of the disk is to the nominal point.</li>
+  <li>\(\alpha\) measures the size of the disk. It represents the size of the disk given a certain \(e\) such that the disk is entirely in the stable region.</li>
+</ol>
+
+<h3 id="disk-placement">Disk Placement</h3>
+<p>You can choose where the disk is:</p>
+
+<ol>
+  <li>
+    <p>If you think real system gain is bigger than model gain, use a bigger \(e\)</p>
+
+    <ul>
+      <li>If unsure, choose \(e = 0.0\)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Disk margin may not be conservative even if it may only covers a small area of stability zone.</p>
+
+    <p><img src="../figures/disk_margin_conservativeness.png" alt="disk margin conservativeness" width="500" /></p>
+
+    <ul>
+      <li>in this case, while gain margin is bigger, at those bigger gain values, not much wiggle room for phase -&gt; not optimal</li>
+    </ul>
+  </li>
+  <li>
+    <p>May need to check all three margins to ensure accurate representation of the stability.</p>
+
+    <ul>
+      <li>Some systems are robust to pure phase or gain variations but not a mix of the two</li>
+    </ul>
+
+    <p><img src="../figures/disk_margin_example.png" alt="disk margin example" width="500" /></p>
+  </li>
+</ol>
+
+<hr />
+
 <h2 id="closed-loop-stability">Closed Loop Stability</h2>
 
 <p>In a non-unity feedback system whose feedback transfer function is \(H(s)\), the closed loop transfer function is \(\frac{G(s)}{1+GH}\). We can study the stability of the closed loop transfer function by identifying the <strong>zeros</strong> of \(1+GH\).</p>
@@ -58,6 +114,86 @@ less margin = less stable</p>
 <hr />
 
 <h2 id="nyquist-criterion--bodenyquist-terms-unity-feedback">Nyquist Criterion — Bode/Nyquist Terms (Unity Feedback)</h2>
+
+<h3 id="cauchys-argument-principle">Cauchy’s Argument Principle</h3>
+
+<p>A <em>contour</em> in S-plane maps to a <em>plot</em> in W-plane. The phaser for any point on the contour is the same as the phaser for its mapped counterpart in the W-plane. The mapping is done by the transfer function.</p>
+
+<p>To compute the phaser:</p>
+<ol>
+  <li>Choose a point in the S plane.</li>
+  <li>Draw phasers by connecting that point of interest to all the zeros and poles in the S-plane.</li>
+  <li>To compute the magnitude of the phaser in W-plane, multiply all magnitudes of the zero phasers (<strong>in S-plane</strong>) and divide by the magnitudes of the pole phasers (<strong>in S-plane</strong>).</li>
+  <li>To compute the phase of the phaser in W-plane, add the zero phases <strong>in S-plane</strong> and subtract the pole phases <strong>in S-plane</strong>. The phase here refers to the angle between the phaser and the positve x-axis.</li>
+</ol>
+
+<p>We use the above method to trace a contour in the S-plane and visualize the plot on the W-plane.</p>
+
+<p><strong>Notes:</strong></p>
+<ol>
+  <li>Given the above steps, we can see that if the contour does not include any poles or zeroes, the phase in W-plane would never go around \(360^\circ\).</li>
+  <li>If the contour encircles a pole, the resulting plot on W-plane circles the origin in the counter clockwise direction. This is because we are subtracting pole phases.</li>
+</ol>
+
+<ul>
+  <li>for each encircled pole on a contour, there’s a circle around the origin on the plot in W-plane.</li>
+</ul>
+
+<ol>
+  <li>Encircling a zero in the S-plane does similar things in W-plane but flip the direction to clockwise.</li>
+  <li>If there are same number of zeros as poles, the resulting plot in W-plane does not encircle the orgin at all.</li>
+</ol>
+
+<p><img src="../figures/s_plane_w_plane_fig1.png" width="300" /> <img src="../figures/s_plane_w_plane_fig2.png" width="300" /></p>
+
+<p>We can get the difference between the number of poles and zeros in the S-plane just by looking at if the plot in W-plane encircles the origin and if so, in what direction.</p>
+
+<ol>
+  <li>If the plot in W-plane (ie, after propagating through the transfer function) encircles the origin once in the clockwise direction, there is 1 <strong>more</strong> zero than poles in the original system.</li>
+  <li>If the plot in W-plane (ie, after propagating through the transfer function) encircles the origin once in the counter-clockwise direction, there is 1 <strong>more</strong> pole than zeros in the original system.</li>
+  <li>If the plot encircles the origin twice in the clockwise direction, there are 2 <strong>more</strong> zeros than poles in the original system.</li>
+</ol>
+
+<p><img src="../figures/s_plane_w_plane_fig3.png" width="300" /></p>
+
+<hr />
+
+<h2 id="using-cauchys-argument-principle-for-closed-loop-stability-analysis-are-there-any-zeroes-in-rhp-for-1ls">Using Cauchy’s Argument Principle for Closed-loop Stability Analysis (Are there any zeroes in RHP for \(1+L(s)\))</h2>
+<h3 id="why-rhp-zeros-of-1ls">Why RHP zeros of \(1+L(s)\)?</h3>
+<ol>
+  <li>An open loop system is stable if and only if there is <em>no RHP poles</em>, which happens when the <strong>denominator</strong> of L(s) equals 0.</li>
+  <li>Since \(1+L(s)\) is the new denominator of the closed loop transfer function \(\frac{G}{1+GH}\), we want there to be no RHP zeros.</li>
+</ol>
+
+<h3 id="using-cauchys-argument-principle-and-nyquist-contour">Using Cauchy’s Argument Principle and Nyquist Contour</h3>
+<p>Since we need to know if there is any RHP zeros for \(1+GH\), we need a contour that encloses the right half plane - \(Nyquist contour\) on S-plane.</p>
+
+<p>When the <strong>Nyquist contour</strong> is mapped through a transfer function to the W-plane, we get a <strong>Nyquist plot</strong>. The Nyquist plot is plotted by pluggin in every single frequency on the imaginary axis and all the points along with infinity on the RHP in the S-plane.</p>
+
+<p>Instead of 1+GH, we can shift the plane to the left by -1 and only investigate the <strong>Open-loop</strong> transfer function \(GH\).</p>
+
+<p>By looking at the Nyquist plot, we can see how many times the -1 point is encircled and in which direction.</p>
+
+<p>Steps:</p>
+<ol>
+  <li>Get Nyquist plot of Open-loop transfer function \(G(s)H(s)\)</li>
+  <li>Count encirclements of -1, note direction.</li>
+  <li>Determine how many more poles or zeros are in the RHP. We can do this since we typically know how many poles are in the RHP for \(GH\)</li>
+</ol>
+
+<p>Therefore,</p>
+
+\[Z=N+P\]
+
+<p>where Z is the number of zeros of \(1+GH\), N is the number of times the Nyquist plot encircles -1 in the clockwise direction, and P is the number of open loop poles in the RHP (unstable open-loop poles)</p>
+
+<p>To guarantee no RHP zeros for \(1+L(s)\), we need to have 1 counterclockwise encirclement for every open-loop RHP pole.</p>
+
+<p>This prperty allows to use Nyquist plots to analyze both stable and unstable open-loop system, unlike the bode plot, which only pertains to stable open loop systems.</p>
+
+<hr />
+
+<h3 id="nyquist-criterion">Nyquist Criterion</h3>
 
 <p><strong>Setup.</strong> Let the open-loop transfer be \(G(s)\) for a unity-feedback loop with closed-loop characteristic \(1+G(s)=0\). Let:</p>
 <ul>

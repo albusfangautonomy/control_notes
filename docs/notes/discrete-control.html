@@ -12,15 +12,228 @@
 
 <h2 id="continuous-vs-discrete-time-domain-analog-vs-digital">Continuous vs Discrete Time domain (Analog vs Digital)</h2>
 <ol>
-  <li>Quatization Error would be introduced and can be minimized. There is a trade-off between bits, measurement range and quatization error</li>
+  <li>Quantization Error would be introduced and can be minimized. There is a trade-off between bits, measurement range and quantization error.</li>
   <li>Discrete time (digital) systems introduce delay, which introduces lag and reduces bandwidth of controller.</li>
 </ol>
 
 <h2 id="discretizing-the-system">Discretizing the system</h2>
-<p>Two ways to approach this problem.
-<img src="../figures/discretize_system.png" alt="discretize system" /></p>
+<p>Two ways to approach this problem.</p>
+
+<p><img src="../figures/discretize_system.png" alt="discretize system" /></p>
+
+<h2 id="discrete-time-fourier-transform">Discrete Time Fourier Transform</h2>
+<p>The <strong>Discrete-Time Fourier Transform (DTFT)</strong> of a discrete-time signal \(x[n]\) is defined as:</p>
+
+\[X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n}\]
+
+<p>This calculates how correlated the time domain signal is with all frequencies.</p>
+
+<p><strong>DTFT</strong> works on finite time signals unlike Z transform.</p>
 
 <h2 id="z-domain-and-z-transform">Z domain and Z transform</h2>
+<p>Z transform can be considered as the discrete-time counterpart of the Laplace Transform.
+The <strong>Z-transform</strong> of a discrete-time signal \(x[n]\) is defined as:</p>
+
+\[X(z) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}\]
+
+<p>where \(z = r*e^{i \omega}\)</p>
+
+<p>An n time delay in z domain would be \(\frac{1}{z^n}\).</p>
+
+<h3 id="z-transform-vs-dtft">Z transform vs DTFT</h3>
+<p><img src="../figures/discrete_z_transform.png" alt="z transform vs DTFT" /></p>
+
+<h3 id="intuition">Intuition</h3>
+<ol>
+  <li>Z transform calculates the correlation between the time domain signal and combinations of both sinusoids and exponentials, which solves most linear shift invariant systems.</li>
+  <li>
+    <p>Unlike DTFT, Z transform has convergence problems</p>
+
+    <ul>
+      <li>
+        <p>For instance, for infinite discrete time signal, when there’s no frequency profile, when the probing signal grows at the same rate at which time signal decays, the sum goes to infinity. (See figure below) Even though all subsequent smaller r would also make the sum \(\infty\), the first instance when the sum does not converge is when a perfect correlation has been found. A pole exists here.</p>
+      </li>
+      <li>
+        <p>For a finite discrete time signal, the sum for z transform always converges. We therefore cannot investigate finite time signals with Z transform without an assumption (signal = 0 for rest of time). In such a case DTFT is useful.</p>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2><img src="../figures/pole_z_transform.png" width="800" /></h2>
+
+<h2 id="z-plane-and-z-domain">Z plane and Z domain</h2>
+
+<p><img src="../figures/all_domains.png" alt="All Domains" /></p>
+
+<p>Z domain is the discrete counterpart of the Laplace S domain. However, Z-domain is not a straight discretization of the S-domain, rather Z domain maps S-domain into a unit circle in polar coordinates as explained below.</p>
+
+<h3 id="z-plane-and-s-plane">Z Plane and S Plane</h3>
+
+<p>Z plane is in polar coordinates, while S plane is in Cartesian coordinates.</p>
+
+<p><img src="../figures/z_plane_s_plane.png" width="700" /></p>
+
+<p>Since \(z = r*e^{i \omega} = e^{sT} = e^{\sigma + i \omega T}\), the real part \(e^{\sigma T}\) scales the circle. The black line enclosing the unit circle and separates the inside and outside of the circle in the Z plane corresponds to the Imaginary axis in the S plane. \(e^{i \omega T}\) traces a circle.</p>
+
+<p>For a continuous domain, there are infinite frequencies so S plane goes from \(-\infty\) to \(\infty\). However, in discrete systems, frequency only goes from \([-f_{nyquist}, f_{nyquist}]\) on the imaginary axis (real axis on S plane still goes to infinity).</p>
+
+\[f_{nyquist} = f_{sampling} / 2\]
+
+<p>Since frequency is represented by the angle between a line and positive x-axis on the Z plane, Nyquist frequency represents the</p>
+
+<p>Defining \(z = e^{sT}\) makes implementing physical hardware easy, since inverse Z transform to difference equation is trivial. This is due to the fact that \(z^{-1}\) corresponds to a single time step delay in time domain for the difference equation.</p>
+
+<p><img src="../figures/inverse_z_transform_example.png" width="600" /></p>
+
+<p>Note the coefficients of the difference equation correspond to those in the transfer function. This makes the inverse Z transform trivial.</p>
+
+<hr />
+
+<h2 id="discretization-method">Discretization Method</h2>
+
+<p>There are 5 different methods:</p>
+<ol>
+  <li>Zero Order Hold</li>
+  <li>First Order Hold</li>
+  <li>Impulse</li>
+  <li>Tustin</li>
+  <li>Matched</li>
+</ol>
+
+<p>ZOH (step invariant), FOH (ramp invariant), and Impulse invariant all produce specific time-domain responses.</p>
+
+<p>The method you choose depends on what you are trying to accomplish. (Minimizing the loss of important info.)</p>
+
+<ol>
+  <li>We may want the frequency response of the discrete system to be the same as the continuous system. (Notch filter)</li>
+  <li>We may want the step response to be the same.</li>
+</ol>
+
+<p><strong>Note</strong> If the time constant of your system is slow compared to the sample time, all methods are the same. When time constant is bigger, these 5 methods produce different results by prioritizing different aspects.</p>
+
+<h3 id="impulse-invariant-method">Impulse Invariant Method</h3>
+
+<p>This method ensures the discrete impulse is the same as the continuous impulse response. Note that Matlab defines impulse differently than Kronecker delta and is <strong>scaled by</strong> \(T_s\).</p>
+
+<p>Impulse invariant method uses an impulse train as inputs, which is not realistic. ZOH is more realistic. Impulse invariant method would yield <strong>erroneous step response</strong>.</p>
+
+<hr />
+
+<h3 id="zero-order-hold-step-invariant-method">Zero Order Hold (Step Invariant Method)</h3>
+
+<p>ZOH holds the value at the previous time step until the next time step is reached. However, ZOH method would yield <strong>inaccurate impulse response</strong>.</p>
+
+<p><img src="../figures/zoh_tf.png" alt="zoh transfer" /></p>
+
+<p>Walkthrough:</p>
+<ol>
+  <li>Start with discrete time domain signal \(v_{k}\) (discrete motor commands, discrete sensor readings …)</li>
+  <li>Convert the discrete time signal \(v_{k}\) to continuous time signal \(v_t\), which is fed to continuous plant (G(s))</li>
+  <li>The continuous time signal \(v_t\) is fed to continuous plant (G(s)) which produces Y(s)</li>
+  <li>Sample the continuous frequency domain output to get discrete frequency domain output</li>
+</ol>
+
+<p>ZOH is created by subtracting a delayed step function from another undelayed step function</p>
+
+\[\frac{Y(s)}{V{s}}=\frac{z-1}{z} * \mathcal{Z}(\frac{G(s)}{s})|_{t=kT}\]
+
+<h3 id="using-zero-order-hold-in-discrete-controller-design">Using Zero Order Hold in discrete controller design</h3>
+<p>Model-based design:</p>
+
+<ol>
+  <li>
+    <p>Method 1: Discretize the plant -&gt; design discrete controller. We need to use ZOH</p>
+
+    <ul>
+      <li>Everything is represented by discrete transfer functions.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Method 2: Design a continuous controller with a continuous plant model -&gt; discretize the controller. ZOH is implied</p>
+
+    <ul>
+      <li>Need to use other methods to discretize the continuous controller other than ZOH (Tustin or Matched method)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Notes:</p>
+
+<ol>
+  <li>If you are building a <strong>hybrid system</strong> with a discrete controller and continuous plant, ZOH is implied.</li>
+  <li>However, when designing a continuous controller based on continuous plant, ZOH is not assumed. Tuning continuous controller without ZOH effect then discretizing the continuous controller may yield unstable behavior.</li>
+  <li>A ZOH needs to be explicitly added between controller and plant to ensure the effect of ZOH is taken into account. However, ZOH is nonlinear and classical methods for continuous controllers can’t handle nonlinearity.</li>
+  <li>Padé Approximation solves this problem by approximating ZOH with a transfer function, allowing us to use classical methods to design the controller then actually discretize it with Tustin method.</li>
+</ol>
+
+<hr />
+
+<h2 id="bilinear-transform-tustin-method---discretizing-a-continuous-controller">Bilinear Transform (Tustin Method) - discretizing a continuous controller</h2>
+<p>The Bilinear Transform is another method for converting a continuous system into a discrete system.</p>
+
+<h3 id="formulae">Formulae</h3>
+<p>Bilinear Transform:</p>
+
+\[s = \frac{2}{T} \frac{z-1}{z+1}\]
+
+<p>Inverse Bilinear Transform:</p>
+
+\[z = \frac{1+ \frac{T}{2} s}{1 - \frac{T}{2}s}\]
+
+<p>**Solving the first formula for s would yield the second one.</p>
+
+<h2 id="why-does-binlinear-transform-work">Why does Binlinear Transform work</h2>
+<ol>
+  <li>
+    <p>Interpretation 1:
+The bilinear transform is essentially a linear first order approximation of \(z=e^{sT}\) with Taylor Series. However, rather than \(z \approx 1+ ST\), we use a fraction to better estimate the exponential. To do this, we first split \(e^{sT} = e^{\frac{sT}{2}} * e^{\frac{sT}{2}} = \frac{e^{\frac{sT}{2}}}{e^{\frac{-sT}{2}}}\).</p>
+  </li>
+  <li>
+    <p>Interpretation 2: Trapezoidal Integration.</p>
+  </li>
+</ol>
+
+<h2 id="matched-method-not-widely-used">Matched Method (Not widely used!)</h2>
+<p>This method brings every pole in S domain to Z domain.</p>
+
+<hr />
+
+<h2 id="bilinear-transform-mapping">Bilinear Transform Mapping</h2>
+<p>Bilinear Transform warps the s-plane differently than the Z transform described above. In this mapping the three infinities - \(\pm \infty\) for <strong>s</strong>-plane imaginary axis and \(-\infty\) for real axis of the s-plane. The imaginarry axis of s-plane wraps around the unit circle. The -1 point is the Nyquist frequency on the z-plane.</p>
+
+<p><img src="../figures/bilinear_warping.png" width="800" /></p>
+
+<h3 id="frequency-warping-equation">Frequency Warping Equation</h3>
+<p>\(\omega_d = \frac{2}{T} atan(\omega_a \frac{T}{2})\)</p>
+
+<p>where \(\omega_d\) is the discrete frequency after bilinear transform and \(\omega_a\) is the analog frequency. At low frequencies, \(\omega_a = \omega_d\). As frequency increases, the warping becomes bigger.</p>
+
+<p>This creates an issue for discretizing continuous filter to get discrete filter. To resolve this issue, we can pre-warp the analog frequency.</p>
+
+<h3 id="pre-warping-spec-analog-frequency-modified-bilinear-transform">Pre-warping spec analog frequency (Modified Bilinear Transform)</h3>
+<p>\(s = \frac{\omega_0}{tan(\frac{\omega_0 T}{2})} \frac{z-1}{z+1}\)
+where \omega_0 is the frequency specification.</p>
+
+<hr />
+
+<h2 id="discrete-notch-filter-design-example">Discrete Notch filter design example</h2>
+
+<h3 id="notch-filter-band-stop-filter">Notch filter (Band stop filter)</h3>
+<ol>
+  <li>Critical frequency \(\omega_0\), center of the notch</li>
+  <li>Q - how deep and narrow the notch is</li>
+</ol>
+
+<h3 id="steps">Steps</h3>
+<p>We first design the filter in continuous domain and craft the perfect analog filter. Then use bilinear transform to deploy the filter on a digital computer.</p>
+
+<p><strong>Step 1</strong>: Design the filter in continuous domain</p>
+
+<p><strong>Step 2</strong>: Pre-warp the critical frequency \(\omega_0\)</p>
+
+<p><strong>Step 3</strong>: Use bilinear transform to convert the continuous filter to discrete filter.</p>
+
 
 </body>
 </html>

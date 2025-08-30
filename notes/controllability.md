@@ -5,9 +5,9 @@ title: Controllability
 # Equivalence
 1. System is controllable
 2. Arbitrary Eigenvalue (Pole) placement is allowed
-    - $$u = -Kx => \dot{x} = (A-BK)x$$ 
-3. Reachability (full in R^{n})
-    - Theorectically one can drive from Massachusetts to California in a second
+    - $$u = -Kx \Rightarrow \dot{x} = (A-BK)x$$ 
+3. Reachability (full in $$ \mathbb{R}^n $$)
+    - Theoretically one can drive from Massachusetts to California in a second
     - This can be proven by Cayley-Hamilton theorem
 
 
@@ -33,18 +33,18 @@ $$
 
 ## Stabilizability
 
-Controllability for a large dimension space maybe too extreme and sometimes unrealistic. For this purpose, Stabilizability is defined as
+Controllability for a large dimension space may be too extreme and sometimes unrealistic. For this purpose, stabilizability is defined as:
 
-**Stabilizability**
-A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controlable subspace. (Anything unstable can be damped)
+**Stabilizability**  
+A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controllable subspace. (Anything unstable can be damped)
 
-Actuator B should be designed so that the unstable dynamic direcitons correspond to the big singular vector of the controlability matrix.
+Actuator B should be designed so that the unstable dynamic directions correspond to the big singular vector of the controllability matrix.
 
 
 ### Examples of Stabilizability
 
 1. Inverted Pendulum on a cart
-    - **Unstable Mode** the pendulum tiipping over (angle grows exponentially).
+    - **Unstable Mode**: the pendulum tipping over (angle grows exponentially).
     - **Why Stabilizable**:
         - The cart can move left or right, providing a restoring torque - can be damped.
 
@@ -53,9 +53,9 @@ Actuator B should be designed so that the unstable dynamic direcitons correspond
     - **Why Stabilizable**:
         - Thrust vector control changes the direction of the force relative to the center of mass. This gives direct control authority over the unstable angular dynamics.
 
-3. Drone in hover (quadcoptor)
+3. Drone in hover (quadcopter)
     - **Unstable Mode**: attitude - if it tilts slightly, gravity pulls it further, the drone accelerates away.
-    - **Why stabilizable**
+    - **Why stabilizable**:
         - Each rotor produces torque about pitch, roll, and yaw.
         - These torques directly act on the unstable angular states.
         - Feedback (from IMU + controllers) lets you push those unstable poles into the stable LHP
@@ -64,33 +64,30 @@ Actuator B should be designed so that the unstable dynamic direcitons correspond
 
 ## Controllability of Linear system
 $$\dot{x}=Ax+Bu$$
-$$y=Cx$$
+$$y=Cx$$  
 This system is controllable if and only if the controllability matrix $$C=[B\ AB\ A^2B\ ...\ A^{n-1}B]$$ is of full column rank
 
-**Note** This is a binary check. To see how controllable this system is, investigate the SVD of C.
+**Note**: This is a binary check. To see how controllable this system is, investigate the SVD of C.
 
 ## Degrees of Controllability
 The Singular Value Decomposition (SVD) of the controllability matrix provides deep insight into the degree and direction of controllability of a linear system:
-1. Controllability Rank
-    If 𝐶 has full rank (i.e. rank = number of states 𝑛), the system is completely controllable.
+1. Controllability Rank  
+    If $$C$$ has full rank (i.e. rank = number of states $$n$$), the system is completely controllable.
 
-    The number of nonzero singular values = the rank of 𝐶.
+    The number of nonzero singular values = the rank of $$C$$.
 
-2. Strength of Controllability (Conditioning)
+2. Strength of Controllability (Conditioning)  
     The magnitude of the singular values tells you how "strongly" controllable the system is in different directions:
 
-    Large singular values → easy to move the system in that direction.
-
-    Tiny singular values → very difficult to control (require large input energy).
-
+    Large singular values → easy to move the system in that direction.  
+    Tiny singular values → very difficult to control (require large input energy).  
     Zero singular values → system not controllable in that direction.
 
-3. Controllable Directions
-    The right singular vectors V from $$𝐶 = 𝑈Σ𝑉^𝑇$$ span the input space.
+3. Controllable Directions  
+    The right singular vectors $$V$$ from $$C = U \Sigma V^\top$$ span the input space.  
+    The left singular vectors $$U$$ represent orthogonal directions in the state space.  
 
-    The left singular vectors 𝑈 represent orthogonal directions in the state space.
-
-    Directions associated with large singular values in 𝑈 are the most controllable.
+    Directions associated with large singular values in $$U$$ are the most controllable.
 
 ___
 
@@ -98,8 +95,8 @@ ___
 ## Controllability Gramian
 **The eigenvectors of the Gramian ($$W_t$$) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix**
 
-$$W_{t} \approx CC^T$$
-The determinant of the Gramian indicates the volume of the ellipsoid and the **signal to noise ratio**
+$$W_{t} \approx CC^T$$  
+The determinant of the Gramian indicates the volume of the ellipsoid and the **signal-to-noise ratio**.
 
 The **controllability Gramian** is a matrix that quantifies how easily a system’s state can be driven by the input. It measures the **energy** required to move the system from the origin to a particular state.
 
@@ -119,7 +116,7 @@ $$
 W_c(T) = \int_0^T e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau
 $$
 
-If \(A\) is stable and $$T \to \infty$$, the **infinite-horizon controllability Gramian** is:
+If $$A$$ is stable and $$T \to \infty$$, the **infinite-horizon controllability Gramian** is:
 
 $$
 W_c = \int_0^\infty e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau
@@ -136,13 +133,13 @@ $$
 
 #### ⚡ 2. Energy to Reach a State
 
-The **minimum energy** to reach a state \( x_f \) from the origin is:
+The **minimum energy** to reach a state $$ x_f $$ from the origin is:
 
 $$
 E = x_f^\top W_c^{-1} x_f
 $$
 
-States in directions with **small eigenvalues** of \(W_c\) require **more energy** to reach.
+States in directions with **small eigenvalues** of $$W_c$$ require **more energy** to reach.
 
 #### 📐 3. Geometric Interpretation
 
@@ -158,18 +155,18 @@ describes the set of states reachable with **unit energy**. This is known as the
 
 If $$ W_c $$ has a mix of **large** and **small** eigenvalues, then **some state directions are harder to control** than others.
 
-**Notes**
-1. The controllability Gramian is only defined for **linear** systems and often assumes zero initial state.
-2. The controllability Gramian is symmetric and positive semi-definite
+**Notes**  
+1. The controllability Gramian is only defined for **linear** systems and often assumes zero initial state.  
+2. The controllability Gramian is symmetric and positive semi-definite.
 
 ## PBH Test
 (A,B) is controllable if and only if
 $$
-rank[(A-\lambda I)\ B] = n \forall \lambda \in \mathbb{C}
+\text{rank}[(A-\lambda I)\ B] = n \quad \forall \lambda \in \mathbb{C}
 $$
-1. $$rank(A-\lambda I)=n$$ except for eigenvalues $$\lambda$$
-2. B needs to have some component in each eigenvector directions
-3. (Advanced) a random vector B would make (A,B) controllably with high probability
+1. $$\text{rank}(A-\lambda I)=n$$ except for eigenvalues $$\lambda$$
+2. B needs to have some component in each eigenvector direction
+3. (Advanced) A random vector B would make (A,B) controllable with high probability
 
 ---
 
@@ -200,7 +197,8 @@ $$
 \mathcal{R} = \begin{bmatrix} B & AB & A^2B & \cdots & A^{n-1}B \end{bmatrix}
 $$
 
-If $$\mathcal{R}$$ has **full rank** (i.e., $$\text{rank}(\mathcal{R}) = n$$), then the system is reachable
+If $$\mathcal{R}$$ has **full rank** (i.e., $$\text{rank}(\mathcal{R}) = n$$), then the system is reachable.
+
 ### 🎯 Reachability Set
 
 The **reachability set** (or reachable set) at time $$t_f$$ is the set of all states that the system can reach from an initial state $$x(0)$$ under some admissible input $$u(t)$$ over the time interval $$[0, t_f]$$.
@@ -234,4 +232,3 @@ $$
 $$
 
 The union of all such sets over all $$t_f$$ (or $$N$$ in discrete time) is the **total reachable set** from the origin.
-

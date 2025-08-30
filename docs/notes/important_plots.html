@@ -16,7 +16,7 @@
 
 <h2 id="which-to-use-a-comparison">Which to Use? A comparison</h2>
 <p><strong>All three display the same information just in different ways</strong>
-Bode Plot is useful for Loop shaping
+Bode Plot is useful for Loop shaping.
 Nyquist Plot and Nichols Plot are useful for general sensitivity and stability analysis.</p>
 
 <h2 id="intuition">Intuition</h2>
@@ -24,6 +24,8 @@ Nyquist Plot and Nichols Plot are useful for general sensitivity and stability a
 <p>Bode plot is extremely useful when analyzing open loop frequency reponse  \(G(s)\) of <strong>minimum phase and stable systems</strong> to predict the beahvior of the closed loop system \(\frac{G(s)}{1+G(s)}\).
 However, Bode plot falls apart when dealing with non-minimum phase or unstable systems. This is where <strong>Nyquist plot</strong> comes in useful. Nyquist plot displays all three in one plot (Gain, Phase, Frequency).
 Nichols encodes Bode magnitude and phase plots into one single plot, displaying same information as the Nyquist plot in cartesian coordinates.</p>
+
+<hr />
 
 <h2 id="nyquist-plot">Nyquist Plot</h2>
 <!-- ![Nyquist Plot example](../figures/nyquist_plot.png)
@@ -35,17 +37,77 @@ Nichols encodes Bode magnitude and phase plots into one single plot, displaying 
 <img src="../figures/nyquist_bode.png" alt="Nyquist Plot and Bode plot" width="500" height="300" />
 <img src="../figures/nyquist_margin.png" alt="Nyquist Plot Margins" width="300" /></p>
 
+<h3 id="important-notes-on-nyquist-plot">Important Notes on Nyquist Plot</h3>
+
+<ol>
+  <li>If the open loop system is stable (ie. \(L(s)\) doesn’t have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.</li>
+  <li>If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point \(N = Z - P\) times <strong>clockwise</strong>. This way the closed loop system is stable and the open loop system is called stabilizable.</li>
+  <li>For a <strong>strictly proper</strong> or <strong>non-strictly proper</strong> transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane</li>
+  <li>For strictly proper systems, that point is the origin.</li>
+  <li>For nonstrictly proper systems, that point is a non-zero constant with <strong>no phase</strong> ie the point lies on the positive x-axis.</li>
+</ol>
+
 <h3 id="nyquist-plot-stability-analysis-benefits">Nyquist Plot Stability analysis (benefits)</h3>
 <ol>
   <li>for minimum phase and stable open loop systems, don’t corss the cricitical point (-1,0)</li>
   <li>Gain margin and Phase Margin can be read from Nyquist Plot</li>
   <li>We can still use Nyquist Stability Criterion and Nyquist plot even for unstable open loop systems</li>
   <li>Easier to see combinations of gain and phase (<strong>disk margin</strong>)</li>
-  <li>Information displayed in polar coordinates.
-    <h3 id="nyquist-plot-critical-point">Nyquist Plot Critical Point</h3>
-    <p>Avoid (-1,0) on Nyquist plot. Closed loop system oscillates at that point.</p>
-  </li>
+  <li>Information displayed in polar coordinates.</li>
 </ol>
+
+<h3 id="nyquist-plot-critical-point">Nyquist Plot Critical Point</h3>
+<p>Avoid (-1,0) on Nyquist plot if the system is open-loop stable. Closed-loop system oscillates at that point (marginally stable).</p>
+
+<h3 id="nyquist-plot-intuition">Nyquist Plot Intuition</h3>
+
+<p>Nyquist plot is the plot in the W-plane resulting from a transfer function mapping the Nyquist contour on the S-plane to a plot on the W plane.</p>
+
+<p>In the S-plane, for <strong>proper and strictly proper transfer functions</strong> all RHP infinite points (not on the imaginary axis) are mapped to a single point in W-plane since in W-plane</p>
+
+\[\text{Phasor Magnitude} \propto \frac{\Pi \text{magnitude of zero phasors in s}}{\Pi \text{magnitude of pole phasors in s}}\]
+
+<ol>
+  <li>For a <strong>strictly proper transfer function</strong> (number of zeros &lt; number of poles), this point is the origin.</li>
+  <li>For a <strong>proper</strong> transfer function (number of zeros = number of poles), this point is a non-zero constant real value.</li>
+</ol>
+
+<p><img src="../figures/nyquist_plot_directed.png" alt="Nyquist Plot example" width="300" /></p>
+
+<h3 id="plotting-nyquist-plot-by-hand">Plotting Nyquist plot by hand</h3>
+<p>Step 1: Substituting \(s=j \omega\) into the give transfer function.</p>
+
+<p>Step 2: Sweep \(\omega\) from 0 to \(\infty\).</p>
+
+<p>Step 3: Draw its reflection about the real axis in W-plane for negative frequencies (in S-plane).</p>
+
+<h3 id="step-2-frequency-sweeping-walkthrough">Step 2 frequency sweeping walkthrough:</h3>
+
+<p>We can use 4 points to approximate this.</p>
+<ol>
+  <li>
+\[\omega = 0\]
+  </li>
+  <li>
+\[\omega = \infty\]
+  </li>
+  <li>Imaginary intercepts</li>
+  <li>Real intercepts</li>
+</ol>
+
+<p>To get the intercepts in 3 and 4, follow these steps:</p>
+<ol>
+  <li>Substituting \(s=j \omega\) into the give transfer function.</li>
+  <li>Factor out the real components and the imaginary components.</li>
+  <li>Set real part to 0 for imaginary intercepts.</li>
+  <li>Set imaginary part to 0 for real intercepts.</li>
+</ol>
+
+<h3 id="nyquist-plot-use-cases">Nyquist Plot Use cases</h3>
+
+<p>A fighter jet open loop system has one slightly positve real pole which makes the system slightly unstable (by design). Bode plot doesn’t work on this scenario, but Nyquist plot can help. Count the number of CW encirclements of -1!</p>
+
+<hr />
 
 <h2 id="nichols-plot">Nichols Plot</h2>
 <p><img src="../figures/nichols_plot.png" alt="Nichols Plot example" width="300" />

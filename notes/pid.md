@@ -6,7 +6,20 @@ title: PID Control
 # PID Control
 This page only covers continuous-time PID control. For more advanced topics on discrete PID, visit Discrete Time Control page for more details. 
 
-PID by itself is a linear controller. Gain Scheduling, Anti-windup schemes, derivative filtering, gain scheduling can make it non-linear
+PID by itself is a linear controller. Gain scheduling, anti-windup schemes, derivative filtering, gain scheduling can make it non-linear.
+
+## Limitations of PID
+1. PID in general do not provide *optimal* control.
+2. PID controllers have difficulties in the presence of non-linearities.
+3. PID may be the best controller for an observer that has no model of the process. However, better performance can be obtained by modeling the actor of the process.
+
+## How to Improve a PID
+1. The most significant **improvement** is to incorporate feed-forward control and use PID only to control error.
+2. PID can be coupled with gain scheduling, improving measurement (higher sampling rate for instance).
+3. The derivative term can be coupled with low-pass filtering.
+4. Cascading multiple PID controllers.
+
+---
 
 ## Which controller to use?
 $$
@@ -14,20 +27,30 @@ $$
 Example & System Order & Controller & Reasoning\\
 \hline
 \text{Controlling mass position using force} & 2 & \text{PD or PID} & \text{Typically needs damping like mass-spring damper, otherwise will oscillate} \\
-\text{Controlling V across C using current} & 1 & \text{P or PI} & \text{not much danger of over-shoot or oscillation}  \\
-\text{Controlling I across R using voltage} & 0 & \text{P or PI} & \text{not much danger, direct mapping}
+\text{Controlling V across C using current} & 1 & \text{P or PI} & \text{Not much danger of over-shoot or oscillation}  \\
+\text{Controlling I across R using voltage} & 0 & \text{P or PI} & \text{Not much danger, direct mapping}
 \end{array}
 $$
 
-**Note** System order denotes how many 'integration' away is your control input from output. For instance controlling position with force would be a second order system.
+**Note** System order denotes how many 'integrations' away your control input is from the output. For instance, controlling position with force would be a second-order system.
+
 ## PI vs PD vs PID
-The derivative controller is highly sensitive to noise and may throw system into instability.
+The derivative controller is highly sensitive to noise and may throw the system into instability.
 
 ### PI controller
-PI controller reduces both rise time and the steady state errors of the system. Integral term introduces phase lag, which may slow down response time.
+PI controller reduces both rise time and the steady-state errors of the system. The integral term introduces phase lag, which may slow down response time.
 
 ### PD controller
-A PD controller reduces transients like rise time, overshoot, and oscillations in the output. D controller cannot exist on its own since itself doesn't stabilize the system, but amplifies noise.
+A PD controller reduces transients like rise time, overshoot, and oscillations in the output. D controller cannot exist on its own since itself doesn't stabilize the system but amplifies noise.
+
+---
+
+| Gain | **Too Low** | **Too High** | **Why** |
+|------|-------------|--------------|---------|
+| **Proportional \(K_p\)** | - Sluggish response<br>- Large steady-state error (SSE)<br>- Poor disturbance rejection | - Large overshoot<br>- Increased oscillations or ringing<br>- Reduced phase margin → possible instability<br>- High sensitivity to noise and disturbances | \(K_p\) increases loop gain and bandwidth, improving speed but reducing stability margins and increasing oscillatory behavior. |
+| **Integral \(K_i\)** | - SSE remains<br>- Poor low-frequency disturbance rejection<br>- System may never reach setpoint | - Overshoot and oscillations from windup<br>- Long settling time after overshoot<br>- Possible instability even for stable P-only systems | \(K_i\) accumulates error to remove SSE, but excessive accumulation (windup) drives large corrective action, overshooting the setpoint before unwinding. |
+| **Derivative \(K_d\)** | - Underdamped response if damping from D is needed<br>- More overshoot than necessary<br>- Poor transient shaping | - High-frequency noise amplification<br>- Chattering or actuator vibration<br>- Possible instability if noise excites system dynamics | \(K_d\) acts on error rate, improving damping. Too much magnifies sensor noise, creating large, rapid control signals that stress actuators and excite high-frequency dynamics. |
+
 
 ---
 
@@ -38,13 +61,13 @@ A PD controller reduces transients like rise time, overshoot, and oscillations i
 1. Model representation
 
 ![What's a model](../figures/model_repres.png)
-2. run input sequence
-   - observe step response for Cohen-Coon
+2. Run input sequence
+   - Observe step response for Cohen-Coon
 
 3. Heuristic Methods:
-   System model not required, only need to measure certain traits such as process gain, time constant. and dead time. 
+   System model not required, only need to measure certain traits such as process gain, time constant, and dead time. 
    1. Cohen-Coon
-   2. Zeguler-Nichols (needs to be careful on hardware, due to oscillatory behavior)
+   2. Ziegler–Nichols (needs to be careful on hardware, due to oscillatory behavior)
 
 4. System Identification.
    1. Measure step-response of system. 
@@ -52,12 +75,12 @@ A PD controller reduces transients like rise time, overshoot, and oscillations i
    3. Model needs to be defined beforehand.
 
 5. Tuning method with Model
-   - manual tuning
-      1. pole placement
-      2. Loop Shaping
-      3. Heuristic Methods. (make model oscilatory NOT hardware)
+   - Manual tuning
+      1. Pole placement
+      2. Loop shaping
+      3. Heuristic Methods (make model oscillatory NOT hardware)
 
-   - auto tuning
+   - Auto tuning
 
 ### Manual PID Tuning Strategy
 
@@ -143,30 +166,30 @@ $$
 ---
 
 ## Integral Windup
-Error builds up even though actuator saturates. takes take for negative error to be reflected in the controller
+Error builds up even though actuator saturates. Takes time for negative error to be reflected in the controller.
 
 ![Integral Windup scenario](../figures/windup.png)
 
 ### Anti-Windup
-**Most anti-windup schemes prevents integral from accumulating error past a threshold**
-1. clamping: two checks (if both true, shut off integration)
-    - Output is saturating (clamp the output of the PID (**this needs to be conservative**), if the output before and after the clamp are the same, then actuator is beginning to get saturated.)
-    - Input and output have same sign
-2. block calculation
-3. observer approach
+**Most anti-windup schemes prevent the integral from accumulating error past a threshold**
+1. Clamping: two checks (if both true, shut off integration)
+    - Output is saturating (clamp the output of the PID (**this needs to be conservative**), if the output before and after the clamp are the same, then the actuator is beginning to get saturated.)
+    - Input and output have the same sign
+2. Block calculation
+3. Observer approach
 
 ## Derivative Control
-Derivative control "predicts the future" in constrast to integral control - a decrease in error gives a decrease in control input. Noise amplifies Derivative control output.
+Derivative control "predicts the future" in contrast to integral control - a decrease in error gives a decrease in control input. Noise amplifies derivative control output.
 
 ### Derivative Control Example
-Altitude Control for Quadcopter:
-Desired altitude 50m, as drone shoots up, error term decreases (negative derivative) -> negative value from derivative term, slows motors down, reduce over shoot
+Altitude Control for Quadcopter:  
+Desired altitude 50m, as drone shoots up, error term decreases (negative derivative) -> negative value from derivative term, slows motors down, reduces overshoot.
 
 ---
 
 ## How to derive a model
 ### First principles
-This methods also works if one knows the individual components of the system.
+This method also works if one knows the individual components of the system.
 1. Newtonian Mechanics
 2. Lagrangian Mechanics
 
@@ -269,16 +292,16 @@ The net effect is that PID changes **both**:
 
 ---
 
-## Gain Scheduling - Control Systtems in Practice
+## Gain Scheduling - Control Systems in Practice
 
-### Movivation
+### Motivation
 Linear controllers may only work well under certain operating conditions but not all.
 
-Linear Parameter Varying systems:
-A fixed lienar transfer function but different parameters under different operating conditions.
+Linear Parameter Varying systems:  
+A fixed linear transfer function but different parameters under different operating conditions.
 
 **How to deal with LPV systems?**
-1. Build nonlinear controler.
+1. Build nonlinear controller.
 2. Build linear robust controller. Drop in performance and may not even be possible.
 3. Limit operations.
 4. Gain scheduling.
@@ -290,12 +313,12 @@ A fixed lienar transfer function but different parameters under different operat
 ### Implementation
 Steps
 1. Linearize plant at each design operating condition. (linear controller for linear plant)
-   - find a critical point in each of the regions that represents the whole area well
+   - Find a critical point in each of the regions that represents the whole area well
    - Linearize plant at the point
 
 2. Tune gains at each design point
    - Performance (or even stability in some cases) is only guaranteed at the design points
-   - Either use a single gain for the entire area or **Interpolate** gains between two points
+   - Either use a single gain for the entire area or **interpolate** gains between two points
    - Make controller more robust or add more design points
 
 3. Choose the gain scheduling architecture
@@ -307,13 +330,13 @@ Steps
    - All critical transitions and corner cases should be covered
 
 ### Preventing drastic changes
-**Scenario** At the boundary points of the gain areas, errors don't change much, but a discrete switch causes controller gain to change -> causing erratic behavior.
+**Scenario**: At the boundary points of the gain areas, errors don't change much, but a discrete switch causes controller gain to change -> causing erratic behavior.
 
 **Methods** 
-1. Transient-free Switch
+1. Transient-free switch
 ![Transient Free Switch](../figures/transient_free_switch.png)
 
-2. Gain curve (2D) and Gain Surface (3D)
+2. Gain curve (2D) and Gain surface (3D)
 ![Gain Curve and Gain Surface](../figures/gain_surface.png)
 
 
@@ -328,23 +351,20 @@ Steps
 Why multiple loops?
 1. **Inner loops can be tuned to respond quickly to local disturbances, the outer loop can be tuned more conservatively to reject sensor noise and increase stability**
 2. Cascade approach makes it easier to isolate the problem
-3. Multiple groups can work separate parts.
+3. Multiple groups can work on separate parts.
    - The motor you buy has a built-in controller
 
 ---
 
 How to Tune Cascade loops
 1. Case 1: Inner loop speed >> outer loop speed
-   - can be tuned separately. Assume the other loops not present and tune like normal
-2. Case 2: Inner loop speed $$\approx$$ Outerloop speed
+   - Can be tuned separately. Assume the other loop is not present and tune like normal
+2. Case 2: Inner loop speed $$\approx$$ Outer loop speed
    - Tune inner loop with a guess
    - Tune outer loop
    - Iterate
 
 ### Discrete PID
-There are three major characteristics of a digital system:  1. **Sample Time** 2. **Quatization** 3. **Transport Delay**
+There are three major characteristics of a digital system:  1. **Sample Time** 2. **Quantization** 3. **Transport Delay**
 
 **Please check out discrete time control page for more details on discrete PID controller**
-
-
-

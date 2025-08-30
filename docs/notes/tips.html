@@ -67,6 +67,11 @@
 <ol>
   <li>Nyquist plots are plotted in <strong>polar coordinates</strong>, in contrast to Bode and Nichols.</li>
   <li>Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.</li>
+  <li>If the open loop system is stable (ie. \(L(s)\) doesn’t have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.</li>
+  <li>If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point \(N = Z - P\) times <strong>clockwise</strong>. This way the closed loop system is stable and the open loop system is called stabilizable.</li>
+  <li>For a <strong>strictly proper</strong> or <strong>non-strictly proper</strong> transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane</li>
+  <li>For strictly proper systems, that point is the origin.</li>
+  <li>For nonstrictly proper systems, that point is a non-zero constant with <strong>no phase</strong> ie the point lies on the positive x-axis.</li>
 </ol>
 
 <h2 id="root-locus-tips">Root Locus Tips</h2>
@@ -140,22 +145,6 @@
 
 <hr />
 
-<h2 id="lqg-and-extended-kalman-tips">LQG and Extended Kalman Tips</h2>
-
-<ol>
-  <li>
-    <p>An LQG controller does not have any guarantee on robustness.</p>
-  </li>
-  <li>
-    <p>LQR and LQR solves an Algebraic Riccati Equation to calculate an analytical solution to the problem given Q and R.</p>
-  </li>
-  <li>
-    <p>If the system is observable, LQE can deduce all states from a few measurable states. Degrees of observability would be helpful when desining an observer.</p>
-  </li>
-</ol>
-
-<hr />
-
 <h2 id="sensitivity-and-complementary-sensitivity-tips">Sensitivity and Complementary Sensitivity Tips</h2>
 
 <ol>
@@ -199,6 +188,46 @@
     </ul>
   </li>
 </ol>
+
+<hr />
+
+<h1 id="state-space-tips">State Space Tips</h1>
+
+<h2 id="state-space-matrix-tips">State Space Matrix Tips</h2>
+
+<ol>
+  <li>
+    <p>In a linear time-invariant system with feedthrough (D*u) term. The poles of the system are only dependent on the eigenvalues of the A matrix, while the zeroes are dependent on all A, B, C, D matrices.</p>
+
+    <ul>
+      <li>
+        <p>To change the poles, you need to re-design the system (dictated by eigenvalues of A).</p>
+      </li>
+      <li>
+        <p>To change the zeros, you can change the sensors.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Zero appears whenever there is a frequency at which the system’s input-output path completely cancels out - a nonzero input produces no output in the steady state response.</p>
+  </li>
+  <li></li>
+</ol>
+
+<h2 id="lqg-and-extended-kalman-tips">LQG and Extended Kalman Tips</h2>
+
+<ol>
+  <li>
+    <p>An LQG controller does not have any guarantee on robustness.</p>
+  </li>
+  <li>
+    <p>LQR and LQR solves an Algebraic Riccati Equation to calculate an analytical solution to the problem given Q and R.</p>
+  </li>
+  <li>
+    <p>If the system is observable, LQE can deduce all states from a few measurable states. Degrees of observability would be helpful when desining an observer.</p>
+  </li>
+</ol>
+
 
 </body>
 </html>

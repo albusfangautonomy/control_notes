@@ -3,8 +3,120 @@ layout: default
 title: Robust Control
 ---
 # Robust Control and Loop Shaping
+
+Robust control is not one controller like PID but rather a desing method that allows us to tune PID gains or other controllers so the actual controller is robust.
+
+## What is Robustness?
+A robust system is one capable of meeting requirements (stability or performance measures) even in the presence of model uncertainty and/or disturbance uncertainty.
+
+
+
 ## Motivation and Background
 A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the **performance, sensitivity, and robustness characteristics**.
+
+---
+
+## A Quick Note about this Section
+All the material on SISO systems below only pertains to variations at the input.
+
+## Why use Disk Margin?
+1. Even though increasing delay or increasing gain individually (reducing GM and PM respectively) may not cause the system to be unstable, adding a mix of the two can unstabilize the system. The disk margin therefore needs to be considered. To anaylze the effect of adding phase and gain, use Nyquist Plot.
+
+2. Disk margin can be used on MIMO.
+
+## Disk Margin
+
+<img src="../figures/disk_margin_complex_plane.png" alt="disk margin" width="700"/>
+
+
+The disk reads "Given $$e=0.0$$, the maximum disk margin is 0.56"
+
+### Parameters of the disk
+The disk must be fit entirely in the stable region and includes the nominal point $$f =1 + 0i$$
+1. Skew factor $$e$$. how far off the center of the disk is to the nominal point.
+2. $$\alpha$$ measures the size of the disk. It represents the size of the disk given a certain $$e$$ such that the disk is entirely in the stable region.
+
+### Disk Placement
+You can choose where the disk is:
+
+1. If you think real system gain is bigger than model gain, use a bigger $$e$$
+
+   - If unsure, choose $$e = 0.0$$
+
+2.  Disk margin may not be conservative even if it may only covers a small area of stability zone.
+
+    <img src="../figures/disk_margin_conservativeness.png" alt="disk margin conservativeness" width="500"/>
+
+
+    - in this case, while gain margin is bigger, at those bigger gain values, not much wiggle room for phase -> not optimal
+
+3. May need to check all three margins to ensure accurate representation of the stability.
+
+    - Some systems are robust to pure phase or gain variations but not a mix of the two
+
+    <img src="../figures/disk_margin_example.png" alt="disk margin example" width="500"/>
+
+
+---
+
+
+
+## Disk Margin for MIMO
+
+### Multi-loop Input Disk Margin (Input TO PLANT Only)
+
+The Multi-loop Input disk margin is the largest disk such that any $$n$$ independent variations within the disk were applied to the $$n$$ plant inputs, the loop would be stable.
+
+### Multi-loop Output Disk Margin (Output Only)
+
+The Multi-loop Output disk margin is the
+
+### Multi-loop Input/Output Disk Margin
+
+![Disk Margin MIMO](../figures/disk_margin_mimo.png)
+
+### MIMO Disk Margin Example
+A simple MIMO controller can be designed by taking the inverse of the plant transfer functions matrix $$G(s)$$. We can then use loop shaping and mulitply the controller with $$\frac{1}{s}$$. In this case the system behaves like an integrator.
+
+Input:
+
+1. Loop-at-a-time input disk margins (varying input one at a time):
+
+    - Infinite Gain margins and large phase margins
+
+2. MLIDM is very similar to Loop-at-a-time:
+
+    - Infinite Gain margins and large phase margins
+    - This is because the channels are decoupled by the inverse!
+
+Output:
+Since we mulitplied G(s) by its inverse, this practically decoupled the channels.
+
+3. Loop-at-a-time output disk margin (varying output one at a time)
+4. MLODM also yields
+
+MIMO (Multi-loop concurrent input/output disk margins):
+
+5. Very little Gain Margin and Phase Margin
+
+Reasoning: Inverting the plant is not desirable since this is assuming perfectly cancellation between the pole and zero. If there's any perturbation, the design falls apart.
+
+---
+
+## System Parameter Uncertainty
+
+![dual cart problem](../figures/dual_cart_problem.png)
+
+For a dual-cart system, there may be uncertainties in model parameters such as spring constant K and mass m.
+
+### Undesirable: Monte Carlo
+
+Generate random models within a threashold of the model parameters and check stability. Monte Carlo may claim false positives.
+
+### Matlab robstab
+
+This approach analytically solves for the cases where the system becomes unstable
+---
 
 ## Three Equivalent Representations of Linear Systems
 1. State space representation
@@ -190,3 +302,53 @@ Recall: a RHP zero would cause the system to go in the wrong direction before co
 A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.
 
 Example: 1. Aircraft gaining altitude. 2. parallel park.
+
+---
+
+# $$H_\infty$$
+
+## $$H_\infty$$ Synthesis
+
+$$H_\infty$$ methods are used to synthesize controllers to achieve stabilization with guaranteed performance. To use such methods, one needs to express the control problem as a  mathematical optimization problem and then finds the controller that solves this optimization.
+
+The resulting controller is only optimal with respect to the prescribed cost function and does not necessarily represent the best controller in terms of the usual performance measures used to evaluate controllers such as settling time, energy expended, etc. Also, non-linear constraints such as saturation are generally not well-handled.
+
+$$H_\infty$$ techniques can be used to minimize the closed loop impact of a perturbation. May not be robust for variations in system model.
+
+### Advantages
+Advantages:
+1. $$H_\infty$$ is readily applicable to problems with multivariate systems with cross-coupling between channels.
+
+### Disadvantages
+1. Complex math
+2. A good model is required
+
+---
+
+## $$H_\infty$$ example modeling car tire over a bump
+
+### System Setup
+
+<p float="left">
+  <img src="../figures/wheel_model.png" width="500" />
+  <img src="../figures/wheel_model_setup.png" width="500" />
+</p>
+
+### $$H_\infty$$ Setup
+
+![H_infty problem setup](../figures/h_infy_setup.png)
+
+A controller that takes two measured external signals, $$S_d$$ suspension travel and $$a_d$$ body acceleration.
+
+
+
+---
+
+# $$\mu$$ Synthesis
+
+$$\mu$$ synthesis is an extension of $$H_\infty$$. It solves the same problem but try to minimize the worst case gain over the entire uncertainty space. It aims to reduce the impact of model uncertainty in $$H_\infty$$.
+
+## D-K Iteration.
+1. Run $$H_\infty$$ to find a nomial controller
+2. Checks robustness
+3. Scales the problem based on the uncertainty in the system and runs another $$H_\infty$$

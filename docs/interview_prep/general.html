@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>General Interview Prep</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <h2 id="how-does-rate-limiting-and-actuator-saturation-affect-stability">How does rate limiting and actuator saturation affect stability?</h2>
+<p>Both introduce nonlinear effects that can significantly influence a control system’s stability and performance.</p>
+
+<h3 id="actuator-saturation">Actuator Saturation</h3>
+<ol>
+  <li>Loss of Phase Margin: we assume actuator perfectly tracks the commanded signal. Often increaes effective delay and reduce stability margins</li>
+  <li>Integral wind-up. The integral term keeps accumulating even though motors are saturated.</li>
+  <li>Limit Cycles.</li>
+</ol>
+
+<p>How to resolve:</p>
+<ol>
+  <li>Integrator clamping for anti-windup.</li>
+  <li>Gain scheduling</li>
+</ol>
+
+<h3 id="rate-limiting">Rate Limiting</h3>
+<p>The actuator can only change its output at a limited rate (slew rate)</p>
+
+<ol>
+  <li>Effective delay: Rate limitting effectively adds delay to the system, introducing phase lag - slows down the system’s ability to respond.</li>
+  <li>Reduced damping: In high-gain systems phase lag can push phase margin close to zero, making the system oscillatory.</li>
+  <li>Reduced bandwidth: cannot track higher frequency reference signals.</li>
+</ol>
+
+<hr />
+
+<h2 id="you-perceived-overshoot-in-your-system-what-are-the-causes-and-what-do-you-do">You perceived overshoot in your system. What are the causes and what do you do?</h2>
+<p>There are several potential causes of overshoot:</p>
+<ol>
+  <li><strong>Low damping</strong>: reducing \(K_p\) and increasing \(K_d\)</li>
+  <li><strong>Integral Windup (Integral term too high)</strong>: anti-windup</li>
+</ol>
+
+<hr />
+
+<h2 id="effects-of-pid-on-bandwidth">Effects of PID on Bandwidth</h2>
+
+<h3 id="kp">Kp</h3>
+<p>Increasing the proportional gain generally increases the bandwidth because it amplifies the response to changes in the error signal, allowing the system to react more quickly to disturbances or reference changes.</p>
+
+<p><strong>Limitations:</strong>
+Higher gain correspond to smaller phase margin. High Kp can cause the system to become oscillatory or unstable.</p>
+
+
+</body>
+</html>
