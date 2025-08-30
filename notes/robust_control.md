@@ -116,6 +116,7 @@ Generate random models within a threashold of the model parameters and check sta
 ### Matlab robstab
 
 This approach analytically solves for the cases where the system becomes unstable
+
 ---
 
 ## Three Equivalent Representations of Linear Systems

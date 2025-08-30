@@ -1,8 +1,6 @@
 ---
-layout: default
+layout: page
 title: Compensators
-parent: Control Notes
-nav_order: 1
 ---
 
 # Lead, Lag, and Lead-Lag Compensators

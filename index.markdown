@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: Control Notes
 ---
 
@@ -26,7 +26,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Performance Specifications](./notes/performance_specs.html)  \\
   Rise time, settling time, overshoot, **Steady-State Error** (error constants, system type, examples).
 
-- [System ID](./notes/system_id.html)
+- [System ID](./notes/system_id.html) \\
   Linear, Nonlinear, Online and recursive system identification.
 
 - [Stability Analysis](./notes/stability.html)  \\
@@ -35,10 +35,10 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Sensor Fusion](./notes/senser_fusion.html) \\
   Common Sensor Fusion algorithms.
 
-- [PID Control](./notes/pid.html)  
+- [PID Control](./notes/pid.html)  \\
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
 
-- [Lead, Lag, and Lead-Lag Compensators](./notes/compensators)  
+- [Lead, Lag, and Lead-Lag Compensators](./notes/compensators)  \\
   Frequency domain intuition, Bode plot effects, stability and performance improvement.
 
 - [Root Locus Analysis](./notes/root-locus.html)  

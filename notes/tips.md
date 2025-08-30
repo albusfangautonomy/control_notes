@@ -1,6 +1,6 @@
 ---
-layout: default
-title: Tips
+layout: page
+title: Useful Tips
 ---
 
 # Stability Tips
@@ -39,7 +39,7 @@ title: Tips
 
 1. Nyquist plots are plotted in **polar coordinates**, in contrast to Bode and Nichols.
 2. Multiplying openloop transfer function by a constant causes Nyquist plot to expand radially outward, pushing the disk margin lower.
-3. If the open loop system is stable (ie. $$L(s)$$ doesn't have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.
+3. If the open loop system is stable (ie. L(s) doesn't have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.
 4. If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point $$N = Z - P$$ times **clockwise**. This way the closed loop system is stable and the open loop system is called stabilizable.
 5. For a **strictly proper** or **non-strictly proper** transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane
   1. For strictly proper systems, that point is the origin.
