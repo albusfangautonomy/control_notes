@@ -1,15 +1,26 @@
 ---
-layout: default
+layout: page
 title: System ID
 ---
 
-# Motivation
+## Motivation - Why do we need System ID
+1. Model for Control Design - PID, MPC, LQR
+2. Model Updating - Wear and tear in system, or operate in varying environments.
+3. Complex Systems - aerodaynamics can be hard to model.
 
 
 ## Model
 
 ### Use Cases
-1. Controller Design 2. State Estimation 3. Formal Analysis 5. Simulation
+1. Controller Design 
+2. State Estimation 
+3. Formal Analysis 
+5. Simulation
+
+### System ID Types
+1. Linear
+2. Nonlinear
+3. Online and recursive
 
 ### Model Components
 1. Structure - e.g. second order differential equations, frequency response, process model (with time delay), neural networks  
@@ -35,7 +46,7 @@ Choose a model structure that represents the system dynamics and fit a model to 
 
 Curve fit only describes the sequence of data but doesn't describe the underlying mechanisms that created the data. For instance, curve fitting cannot predict the data if system was initialized at different state or even different inputs.
 
-### System ID $$y=f(u,y,t)
+### System ID $$y=f(u,y,t)$$
 
 System ID takes into account of correlation between the data points, which depends on previous system state. 
 
@@ -54,6 +65,8 @@ System ID takes into account of correlation between the data points, which depen
 1. Hankel Singular Values are caluclated by taking the SVD of the Hankel matrix.
 2. Hankel Singular values can be plotted against model order to show redundant orders to reduce the system.
 
+![Hankel Singular Value](../figures/hankel_singular_value.png)
+
 ## Modeling a Real System
 1. Model the system.
 2. Model the dynamics of disturbance.
@@ -69,6 +82,8 @@ System ID takes into account of correlation between the data points, which depen
 
 We have a residual curve.
 
+![residual](../figures/system_id_residual.png)
+
 **Residual Autocorrelation:** If residual values are correlated with themselves in some way -> there is unmodeled dynamics in disturbance model.
 
 **Residual-Input Cross-Correlation:** If residual values are highly cross-correlated with input -> there is unmodeled dynamics in system model.
@@ -77,7 +92,7 @@ We have a residual curve.
 
 # Nonlinear System ID
 
-## Linear ARX (Auto-Regressive Exogeneous Input)
+## Linear ARX (Auto-Regressive Exogeneous Input) SISO
 
 ![Linear ARX](../figures/arx.png)
 
@@ -100,9 +115,9 @@ Where:
 
 In compact notation:
 
-\[
+$$
 A(q^{-1})y(t) = B(q^{-1})u(t) + e(t)
-\]
+$$
 
 where $$ q^{-1} $$ is the **backward shift operator** ($$ q^{-1} y(t) = y(t-1) $$).
 
@@ -116,7 +131,20 @@ where $$ q^{-1} $$ is the **backward shift operator** ($$ q^{-1} y(t) = y(t-1) $
 
 ---
 
+## NLARX Model (Linear Regressors + Linear output function(y) + Offset)
+
+Note that the offset term makes a linear system nonlinear. A linear system with an offset is called **affine**.
+
+### idLinear
+1. Linear function for input
+2. Offset term to make the system affine.
+
+---
+
 ## NARX Systems
+
+![NARX system diagram](../figures/narx.png)
+
 
 A **NARX system** is a **Nonlinear Auto-Regressive model with eXogenous input**.  
 It extends the ARX model by allowing **nonlinear relationships** between past inputs, past outputs, and the current output.
@@ -140,6 +168,9 @@ Where:
 ---
 
 ### Key Points
+- While it is possible to capture the entire system with nonlinear dynamics, it is generally not recommended since there is no global stability guaratnee.
+- To better understand the system dynamics while accounting for non-linear dynamics, we generally use a **linear combination** of nonlinear regressors to model the bulk of the system, and use **non-linear combination** to capture the remaining nonlinear dynamics.
+    - A linear combination of nonlinear regressors is still linear.
 - Generalizes ARX by replacing the linear mapping with a **nonlinear function**. ie $$(y(t-1))^2 + \sqrt{u(t-1 )}$$
 - Captures complex, nonlinear system dynamics more accurately than ARX.
 - Commonly used in **machine learning–based system identification**.

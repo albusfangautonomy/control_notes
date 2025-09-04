@@ -50,10 +50,15 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <h1 id="frequency-response-and-fourier-transform">Frequency Response and Fourier Transform</h1>
+        <article class="post">
 
-<h2 id="quick-notes-on-damping">Quick Notes on Damping</h2>
-<h3 id="underdamped-critically-damped-and-overdamped">Underdamped, Critically damped, and Overdamped</h3>
+  <header class="post-header">
+    <h1 class="post-title">Frequency Response and Fourier Transform</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="quick-notes-on-damping">Quick Notes on Damping</h2>
+<h3 id="underdamped-critically-damped-and-overdamped-only-defined-for-second-order-systems">Underdamped, Critically damped, and Overdamped (Only defined for second order systems)</h3>
 <p>Underdamped: imgarinary poles</p>
 
 <p>Cirtically damped: repeated poles (eigenvalues)</p>
@@ -100,13 +105,15 @@
 
 <h2 id="fourier-and-laplace-transforms">Fourier and Laplace Transforms</h2>
 
-<p><strong>Note:</strong> In Laplace domain, \(s=\sigma + j\omega\). When evaluating Laplace Transform at \(s=j\omega\), Laplace Transform becomes Fourier Transform. <strong>when you go from the Laplace transform \(F(s)\) to the Fourier transform \(F(j\omega)\), you’re essentially looking at the steady-state sinusoidal response of the system.</strong></p>
+<p><strong>Note:</strong> In Laplace domain, \(s=\sigma + j\omega\). When evaluating Laplace Transform at \(s=j\omega\), Laplace Transform becomes Fourier Transform.</p>
+
+<p><strong>When you go from the Laplace transform \(F(s)\) to the Fourier transform \(F(j\omega)\), you’re essentially looking at the steady-state sinusoidal response of the system.</strong></p>
 
 <h3 id="laplace-transform">Laplace Transform</h3>
 <p>\(\mathcal{L}\{f(t)\} = F(s) = \int_0^{\infty} e^{-st} f(t) \, dt\)</p>
 
 <p>Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at \(i\omega\), with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform.
-<strong>Inpoulse response</strong> h(t) given \(u = \delta(t)\) is \(L^{-1}{G(s), where Y(s) = G(s)X(s)}\) ie the inverse Laplace Transform of the Transfer function (G(s))</p>
+<strong>Inpulse response</strong> h(t) given \(u = \delta(t)\) is \(L^{-1}{G(s), \text{ where } Y(s) = G(s)X(s)}\) ie the inverse Laplace Transform of the Transfer function (G(s))</p>
 <h3 id="fourier-series">Fourier Series</h3>
 
 <p>If \(f(t)\) is a periodic function with period $T$, its <strong>Fourier series</strong> representation is:</p>
@@ -147,11 +154,12 @@
 
 \[f(t) = \int_{-\infty}^{\infty} F(f) e^{i 2\pi f t} df\]
 
-<p><strong>Intuition</strong> Fourier Transform converts a time-domain \(\bar{x}(t)\) to frequency domain \(X(f)\). This investigates how much of this specific frequency exists in the signal.
-Fourier Transform returns a complex number.</p>
+<p><strong>Intuition</strong> Fourier Transform converts a time-domain \(\bar{x}(t)\) to frequency domain \(X(f)\). This investigates how much of this specific frequency exists in the signal.</p>
+
+<p>Fourier Transform returns a <strong>complex number</strong>:</p>
 <ol>
-  <li>The magnitude of this number denotes how strong that frequency is in the signal</li>
-  <li>The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.</li>
+  <li>The <strong>magnitude</strong> of this number denotes how strong that frequency is in the signal</li>
+  <li>The <strong>angle</strong> of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.</li>
 </ol>
 
 <hr />
@@ -171,7 +179,7 @@ Fourier Transform returns a complex number.</p>
 
 <h3 id="why-does-rhp-zeroes-cause-system-to-go-the-opposite-way-first">Why does RHP zeroes cause system to go the opposite way first</h3>
 
-<p>Long story short, RHP zeroes take derivative on the input with the \(-S\) term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting.</p>
+<p>Long story short, RHP zeroes take derivative on the input with the \((-S)\) term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting. The number of RHP zeros correspond to the number of times the step response needs to change direction.</p>
 
 <p><img src="../figures/rhp_zero_behavior.png" alt="RHP zeroes behavior" /></p>
 
@@ -224,13 +232,61 @@ Fourier Transform returns a complex number.</p>
 <h3 id="frequency-response">Frequency Response</h3>
 <p><img src="../figures/frequency_response.png" alt="frequency response of a mass-spring damper system" /></p>
 
-<p>\(frac{\bar{x}}{\bar{u}}\)
-<strong>Notes:</strong></p>
+\[\frac{\bar{x}}{\bar{u}}\]
+
+<p><strong>Notes:</strong></p>
 <ol>
   <li>The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency.</li>
   <li>At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn’t have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.</li>
 </ol>
 
+<hr />
+
+<h2 id="time-delays">Time Delays</h2>
+
+<h3 id="non-distorting-delays">Non-distorting Delays</h3>
+<p>Every frequency is delayed by the same amount, the shape of the signal doesn’t change (transport delay).</p>
+<h3 id="distorting-delays">Distorting Delays</h3>
+<p>Each frequency of a given signal is delayed by a different amount, given by the Bode plot.</p>
+
+<h3 id="time-delay-issues">Time Delay Issues</h3>
+<ol>
+  <li>Controller has to use old information.</li>
+  <li>Controller has to predict the future - effectively lowers sample time and erodes phase margin.</li>
+  <li>As a result, the system becomes laggy.</li>
+</ol>
+
+<h3 id="time-delay-types">Time Delay Types</h3>
+<ol>
+  <li>Unintentional Delays - by-product of the design (not included on purpose)
+    <ul>
+      <li>All actuators, processes, sensors add phase delay.</li>
+      <li>Even controller may add phase delay by design.</li>
+      <li>Faster sensors, less noisy sensors, etc.</li>
+    </ul>
+  </li>
+  <li>Transport Delays (picture below)</li>
+  <li>Internal Delay</li>
+</ol>
+
+<h3 id="transport-delay">Transport Delay</h3>
+<p><img src="../figures/transport_delay.png" alt="Transport Delays" /></p>
+
+<p>Various sources of transport delay are identified in the picture.</p>
+
+<h3 id="internal-delay">Internal Delay</h3>
+
+<p><img src="../figures/internal_delays.png" alt="Internal Delays" /></p>
+
+<p>For some systems, one can replace time delay with <strong>Pade Approximation</strong>.</p>
+
+<p>To estimate time margins for highly non-linear systems, ie. systems that can’t be approximated well with a linear model, add a Delay Margin block and estimate the Margin.</p>
+
+<p>If the system design doesn’t have a satisfactory delay margin, either design a slower controller or try to eliminate the delays from source.</p>
+
+  </div>
+
+</article>
 
       </div>
     </main><footer class="site-footer h-card">

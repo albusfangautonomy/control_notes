@@ -59,21 +59,31 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Sensitivity, Robustness, and Robust Control](./notes/robust_control.html)  
   Sensitive, complimentary Sensitivity, and robust control techniques.
 
-- [Discrete-Time Control](./notes/discrete-control.html)  
+- [Discrete-Time Control](./notes/discrete-control.html) \\
   Z-transform, digital implementation of controllers, sampling effects.
 
-- [Model Predictive Control (MPC)](./notes/mpc.html)  
+- [Model Predictive Control (MPC)](./notes/mpc.html)  \\
   Optimization-based control for constrained systems (intro-level overview).
 
-- [SVD](./notes/svd.html)
+- [Filters & Signal Conditioning](./notes/filters.html)  \\
+  Notch filters for resonances, derivative filtering, reference prefilters, and anti-aliasing.
+
+- [SVD](./notes/svd.html) \\
+  A basic review of SVD
 
 - [Data Driven Control](./notes/data_driven_control.html) \\
   Advanced control topics for Machine Learning based control
 
 ### Nonlinear Control
 
-- [Lyapunov Stability Principle](./nonlinear_notes/stability.html)
+- [Lyapunov Stability Principle](./nonlinear_notes/stability.html) \\
+  Lyapunov Stability and LaSelle's Principle.
 
+- [Passivity Theorem](./nonlinear_notes/passivity.html) \\
+  Passivity-based controller design.
+
+- [Sliding Mode Control](./nonlinear_notes/sliding_mode.html) \\
+  Sliding Mode Control derivation and design.
 
 ## Domain Specific Control
 
@@ -90,7 +100,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 ## Data Driven Control
 
-- []
+- [Reinforcement Learning]()
 
 
 ## 🛠️ Tools and Techniques

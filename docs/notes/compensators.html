@@ -291,6 +291,103 @@ Phase lag compensators add negative phase to the output, so the output lags behi
   </li>
 </ol>
 
+<hr />
+
+<h2 id="designing-a-lead-compensator-with-bode-plots">Designing a Lead Compensator with Bode Plots</h2>
+
+<h3 id="equations-of-lead-compensator-in-frequency-domain">Equations of Lead Compensator in Frequency Domain</h3>
+<ol>
+  <li>\(\text{Lead } = \frac{\alpha_2 * \tau * s + 1}{\tau s + 1}\), where \(\alpha_2 &gt; 1\), and \(\alpha_2 = \frac{\omega_p}{\omega_z}\) is the pole-to-zero ratio.</li>
+  <li>Upper Cutoff frequency \(\omega_{high} = \omega_p = \alpha \omega_z = \frac{1}{\tau}\).</li>
+  <li>Lower Cutoff freqeuncy \(\omega_{low} = \omega_z = \frac{1}{\alpha_2 \tau}\).</li>
+  <li>Maximum Phase Lead Compensator can provide: \(\phi_{max} = sin^{-1}(\frac{\alpha_2 - 1}{\alpha_2 + 1})\).</li>
+  <li>Maximum Frequency at which \(\phi_{max}\) occurs. \(\omega_{m} = \frac{1}{\tau \sqrt{\alpha_2}}\)</li>
+  <li>Gain at \(\omega_{m}\) = \(\sqrt{\alpha_2}\)</li>
+</ol>
+
+<p><img src="../figures/lead_compensator_parameters.png" alt="parameters for lead compensators" width="500" /></p>
+
+<p><strong>Note:</strong></p>
+
+<h3 id="step-1-always-start-with-system-type">Step 1: Always Start with System Type</h3>
+<p>If you have a steady state error \(E_{ss}\) requirement for a given input, then checking system type and adding the corresponding number of integrators must be the first step.</p>
+
+<p>Adding an integrator (pole at 0) generally imposes complexity in your design and in your hardware. It is therefore <strong>not recommended</strong> to add an integrator just to drive \(E_{ss}\) to 0. A finite \(E_{ss}\) is often enough.</p>
+
+<h3 id="step-2-choose-gain-to-meet-ess-requiremnt">Step 2: Choose gain to meet Ess requiremnt</h3>
+<p>Calculate the gain necessary to drive \(E_{ss}\) below the specified requirement.</p>
+
+\[E_ss = \lim_{s \to 0} s * E(s) = \lim_{s \to 0} \frac{R(s)}{1+G(s)}\]
+
+<h3 id="step-3-draw-bode-plot-of-gs-and-verify-if-phase-margin-satisfies-the-requirement">Step 3: Draw Bode Plot of G(s) and Verify if Phase Margin Satisfies the requirement.</h3>
+<ol>
+  <li>Calculate the Phase Margin based on the plot</li>
+</ol>
+
+<h3 id="step-4-designing-a-lead-compensators-with-equations">Step 4: Designing a Lead Compensators with Equations</h3>
+<ol>
+  <li>Choose a \(\phi_{max}\) -&gt; solve for \(\alpha_2\).</li>
+  <li>Choose a \(\omega_m\) -? solve for \(\tau\).</li>
+  <li>Constuct Lead Compensator.</li>
+</ol>
+
+<h3 id="step-5-evaluate-new-phase-margin-theres-a-catch">Step 5: Evaluate New Phase Margin (There’s a catch!)</h3>
+<p>While Lead Compensator adds damping and increases the phase margin, it increases the gain from the zero frequency \(\omega_z\) as well, which reduces phase margin, so full phase margin cannot be achieved. To mitigate this:</p>
+<ol>
+  <li>Design desired phase lead to be bigger than required OR</li>
+  <li>Build a table over a range of \(\alpha_2\) and pick the best.</li>
+</ol>
+
+<p><strong>Note:</strong> Even though the theoretical maximum phase lead one can add with lead compensator is \(90^\circ\), one should only try to add \(55^\circ\). If you need more than \(55^\circ\), you would need two lead compensators <strong>in series</strong>.</p>
+
+<hr />
+
+<h2 id="designing-a-lag-compensator-with-bode-plot">Designing a Lag Compensator with Bode Plot</h2>
+
+<p><img src="../figures/lag_compensator_bode.png" alt="Phase Lag Compensator bode plot" /></p>
+
+<p>We want the critical region where the system needs more gain margin to the right of the red box. The phase lag needs to be added at really low frequencies.</p>
+
+<h3 id="lag-compensator-1">Lag Compensator</h3>
+
+<h3 id="important-notes">Important Notes</h3>
+<ol>
+  <li>While a lead compensator adds phase margin by changing the phase plot, a lag compensator can also add phase in the critical region by <strong>reducing the gain plot</strong> at the critical region, **keeping the \(E_{ss}\), and not disturbing the phase plot.</li>
+</ol>
+
+<h3 id="problem-setup">Problem Setup</h3>
+<p>Our current phase margin is \(18^\circ\), but we want the phase margin to be</p>
+
+<h3 id="steps-to-design-a-lag-compensator">Steps to design a lag compensator</h3>
+<ol>
+  <li>Compute the frequency (\(\omega_r\))at which the phase margin requirement is set (frequency at which Phase Margin = \(48^\circ\)).</li>
+  <li>Compute the Gain at that frequency (\(G_r\)) and add a little extra gain to ensure the compensator fulfills the requirement (18 dB -&gt; 20 dB).</li>
+  <li>20 dB = a factor of 10. Therefore, the lag compensator becomes \(\frac{\tau s + 1}{10 \tau s + 1}\)</li>
+  <li>Place the zero (\(\omega_z\)) approximately 50 times closer to the origin as the dominant pole.</li>
+  <li>
+\[\tau = \omega_z\]
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="comparing-lead-lag-compensators">Comparing Lead Lag Compensators</h2>
+
+<p><img src="../figures/lead_lag_comparison.png" alt="lead lag comparison" /></p>
+
+<p>Even though Phase Margins are the same for both compensated systems, lead composator <strong>increased \(\omega_{gc}\)</strong>, the gain crossover frequency, while the lag compensator <strong>decreased \(\omega_{gc}\)</strong>.</p>
+
+<p>\(\omega_{gc}\) is related to the speed of the control system, as shown in the picture below.</p>
+
+<p><img src="../figures/lead_lag_comparison_step.png" alt="lead lag comparison in time domain step response" /></p>
+
+<h3 id="potential-benefits-of-a-slower-system">Potential benefits of a slower system</h3>
+<ol>
+  <li>A slower system won’t react as much to high frequency noise.</li>
+  <li>A slower system is safer if you’re uncertain about your high frequency modes.</li>
+</ol>
+
+
   </div>
 
 </article>

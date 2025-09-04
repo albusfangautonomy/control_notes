@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot
 ---
 
@@ -16,8 +16,10 @@ Nyquist Plot and Nichols Plot are useful for general sensitivity and stability a
 
 ## Intuition
 
-Bode plot is extremely useful when analyzing open loop frequency reponse  $$G(s)$$ of **minimum phase and stable systems** to predict the beahvior of the closed loop system $$\frac{G(s)}{1+G(s)}$$.
+Bode plot is extremely useful when analyzing open loop frequency reponse  $$G(s)$$ of **minimum phase and stable open-loop systems** to predict the beahvior of the closed loop system $$\frac{G(s)}{1+G(s)}$$.
+
 However, Bode plot falls apart when dealing with non-minimum phase or unstable systems. This is where **Nyquist plot** comes in useful. Nyquist plot displays all three in one plot (Gain, Phase, Frequency).
+
 Nichols encodes Bode magnitude and phase plots into one single plot, displaying same information as the Nyquist plot in cartesian coordinates.
 
 ---
@@ -37,8 +39,8 @@ Nichols encodes Bode magnitude and phase plots into one single plot, displaying 
 1. If the open loop system is stable (ie. $$L(s)$$ doesn't have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.
 2. If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point $$N = Z - P$$ times **clockwise**. This way the closed loop system is stable and the open loop system is called stabilizable.
 3. For a **strictly proper** or **non-strictly proper** transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane
-  1. For strictly proper systems, that point is the origin.
-  2. For nonstrictly proper systems, that point is a non-zero constant with **no phase** ie the point lies on the positive x-axis.
+  - For strictly proper systems, that point is the origin.
+  - For nonstrictly proper systems, that point is a non-zero constant with **no phase** ie the point lies on the positive x-axis.
 
 ### Nyquist Plot Stability analysis (benefits)
 1. for minimum phase and stable open loop systems, don't corss the cricitical point (-1,0)
@@ -73,8 +75,8 @@ Step 3: Draw its reflection about the real axis in W-plane for negative frequenc
 ### Step 2 frequency sweeping walkthrough:
 
 We can use 4 points to approximate this.
-1. $$\omega = 0$$
-2. $$\omega = \infty$$
+1. $\omega = 0$
+2. $\omega = \infty$
 3. Imaginary intercepts
 4. Real intercepts
 

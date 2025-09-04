@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: page
 title: Frequency Response and Fourier Transform
 ---
-# Frequency Response and Fourier Transform
 
 ## Quick Notes on Damping
-### Underdamped, Critically damped, and Overdamped 
+### Underdamped, Critically damped, and Overdamped (Only defined for second order systems)
 Underdamped: imgarinary poles
 
 Cirtically damped: repeated poles (eigenvalues)
@@ -73,7 +72,9 @@ A peak in the frequency response (magnitude plot) happens when the system has co
 
 ## Fourier and Laplace Transforms
 
-**Note:** In Laplace domain, $$s=\sigma + j\omega$$. When evaluating Laplace Transform at $$s=j\omega$$, Laplace Transform becomes Fourier Transform. **when you go from the Laplace transform $$F(s)$$ to the Fourier transform $$F(j\omega)$$, you’re essentially looking at the steady-state sinusoidal response of the system.**
+**Note:** In Laplace domain, $$s=\sigma + j\omega$$. When evaluating Laplace Transform at $$s=j\omega$$, Laplace Transform becomes Fourier Transform. 
+
+**When you go from the Laplace transform $$F(s)$$ to the Fourier transform $$F(j\omega)$$, you’re essentially looking at the steady-state sinusoidal response of the system.**
 
 ### Laplace Transform
 $$
@@ -81,7 +82,7 @@ $$
 $$
 
 Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at $$i\omega$$, with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform.
-**Inpoulse response** h(t) given $$u = \delta(t)$$ is $$L^{-1}{G(s), where Y(s) = G(s)X(s)}$$ ie the inverse Laplace Transform of the Transfer function (G(s))
+**Inpulse response** h(t) given $$u = \delta(t)$$ is $$L^{-1}{G(s), \text{ where } Y(s) = G(s)X(s)}$$ ie the inverse Laplace Transform of the Transfer function (G(s))
 ### Fourier Series
 
 If $$f(t)$$ is a periodic function with period $T$, its **Fourier series** representation is:
@@ -143,9 +144,10 @@ f(t) = \int_{-\infty}^{\infty} F(f) e^{i 2\pi f t} df
 $$
 
 **Intuition** Fourier Transform converts a time-domain $$\bar{x}(t)$$ to frequency domain $$X(f)$$. This investigates how much of this specific frequency exists in the signal.
-Fourier Transform returns a complex number.
-1. The magnitude of this number denotes how strong that frequency is in the signal
-2. The angle of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.
+
+Fourier Transform returns a **complex number**:
+1. The **magnitude** of this number denotes how strong that frequency is in the signal
+2. The **angle** of the complex number signifies the phase offset of that frequency - i.e., where that sine wave starts relative to time zero.
 
 ---
 
@@ -164,7 +166,7 @@ Green curve is for time delay, and red curve is for RHP zero.
 
 ### Why does RHP zeroes cause system to go the opposite way first
 
-Long story short, RHP zeroes take derivative on the input with the $$-S$$ term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting.
+Long story short, RHP zeroes take derivative on the input with the $$(-S)$$ term, which means the derivative has opposite sign from the input, which causes the system to react in the opposite way before correcting. The number of RHP zeros correspond to the number of times the step response needs to change direction.
 
 ![RHP zeroes behavior](../figures/rhp_zero_behavior.png)
 
@@ -199,8 +201,45 @@ Long story short, RHP zeroes take derivative on the input with the $$-S$$ term, 
 ### Frequency Response
 ![frequency response of a mass-spring damper system](../figures/frequency_response.png)
 
-$$ frac{\bar{x}}{\bar{u}}$$
+$$ \frac{\bar{x}}{\bar{u}}$$
+
 **Notes:** 
 1. The bode plots are plotted in log scale. A small bump in Gain plot corresponds to huge response at resonate frequency. 
 2. At extremely low frequency, this system displays no gain at all hence Gain = 0 for low frequencies. At high frequencies, the sytems doesn't have the capacity to respond in times hence the gain drops asymptotically to zero or $-\infty$ in log scale.
 
+---
+
+## Time Delays
+
+### Non-distorting Delays
+Every frequency is delayed by the same amount, the shape of the signal doesn't change (transport delay).
+### Distorting Delays
+Each frequency of a given signal is delayed by a different amount, given by the Bode plot.
+
+### Time Delay Issues
+1. Controller has to use old information.
+2. Controller has to predict the future - effectively lowers sample time and erodes phase margin.
+3. As a result, the system becomes laggy.
+
+### Time Delay Types
+1. Unintentional Delays - by-product of the design (not included on purpose)
+    - All actuators, processes, sensors add phase delay. 
+    - Even controller may add phase delay by design.
+    - Faster sensors, less noisy sensors, etc.
+2. Transport Delays (picture below)
+3. Internal Delay
+
+### Transport Delay
+![Transport Delays](../figures/transport_delay.png)
+
+Various sources of transport delay are identified in the picture.
+
+### Internal Delay
+
+![Internal Delays](../figures/internal_delays.png)
+
+For some systems, one can replace time delay with **Pade Approximation**.
+
+To estimate time margins for highly non-linear systems, ie. systems that can't be approximated well with a linear model, add a Delay Margin block and estimate the Margin.
+
+If the system design doesn't have a satisfactory delay margin, either design a slower controller or try to eliminate the delays from source.

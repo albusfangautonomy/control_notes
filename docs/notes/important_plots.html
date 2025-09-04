@@ -50,7 +50,14 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <h1 id="nichols-chart-nyquist-plot-and-bode-plot">Nichols Chart, Nyquist Plot, and Bode Plot</h1>
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="nichols-chart-nyquist-plot-and-bode-plot">Nichols Chart, Nyquist Plot, and Bode Plot</h1>
 
 <p><img src="../figures/bode_nyquist_nichols.png" alt="Bode, Nyquist, Nichols plots" /></p>
 
@@ -63,9 +70,11 @@ Nyquist Plot and Nichols Plot are useful for general sensitivity and stability a
 
 <h2 id="intuition">Intuition</h2>
 
-<p>Bode plot is extremely useful when analyzing open loop frequency reponse  \(G(s)\) of <strong>minimum phase and stable systems</strong> to predict the beahvior of the closed loop system \(\frac{G(s)}{1+G(s)}\).
-However, Bode plot falls apart when dealing with non-minimum phase or unstable systems. This is where <strong>Nyquist plot</strong> comes in useful. Nyquist plot displays all three in one plot (Gain, Phase, Frequency).
-Nichols encodes Bode magnitude and phase plots into one single plot, displaying same information as the Nyquist plot in cartesian coordinates.</p>
+<p>Bode plot is extremely useful when analyzing open loop frequency reponse  \(G(s)\) of <strong>minimum phase and stable open-loop systems</strong> to predict the beahvior of the closed loop system \(\frac{G(s)}{1+G(s)}\).</p>
+
+<p>However, Bode plot falls apart when dealing with non-minimum phase or unstable systems. This is where <strong>Nyquist plot</strong> comes in useful. Nyquist plot displays all three in one plot (Gain, Phase, Frequency).</p>
+
+<p>Nichols encodes Bode magnitude and phase plots into one single plot, displaying same information as the Nyquist plot in cartesian coordinates.</p>
 
 <hr />
 
@@ -84,9 +93,12 @@ Nichols encodes Bode magnitude and phase plots into one single plot, displaying 
 <ol>
   <li>If the open loop system is stable (ie. \(L(s)\) doesn’t have any RHP poles), Nyquist plot should not encircle -1 and if it does, it means the closed loop system is unstable.</li>
   <li>If the open loop system is unstable (ie. there are RHP poles), Nyquist plot needs to encircle the -1 point \(N = Z - P\) times <strong>clockwise</strong>. This way the closed loop system is stable and the open loop system is called stabilizable.</li>
-  <li>For a <strong>strictly proper</strong> or <strong>non-strictly proper</strong> transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane</li>
-  <li>For strictly proper systems, that point is the origin.</li>
-  <li>For nonstrictly proper systems, that point is a non-zero constant with <strong>no phase</strong> ie the point lies on the positive x-axis.</li>
+  <li>For a <strong>strictly proper</strong> or <strong>non-strictly proper</strong> transfer function, all infinite points not on the imaginary axis on the S-plane are mapped to one single point on the W-plane
+    <ul>
+      <li>For strictly proper systems, that point is the origin.</li>
+      <li>For nonstrictly proper systems, that point is a non-zero constant with <strong>no phase</strong> ie the point lies on the positive x-axis.</li>
+    </ul>
+  </li>
 </ol>
 
 <h3 id="nyquist-plot-stability-analysis-benefits">Nyquist Plot Stability analysis (benefits)</h3>
@@ -127,12 +139,8 @@ Nichols encodes Bode magnitude and phase plots into one single plot, displaying 
 
 <p>We can use 4 points to approximate this.</p>
 <ol>
-  <li>
-\[\omega = 0\]
-  </li>
-  <li>
-\[\omega = \infty\]
-  </li>
+  <li>$\omega = 0$</li>
+  <li>$\omega = \infty$</li>
   <li>Imaginary intercepts</li>
   <li>Real intercepts</li>
 </ol>
@@ -194,6 +202,10 @@ be a gain-crossover frequency where
 </ul>
 
 <p>If <strong>both</strong> conditions hold for all relevant crossovers and \(P=0\), the loop has positive stability margins and the closed loop is stable.</p>
+
+  </div>
+
+</article>
 
       </div>
     </main><footer class="site-footer h-card">

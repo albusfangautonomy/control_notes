@@ -154,6 +154,41 @@ The <strong>Z-transform</strong> of a discrete-time signal \(x[n]\) is defined a
 
 <p><strong>Note</strong> If the time constant of your system is slow compared to the sample time, all methods are the same. When time constant is bigger, these 5 methods produce different results by prioritizing different aspects.</p>
 
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>When to Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Zero-Order Hold</td>
+      <td>You want an exact discretization in the <strong>time domain</strong> for staircase inputs.</td>
+    </tr>
+    <tr>
+      <td>First-Order Hold</td>
+      <td>You want an exact discretization in the <strong>time domain</strong> for piecewise linear inputs.</td>
+    </tr>
+    <tr>
+      <td>Impulse-Invariant Mapping (continuous-to-discrete conversion only)</td>
+      <td>You want an exact discretization in the <strong>time domain</strong> for impulse train inputs.</td>
+    </tr>
+    <tr>
+      <td>Tustin Approximation</td>
+      <td>You want good matching in the <strong>frequency domain</strong> between the continuous- and discrete-time models.<br /><br />Your model has important dynamics at some particular frequency.</td>
+    </tr>
+    <tr>
+      <td>Zero-Pole Matching Equivalents</td>
+      <td>You have a SISO model.<br /><br />You want good matching in the frequency domain between the continuous- and discrete-time models.</td>
+    </tr>
+    <tr>
+      <td>Least Squares (continuous-to-discrete conversion only)</td>
+      <td>You have a SISO model.<br /><br />You want good matching in the frequency domain between the continuous- and discrete-time models.<br /><br />You want to capture fast system dynamics but must use a larger sample time.</td>
+    </tr>
+  </tbody>
+</table>
+
 <h3 id="impulse-invariant-method">Impulse Invariant Method</h3>
 
 <p>This method ensures the discrete impulse is the same as the continuous impulse response. Note that Matlab defines impulse differently than Kronecker delta and is <strong>scaled by</strong> \(T_s\).</p>

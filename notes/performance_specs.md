@@ -1,8 +1,6 @@
 ---
-layout: default
-title: Performance Specifications
-parent: Control Notes
-nav_order: 4.1
+layout: page
+title: Performance and Design Specifications
 ---
 
 # Performance Specifications
@@ -175,6 +173,40 @@ nav_order: 4.1
 
   $$L(s)=C(s)G(s)$$ = Open-loop transfer function
 
+---
+
+# Design Specs
+In classical Control Theory, design and performance specs are defined with respect to a **step response** in the time domain.
+
+While a step response of a system may look like anything, the step response of a **low-pass filter** is typically used to specify the requirements for **trajectory and reference tracking**.
+
+However, other design specs exist and step response requirement depends entirely on the system.
+
+
+## Classical Requirements for a Reference-Tracking System
+### System Definition
+Linear, low pass filter-like, second order, no finite zeros.
+
+$$
+G(s) = \frac{\omega_n^2}{s^2+2 \zeta \omega_n s + \omega_n^2}
+$$
+
+### Classical Requirements
+![step response specs](../figures/design_specs.png)
+
+We can simplify this system requiremnts to just 2 parameters:
+1. **Natural Frequency** $$\omega_n$$.
+2. **Damping Ratio** $$\zeta$$.
+
+Changing the Damping ratio $$\zeta$$ changes all time-domain parameters (rising time, settling time, overshoot ... ), while changing natural frequency has no effect on overshoot and only changes rise time and setting time.
+
+Increasing $$\zeta$$ would in general:
+1. Reduce overshoot.
+2. Increase rise time.
+3. Increase settling time.
+
+Increasing $$\omega_n$$ would in general:
+1. Reduce rise time and settling time.
 
 
 

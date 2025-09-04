@@ -102,6 +102,16 @@ The method you choose depends on what you are trying to accomplish. (Minimizing 
 
 **Note** If the time constant of your system is slow compared to the sample time, all methods are the same. When time constant is bigger, these 5 methods produce different results by prioritizing different aspects.
 
+| Method | When to Use |
+| --- | --- |
+| Zero-Order Hold | You want an exact discretization in the **time domain** for staircase inputs. |
+| First-Order Hold | You want an exact discretization in the **time domain** for piecewise linear inputs. |
+| Impulse-Invariant Mapping (continuous-to-discrete conversion only) | You want an exact discretization in the **time domain** for impulse train inputs. |
+| Tustin Approximation | You want good matching in the **frequency domain** between the continuous- and discrete-time models.<br><br>Your model has important dynamics at some particular frequency. |
+| Zero-Pole Matching Equivalents | You have a SISO model.<br><br>You want good matching in the frequency domain between the continuous- and discrete-time models. |
+| Least Squares (continuous-to-discrete conversion only) | You have a SISO model.<br><br>You want good matching in the frequency domain between the continuous- and discrete-time models.<br><br>You want to capture fast system dynamics but must use a larger sample time. |
+
+
 ### Impulse Invariant Method
 
 This method ensures the discrete impulse is the same as the continuous impulse response. Note that Matlab defines impulse differently than Kronecker delta and is **scaled by** $$T_s$$.

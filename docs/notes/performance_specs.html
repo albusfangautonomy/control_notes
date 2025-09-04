@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Performance Specifications | Albus’s Control Notes</title>
+<title>Performance and Design Specifications | Albus’s Control Notes</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Performance Specifications" />
+<meta property="og:title" content="Performance and Design Specifications" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Performance Specifications" />
+<meta property="twitter:title" content="Performance and Design Specifications" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Performance Specifications","url":"https://albusfangautonomy.github.io/control_notes/notes/performance_specs.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Performance and Design Specifications","url":"https://albusfangautonomy.github.io/control_notes/notes/performance_specs.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/control_notes/assets/main.css">
   <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
@@ -50,7 +50,14 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <h1 id="performance-specifications">Performance Specifications</h1>
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Performance and Design Specifications</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="performance-specifications">Performance Specifications</h1>
 <h2 id="control-system-specs--design-actions-cheat-sheet">Control System Specs → Design Actions Cheat Sheet</h2>
 
 <table border="1" cellpadding="5" cellspacing="0">
@@ -224,6 +231,48 @@ for unity feedback, with \(L(s)=G(s)C(s)\).</p>
   </li>
 </ul>
 
+<hr />
+
+<h1 id="design-specs">Design Specs</h1>
+<p>In classical Control Theory, design and performance specs are defined with respect to a <strong>step response</strong> in the time domain.</p>
+
+<p>While a step response of a system may look like anything, the step response of a <strong>low-pass filter</strong> is typically used to specify the requirements for <strong>trajectory and reference tracking</strong>.</p>
+
+<p>However, other design specs exist and step response requirement depends entirely on the system.</p>
+
+<h2 id="classical-requirements-for-a-reference-tracking-system">Classical Requirements for a Reference-Tracking System</h2>
+<h3 id="system-definition">System Definition</h3>
+<p>Linear, low pass filter-like, second order, no finite zeros.</p>
+
+\[G(s) = \frac{\omega_n^2}{s^2+2 \zeta \omega_n s + \omega_n^2}\]
+
+<h3 id="classical-requirements">Classical Requirements</h3>
+<p><img src="../figures/design_specs.png" alt="step response specs" /></p>
+
+<p>We can simplify this system requiremnts to just 2 parameters:</p>
+<ol>
+  <li><strong>Natural Frequency</strong> \(\omega_n\).</li>
+  <li><strong>Damping Ratio</strong> \(\zeta\).</li>
+</ol>
+
+<p>Changing the Damping ratio \(\zeta\) changes all time-domain parameters (rising time, settling time, overshoot … ), while changing natural frequency has no effect on overshoot and only changes rise time and setting time.</p>
+
+<p>Increasing \(\zeta\) would in general:</p>
+<ol>
+  <li>Reduce overshoot.</li>
+  <li>Increase rise time.</li>
+  <li>Increase settling time.</li>
+</ol>
+
+<p>Increasing \(\omega_n\) would in general:</p>
+<ol>
+  <li>Reduce rise time and settling time.</li>
+</ol>
+
+
+  </div>
+
+</article>
 
       </div>
     </main><footer class="site-footer h-card">

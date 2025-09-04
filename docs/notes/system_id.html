@@ -50,13 +50,35 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <h1 id="motivation">Motivation</h1>
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">System ID</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="motivation---why-do-we-need-system-id">Motivation - Why do we need System ID</h2>
+<ol>
+  <li>Model for Control Design - PID, MPC, LQR</li>
+  <li>Model Updating - Wear and tear in system, or operate in varying environments.</li>
+  <li>Complex Systems - aerodaynamics can be hard to model.</li>
+</ol>
 
 <h2 id="model">Model</h2>
 
 <h3 id="use-cases">Use Cases</h3>
 <ol>
-  <li>Controller Design 2. State Estimation 3. Formal Analysis 5. Simulation</li>
+  <li>Controller Design</li>
+  <li>State Estimation</li>
+  <li>Formal Analysis</li>
+  <li>Simulation</li>
+</ol>
+
+<h3 id="system-id-types">System ID Types</h3>
+<ol>
+  <li>Linear</li>
+  <li>Nonlinear</li>
+  <li>Online and recursive</li>
 </ol>
 
 <h3 id="model-components">Model Components</h3>
@@ -85,7 +107,7 @@
 
 <p>Curve fit only describes the sequence of data but doesn’t describe the underlying mechanisms that created the data. For instance, curve fitting cannot predict the data if system was initialized at different state or even different inputs.</p>
 
-<h3 id="system-id-yfuyt">System ID $$y=f(u,y,t)</h3>
+<h3 id="system-id-yfuyt">System ID \(y=f(u,y,t)\)</h3>
 
 <p>System ID takes into account of correlation between the data points, which depends on previous system state.</p>
 
@@ -105,6 +127,8 @@
   <li>Hankel Singular Values are caluclated by taking the SVD of the Hankel matrix.</li>
   <li>Hankel Singular values can be plotted against model order to show redundant orders to reduce the system.</li>
 </ol>
+
+<p><img src="../figures/hankel_singular_value.png" alt="Hankel Singular Value" /></p>
 
 <h2 id="modeling-a-real-system">Modeling a Real System</h2>
 <ol>
@@ -127,6 +151,8 @@
 
 <p>We have a residual curve.</p>
 
+<p><img src="../figures/system_id_residual.png" alt="residual" /></p>
+
 <p><strong>Residual Autocorrelation:</strong> If residual values are correlated with themselves in some way -&gt; there is unmodeled dynamics in disturbance model.</p>
 
 <p><strong>Residual-Input Cross-Correlation:</strong> If residual values are highly cross-correlated with input -&gt; there is unmodeled dynamics in system model.</p>
@@ -135,7 +161,7 @@
 
 <h1 id="nonlinear-system-id">Nonlinear System ID</h1>
 
-<h2 id="linear-arx-auto-regressive-exogeneous-input">Linear ARX (Auto-Regressive Exogeneous Input)</h2>
+<h2 id="linear-arx-auto-regressive-exogeneous-input-siso">Linear ARX (Auto-Regressive Exogeneous Input) SISO</h2>
 
 <p><img src="../figures/arx.png" alt="Linear ARX" /></p>
 
@@ -158,9 +184,7 @@
 
 <p>In compact notation:</p>
 
-<p>[
-A(q^{-1})y(t) = B(q^{-1})u(t) + e(t)
-]</p>
+\[A(q^{-1})y(t) = B(q^{-1})u(t) + e(t)\]
 
 <p>where \(q^{-1}\) is the <strong>backward shift operator</strong> (\(q^{-1} y(t) = y(t-1)\)).</p>
 
@@ -176,7 +200,21 @@ A(q^{-1})y(t) = B(q^{-1})u(t) + e(t)
 
 <hr />
 
+<h2 id="nlarx-model-linear-regressors--linear-output-functiony--offset">NLARX Model (Linear Regressors + Linear output function(y) + Offset)</h2>
+
+<p>Note that the offset term makes a linear system nonlinear. A linear system with an offset is called <strong>affine</strong>.</p>
+
+<h3 id="idlinear">idLinear</h3>
+<ol>
+  <li>Linear function for input</li>
+  <li>Offset term to make the system affine.</li>
+</ol>
+
+<hr />
+
 <h2 id="narx-systems">NARX Systems</h2>
+
+<p><img src="../figures/narx.png" alt="NARX system diagram" /></p>
 
 <p>A <strong>NARX system</strong> is a <strong>Nonlinear Auto-Regressive model with eXogenous input</strong>.<br />
 It extends the ARX model by allowing <strong>nonlinear relationships</strong> between past inputs, past outputs, and the current output.</p>
@@ -201,6 +239,12 @@ It extends the ARX model by allowing <strong>nonlinear relationships</strong> be
 
 <h3 id="key-points-1">Key Points</h3>
 <ul>
+  <li>While it is possible to capture the entire system with nonlinear dynamics, it is generally not recommended since there is no global stability guaratnee.</li>
+  <li>To better understand the system dynamics while accounting for non-linear dynamics, we generally use a <strong>linear combination</strong> of nonlinear regressors to model the bulk of the system, and use <strong>non-linear combination</strong> to capture the remaining nonlinear dynamics.
+    <ul>
+      <li>A linear combination of nonlinear regressors is still linear.</li>
+    </ul>
+  </li>
   <li>Generalizes ARX by replacing the linear mapping with a <strong>nonlinear function</strong>. ie \((y(t-1))^2 + \sqrt{u(t-1 )}\)</li>
   <li>Captures complex, nonlinear system dynamics more accurately than ARX.</li>
   <li>Commonly used in <strong>machine learning–based system identification</strong>.</li>
@@ -250,6 +294,10 @@ It extends the ARX model by allowing <strong>nonlinear relationships</strong> be
 <p>Method 2: Since fixed gain is not optimal enough:</p>
 
 <p>Use Kalman!!!</p>
+
+  </div>
+
+</article>
 
       </div>
     </main><footer class="site-footer h-card">

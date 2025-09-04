@@ -1,7 +1,8 @@
 ---
-layout: default
+layout: page
 title: Controllability
 ---
+
 # Equivalence
 1. System is controllable
 2. Arbitrary Eigenvalue (Pole) placement is allowed

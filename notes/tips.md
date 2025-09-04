@@ -8,6 +8,17 @@ title: Useful Tips
 
 2. Margins are local properties measured at specific crossover points. It is very possible for a higher-order system to have multiple crossover frequencies and therefore multiple Stability Margins. **Conservative Rule** the smallest (worst-case) margin dictates stability.
 
+3. The Nyquist stability criterion $$Z = N + P$$ or $$ N = Z - P$$ dictates if the Nyquist plot of a transfer function can encircle the critical point -1.
+    - Classical stability margins (phase and gain margins) don't apply in this case since they would be negative.
+    - Disk Margins can be used in this case. Disk margin is defined in terms of the smallest disk in the complex plane, centered on the critical point –1, that just touches the Nyquist plot of the open-loop transfer function $$L(s)$$.
+    - Disk Margin only works on closed loop stable systems, which needs to satisfy the Nyquist Stability Criterion ie $$Z = N + P$$.
+
+4. Disk Margin investigate the closed loop robustness for all complex perturbations. Disk Margin works for **MIMO systems**.
+    - A complex perturbations $$\sigma + j \omega$$. The real part adds growth or decay to the system while the imaginary part adds phase.
+
+5. A matrix is Hurwitz if the real part of all of its eigenvalues are negative.
+
+
 ---
 
 

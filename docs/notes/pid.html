@@ -105,22 +105,22 @@ Example &amp; System Order &amp; Controller &amp; Reasoning\\
   </thead>
   <tbody>
     <tr>
-      <td><strong>Proportional (K_p)</strong></td>
+      <td><strong>Proportional \(K_p\)</strong></td>
       <td>- Sluggish response<br />- Large steady-state error (SSE)<br />- Poor disturbance rejection</td>
       <td>- Large overshoot<br />- Increased oscillations or ringing<br />- Reduced phase margin → possible instability<br />- High sensitivity to noise and disturbances</td>
-      <td>(K_p) increases loop gain and bandwidth, improving speed but reducing stability margins and increasing oscillatory behavior.</td>
+      <td>\(K_p\) increases loop gain and bandwidth, improving speed but reducing stability margins and increasing oscillatory behavior.</td>
     </tr>
     <tr>
-      <td><strong>Integral (K_i)</strong></td>
+      <td><strong>Integral \(K_i\)</strong></td>
       <td>- SSE remains<br />- Poor low-frequency disturbance rejection<br />- System may never reach setpoint</td>
       <td>- Overshoot and oscillations from windup<br />- Long settling time after overshoot<br />- Possible instability even for stable P-only systems</td>
-      <td>(K_i) accumulates error to remove SSE, but excessive accumulation (windup) drives large corrective action, overshooting the setpoint before unwinding.</td>
+      <td>\(K_i\) accumulates error to remove SSE, but excessive accumulation (windup) drives large corrective action, overshooting the setpoint before unwinding.</td>
     </tr>
     <tr>
-      <td><strong>Derivative (K_d)</strong></td>
+      <td><strong>Derivative \(K_d\)</strong></td>
       <td>- Underdamped response if damping from D is needed<br />- More overshoot than necessary<br />- Poor transient shaping</td>
       <td>- High-frequency noise amplification<br />- Chattering or actuator vibration<br />- Possible instability if noise excites system dynamics</td>
-      <td>(K_d) acts on error rate, improving damping. Too much magnifies sensor noise, creating large, rapid control signals that stress actuators and excite high-frequency dynamics.</td>
+      <td>\(K_d\) acts on error rate, improving damping. Too much magnifies sensor noise, creating large, rapid control signals that stress actuators and excite high-frequency dynamics.</td>
     </tr>
   </tbody>
 </table>
