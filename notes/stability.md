@@ -45,11 +45,15 @@ $$
 PM = 180^\circ + \angle L(j\omega_{gc})
 $$
 
-
+Delay in the system (e.g. delay in digital computers) only affects the phase plot and shifts it down.
 
 ### Margins and Sensitivity
 
 Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
+
+### Real World Cases
+1. Changing one parameter in the characteristic equation can have a larger effect than anticipated. Gain and Phase margin only apply separately to a whole open-loop system, and uncertainty in one particular parameter can drastically change the bode plots and therefore the margins.
+2. The Bode Plots can indicate infinite margins but be cautious about any dips in the phase plot, as the margins are small in those areas.
 
 ---
 

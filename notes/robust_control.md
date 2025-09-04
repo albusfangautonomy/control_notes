@@ -254,6 +254,8 @@ $$
 | $$ T(s) $$ | $$ \frac{K(s)G(s)}{1 + K(s)G(s)} $$ or $$ G(s)K(s)(I + G(s)K(s))^{-1} $$ | Response to reference / noise sensitivity |
 | Relation | $$ S + T = 1 $$ or $$ S + T = I $$ | Always holds |
 
+---
+
 ## Loop Shaping
 ![Loop Shaping Diagram](../figures/loop_shaping_graph.png)
 
@@ -290,7 +292,7 @@ This takes into account of model uncertainty in P.
 
 ---
 
-### Causes of Non-Robustness and Unstability
+### Causes of Non-Robustness and Instability
 1. model uncertainty. The real system gain is smaller or bigger than the model
 2. **Time delays.**
 3. Right Half Plane (RHP) zeros of P (the system transfer function)
@@ -303,6 +305,74 @@ Recall: a RHP zero would cause the system to go in the wrong direction before co
 A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.
 
 Example: 1. Aircraft gaining altitude. 2. parallel park.
+
+---
+
+## Gang of Four (No Feedforward F = 1) and Gang of Six (Feedforward)
+![Block Diagram for Feedback and Feedforward control system](../figures/feedback_system_diagram.png)
+
+### Setup
+1. Varaibles:
+    - control input: u
+    - system state: x
+    - system output: y
+
+## Gang of Four (No Feedforward Control F = 1)
+
+$$
+S = \frac{1}{1 + PC} \quad \text{sensitivity function}
+$$
+
+$$
+T = \frac{PC}{1 + PC} \quad \text{complementary sensitivity function}
+$$
+
+$$
+PS = \frac{P}{1 + PC} \quad \text{ disturbance sensitivity function}
+$$
+
+$$
+CS = \frac{C}{1 + PC} \quad \text{noise sensitivity function}
+$$
+
+## Gang of Six (with Feedforward Control)
+Easy to Derive:
+
+$$
+X = \frac{P}{1 + PC} D - \frac{PC}{1 + PC} N + \frac{PCF}{1 + PC} R
+$$
+
+$$
+Y = \frac{P}{1 + PC} D + \frac{1}{1 + PC} N + \frac{PCF}{1 + PC} R
+$$
+
+$$
+U = -\frac{PC}{1 + PC} D - \frac{C}{1 + PC} N + \frac{CF}{1 + PC} R
+$$
+
+$$
+\frac{PCF}{1 + PC}, \quad
+$$
+
+$$
+\frac{PC}{1 + PC}, \quad
+$$
+
+$$
+\frac{P}{1 + PC}, \quad
+$$
+
+$$
+\frac{CF}{1 + PC}, \quad
+$$
+
+$$
+\frac{C}{1 + PC}, \quad
+$$
+
+$$
+\frac{1}{1 + PC}
+$$
 
 ---
 

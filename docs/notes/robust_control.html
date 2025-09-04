@@ -345,6 +345,8 @@ where</p>
   </tbody>
 </table>
 
+<hr />
+
 <h2 id="loop-shaping">Loop Shaping</h2>
 <p><img src="../figures/loop_shaping_graph.png" alt="Loop Shaping Diagram" /></p>
 
@@ -382,7 +384,7 @@ compensator that gives a loop transfer function with a desired shape.</li>
 
 <hr />
 
-<h3 id="causes-of-non-robustness-and-unstability">Causes of Non-Robustness and Unstability</h3>
+<h3 id="causes-of-non-robustness-and-instability">Causes of Non-Robustness and Instability</h3>
 <ol>
   <li>model uncertainty. The real system gain is smaller or bigger than the model</li>
   <li><strong>Time delays.</strong></li>
@@ -397,6 +399,53 @@ To satisfy these hard rules set by Time delay and RHP zeros, one needs to shift 
 <p>A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.</p>
 
 <p>Example: 1. Aircraft gaining altitude. 2. parallel park.</p>
+
+<hr />
+
+<h2 id="gang-of-four-no-feedforward-f--1-and-gang-of-six-feedforward">Gang of Four (No Feedforward F = 1) and Gang of Six (Feedforward)</h2>
+<p><img src="../figures/feedback_system_diagram.png" alt="Block Diagram for Feedback and Feedforward control system" /></p>
+
+<h3 id="setup">Setup</h3>
+<ol>
+  <li>Varaibles:
+    <ul>
+      <li>control input: u</li>
+      <li>system state: x</li>
+      <li>system output: y</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="gang-of-four-no-feedforward-control-f--1">Gang of Four (No Feedforward Control F = 1)</h2>
+
+\[S = \frac{1}{1 + PC} \quad \text{sensitivity function}\]
+
+\[T = \frac{PC}{1 + PC} \quad \text{complementary sensitivity function}\]
+
+\[PS = \frac{P}{1 + PC} \quad \text{ disturbance sensitivity function}\]
+
+\[CS = \frac{C}{1 + PC} \quad \text{noise sensitivity function}\]
+
+<h2 id="gang-of-six-with-feedforward-control">Gang of Six (with Feedforward Control)</h2>
+<p>Easy to Derive:</p>
+
+\[X = \frac{P}{1 + PC} D - \frac{PC}{1 + PC} N + \frac{PCF}{1 + PC} R\]
+
+\[Y = \frac{P}{1 + PC} D + \frac{1}{1 + PC} N + \frac{PCF}{1 + PC} R\]
+
+\[U = -\frac{PC}{1 + PC} D - \frac{C}{1 + PC} N + \frac{CF}{1 + PC} R\]
+
+\[\frac{PCF}{1 + PC}, \quad\]
+
+\[\frac{PC}{1 + PC}, \quad\]
+
+\[\frac{P}{1 + PC}, \quad\]
+
+\[\frac{CF}{1 + PC}, \quad\]
+
+\[\frac{C}{1 + PC}, \quad\]
+
+\[\frac{1}{1 + PC}\]
 
 <hr />
 

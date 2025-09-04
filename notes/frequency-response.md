@@ -210,13 +210,16 @@ $$ \frac{\bar{x}}{\bar{u}}$$
 ---
 
 ## Time Delays
+In Continuous time domain, time delay is essentially an infinite poles. Root locus, LQR, $$H_{infinity}$$ wouldn't work for systems with time delays, since it is of infinite state. We can solve this by using [Pade Approximation](./techniques.html).
 
 ### Non-distorting Delays
 Every frequency is delayed by the same amount, the shape of the signal doesn't change (transport delay).
+
 ### Distorting Delays
 Each frequency of a given signal is delayed by a different amount, given by the Bode plot.
 
 ### Time Delay Issues
+0. Pure time delays (transport delays) shifts the phase plot down, reducing the phase margin.
 1. Controller has to use old information.
 2. Controller has to predict the future - effectively lowers sample time and erodes phase margin.
 3. As a result, the system becomes laggy.
@@ -243,3 +246,6 @@ For some systems, one can replace time delay with **Pade Approximation**.
 To estimate time margins for highly non-linear systems, ie. systems that can't be approximated well with a linear model, add a Delay Margin block and estimate the Margin.
 
 If the system design doesn't have a satisfactory delay margin, either design a slower controller or try to eliminate the delays from source.
+
+## Delay Margin
+Unexpected time delays can degrade system performance, and even cause instability when delay is high.

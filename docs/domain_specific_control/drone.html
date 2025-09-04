@@ -235,14 +235,21 @@ we are going to develop a controller that couples thrust with rotational dynamic
 <hr />
 
 <h1 id="altitude-controller-walkthrough">Altitude Controller Walkthrough</h1>
-<p><strong>Scenario starts</strong>: Altitude correct, but position is a bit off to the left -&gt; position error.
-Step 1: P controller of PID request roll angle to fly right, which gives a reference roll angle.
-Step 2: Inner loop roll PID takes the reference roll angle from previous step and calculate rolling torque.
-Step 3: Motor-Mix-Algorithm takes rolling torque as input and outputs motor commands, making motors on the left speed up and motors on the right slow down.
-<strong>Scenario prgoresses</strong>: Step 3 makes the drone roll to the right, but since the vertical component of the thrust is slightly smaller than gravity when rolled, the drone loses altitude.
-Step 4: Altitude controller senses this altitude error and increases thrust.
-Step 5: Position error decreases as drone moves to the right, the requested roll angle also drops.
-Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
+<p><strong>Scenario starts</strong>: Altitude correct, but position is a bit off to the left -&gt; position error.</p>
+
+<p>Step 1: P controller of PID request roll angle to fly right, which gives a reference roll angle.</p>
+
+<p>Step 2: Inner loop roll PID takes the reference roll angle from previous step and calculate rolling <strong>torque</strong> (force).</p>
+
+<p>Step 3: Motor-Mix-Algorithm takes rolling torque as input and outputs motor commands, making motors on the left speed up and motors on the right slow down.</p>
+
+<p><strong>Scenario prgoresses</strong>: Step 3 makes the drone roll to the right, but since the vertical component of the thrust is slightly smaller than gravity when rolled, the drone loses altitude.</p>
+
+<p>Step 4: Altitude controller senses this altitude error and increases thrust.</p>
+
+<p>Step 5: Position error decreases as drone moves to the right, the requested roll angle also drops.</p>
+
+<p>Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
 
 <hr />
 
@@ -266,7 +273,7 @@ Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
 
 <hr />
 
-<h1 id="tuning-the-pid-controller">Tuning the PID controller</h1>
+<h3 id="tuning-the-pid-controller">Tuning the PID controller</h3>
 
 <p>start with the simplest model possible</p>
 <ol>
@@ -277,6 +284,12 @@ Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
 <hr />
 
 <h1 id="geometric-controller">Geometric Controller</h1>
+
+<p><img src="../figures/drone_geometric_controller_diagram.png" alt="Geometric Controller for Drones Diagram" />
+<img src="../figures/geometric_controller_desired_frame.png" alt="Geometric Controller desired body frame" /></p>
+
+<p>\(z^w_d\) is vector \(z_d\) expressed in world frame. \(y_d\) and \(x_d\) are calculated based on the cross product between desired horizontal yaw vector \(\tilde{x}^w_d\) and desired thrust vector \(z^w_d\)</p>
+
 <p>Reference:</p>
 
 <p><a href="https://vnav.mit.edu/material/06-Control1-notes.pdf">Control 1 Notes (MIT VNAV)</a></p>
@@ -324,7 +337,7 @@ Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
 <hr />
 
 <h2 id="control-commands-per-tick">Control commands (per tick)</h2>
-<h3 id="translational-side">Translational Side</h3>
+<h3 id="translational-side-outer-loop">Translational Side (Outer Loop)</h3>
 <p>Let \(R \in SO(3)\) be the body→world rotation matrix,<br />
 \(\Omega \in \mathbb{R}^3\) the body-frame angular velocity,<br />
 \(e_3 = [0,\,0,\,1]^\top\), \(m\) the mass, \(J\) the inertia matrix.</p>
@@ -338,7 +351,7 @@ Step 6: Roll PID senses decreases in error, brings drone back to level.</p>
 <p><strong>Collective thrust:</strong>
 \(u_1 = m\, a_c^\top (R\,e_3)\)</p>
 
-<h3 id="rotational-side">Rotational Side</h3>
+<h3 id="rotational-side-inner-loop">Rotational Side (Inner Loop)</h3>
 
 <p><strong>Attitude/angular velocity errors:</strong>
 \(e_R = \frac{1}{2} \big(R_d^\top R - R^\top R_d\big)^\vee\),
@@ -424,6 +437,21 @@ where \(J_{diag}\) are diagonal elements of the inertia matrix.</li>
 where \(m\) is the mass.</li>
     </ul>
   </li>
+</ol>
+
+<hr />
+
+<h1 id="sliding-mode-control">Sliding Mode Control</h1>
+<p>In a cascade loop setup, the <strong>matched disturbance</strong> means disturbance that enter through the same channel as the control input to the next controller (ie, output of the current controller). In this case the control input to the <em>plant</em> would be the input to the inner loop.</p>
+
+<h2 id="why-smc-would-make-sense">Why SMC would make sense?</h2>
+<ol>
+  <li>Attitude controller (inner loop) takes roll error and pitch error and outputs roll torque and pitch torque, which are forces.
+    <ul>
+      <li>Wind gust and payload also changes forces, which means they are matched disturbances in the <strong>attitude loop</strong></li>
+    </ul>
+  </li>
+  <li>Matched disturbances in attitude controller would be wind gust, payload uncertainty, etc, which need to be taken into account. SMC deals well with matched uncertainities.</li>
 </ol>
 
       </div>

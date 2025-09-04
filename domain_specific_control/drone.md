@@ -164,12 +164,19 @@ We **need to couple position errors with roll and pitch** because left, right, f
 
 # Altitude Controller Walkthrough
 **Scenario starts**: Altitude correct, but position is a bit off to the left -> position error.
+
 Step 1: P controller of PID request roll angle to fly right, which gives a reference roll angle.
-Step 2: Inner loop roll PID takes the reference roll angle from previous step and calculate rolling torque.
+
+Step 2: Inner loop roll PID takes the reference roll angle from previous step and calculate rolling **torque** (force).
+
 Step 3: Motor-Mix-Algorithm takes rolling torque as input and outputs motor commands, making motors on the left speed up and motors on the right slow down.
+
 **Scenario prgoresses**: Step 3 makes the drone roll to the right, but since the vertical component of the thrust is slightly smaller than gravity when rolled, the drone loses altitude.
+
 Step 4: Altitude controller senses this altitude error and increases thrust.
+
 Step 5: Position error decreases as drone moves to the right, the requested roll angle also drops.
+
 Step 6: Roll PID senses decreases in error, brings drone back to level.
 
 
@@ -195,7 +202,7 @@ This diagram shows the four components of the Flight Code Software (FCS)
 
 ---
 
-# Tuning the PID controller
+### Tuning the PID controller
 
 start with the simplest model possible
 1. Focus on altitude control only (thrust control) first by setting inputs to MMA for roll, pitch, and yaw to 0
@@ -205,6 +212,12 @@ start with the simplest model possible
 ---
 
 # Geometric Controller
+
+![Geometric Controller for Drones Diagram](../figures/drone_geometric_controller_diagram.png)
+![Geometric Controller desired body frame](../figures/geometric_controller_desired_frame.png)
+
+$$z^w_d$$ is vector $$z_d$$ expressed in world frame. $$y_d$$ and $$x_d$$ are calculated based on the cross product between desired horizontal yaw vector $$\tilde{x}^w_d$$ and desired thrust vector $$z^w_d$$
+
 Reference:
 
 [Control 1 Notes (MIT VNAV)](https://vnav.mit.edu/material/06-Control1-notes.pdf)
@@ -249,7 +262,7 @@ Reference:
 ---
 
 ## Control commands (per tick)
-### Translational Side
+### Translational Side (Outer Loop)
 Let $$ R \in SO(3) $$ be the body→world rotation matrix,  
 $$ \Omega \in \mathbb{R}^3 $$ the body-frame angular velocity,  
 $$ e_3 = [0,\,0,\,1]^\top $$, $$ m $$ the mass, $$ J $$ the inertia matrix.
@@ -269,7 +282,7 @@ $$
 u_1 = m\, a_c^\top (R\,e_3)
 $$
 
-### Rotational Side
+### Rotational Side (Inner Loop)
 
 **Attitude/angular velocity errors:**
 $$
@@ -340,3 +353,14 @@ Where:
      k_v ≈ 2 * \sqrt{(k_x * m)}
      $$
      where $$m$$ is the mass.
+
+---
+
+# Sliding Mode Control 
+In a cascade loop setup, the **matched disturbance** means disturbance that enter through the same channel as the control input to the next controller (ie, output of the current controller). In this case the control input to the *plant* would be the input to the inner loop.
+
+
+## Why SMC would make sense?
+1. Attitude controller (inner loop) takes roll error and pitch error and outputs roll torque and pitch torque, which are forces.
+  - Wind gust and payload also changes forces, which means they are matched disturbances in the **attitude loop**
+2. Matched disturbances in attitude controller would be wind gust, payload uncertainty, etc, which need to be taken into account. SMC deals well with matched uncertainities.

@@ -69,10 +69,13 @@ Welcome to my personal collection of control systems notes. This site compiles e
   Notch filters for resonances, derivative filtering, reference prefilters, and anti-aliasing.
 
 - [SVD](./notes/svd.html) \\
-  A basic review of SVD
+  A basic review of SVD.
+
+- [Control Theory Techniques](../notes/techniques.html) \\
+  Commonly used techniques in controller desing. Pade Approximation, SVD.
 
 - [Data Driven Control](./notes/data_driven_control.html) \\
-  Advanced control topics for Machine Learning based control
+  Advanced control topics for Machine Learning based control.
 
 ### Nonlinear Control
 

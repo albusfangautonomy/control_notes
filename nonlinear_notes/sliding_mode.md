@@ -88,7 +88,7 @@ Next step is to actually constrain the trajectory to a single line.
 ### Sliding Mode Control Robustness
 Zooming into the plane we can see how disturbances are rejected.
 
- <figure style="text-align: center;">
+ <figure style="text-align: left;">
     <img src="../figures/sliding_mode_robustness.png" width="500" height = 400>
     <figcaption>Robustness and Disturbance Rejection</figcaption>
 </figure>

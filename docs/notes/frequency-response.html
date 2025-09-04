@@ -243,14 +243,17 @@
 <hr />
 
 <h2 id="time-delays">Time Delays</h2>
+<p>In Continuous time domain, time delay is essentially an infinite poles. Root locus, LQR, \(H_{infinity}\) wouldn’t work for systems with time delays, since it is of infinite state. We can solve this by using <a href="./techniques.html">Pade Approximation</a>.</p>
 
 <h3 id="non-distorting-delays">Non-distorting Delays</h3>
 <p>Every frequency is delayed by the same amount, the shape of the signal doesn’t change (transport delay).</p>
+
 <h3 id="distorting-delays">Distorting Delays</h3>
 <p>Each frequency of a given signal is delayed by a different amount, given by the Bode plot.</p>
 
 <h3 id="time-delay-issues">Time Delay Issues</h3>
 <ol>
+  <li>Pure time delays (transport delays) shifts the phase plot down, reducing the phase margin.</li>
   <li>Controller has to use old information.</li>
   <li>Controller has to predict the future - effectively lowers sample time and erodes phase margin.</li>
   <li>As a result, the system becomes laggy.</li>
@@ -283,6 +286,9 @@
 <p>To estimate time margins for highly non-linear systems, ie. systems that can’t be approximated well with a linear model, add a Delay Margin block and estimate the Margin.</p>
 
 <p>If the system design doesn’t have a satisfactory delay margin, either design a slower controller or try to eliminate the delays from source.</p>
+
+<h2 id="delay-margin">Delay Margin</h2>
+<p>Unexpected time delays can degrade system performance, and even cause instability when delay is high.</p>
 
   </div>
 
