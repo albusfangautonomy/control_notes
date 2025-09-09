@@ -364,3 +364,8 @@ In a cascade loop setup, the **matched disturbance** means disturbance that ente
 1. Attitude controller (inner loop) takes roll error and pitch error and outputs roll torque and pitch torque, which are forces.
   - Wind gust and payload also changes forces, which means they are matched disturbances in the **attitude loop**
 2. Matched disturbances in attitude controller would be wind gust, payload uncertainty, etc, which need to be taken into account. SMC deals well with matched uncertainities.
+
+
+---
+
+# Disturbance Observer

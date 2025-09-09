@@ -58,6 +58,10 @@ In **complementary filter**, the user decides how much accel+mag and gyro data n
 ---
 
 ## Sensor Fusion with GPS and IMU: Algorithm - Extended Kalman
+[Matlab Example](https://www.mathworks.com/help/fusion/ug/pose-estimation-from-asynchronous-sensors.html)
+
+Note that the model in Extended Kalman is not vehicle specific. This model refers to how each state of the filter is affected by other states of the filter. The 'model' just dead-reckon the sensor data adjusted for biases and predict the pose.
+
 GPS measured velocity and position.
 If GPS reading doesn't need to be very accurate or fast, adding IMU is not helping much. (driving with google maps)
 If GPS reading needs to be accurate and fast velocity constantly changing, adding IMU helps. (drone flying around obstacles)
