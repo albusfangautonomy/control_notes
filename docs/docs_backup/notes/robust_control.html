@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Robust Control | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Robust Control" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/robust_control.html" />
+<meta property="og:url" content="http://localhost:4000/notes/robust_control.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Robust Control" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Robust Control","url":"http://localhost:4000/notes/robust_control.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="robust-control-and-loop-shaping">Robust Control and Loop Shaping</h1>
+
+<p>Robust control is not one controller like PID but rather a desing method that allows us to tune PID gains or other controllers so the actual controller is robust.</p>
+
+<h2 id="what-is-robustness">What is Robustness?</h2>
+<p>A robust system is one capable of meeting requirements (stability or performance measures) even in the presence of model uncertainty and/or disturbance uncertainty.</p>
+
+<h2 id="motivation-and-background">Motivation and Background</h2>
+<p>A paper by John Doyle proved that there is no guarantee on robustness of LQG scheme. This discovery pushed the industry towards robust control. We need to delve into Laplace domain and determine Robustness of a system. Laplace Transform domain gives us insights into the <strong>performance, sensitivity, and robustness characteristics</strong>.</p>
+
+<hr />
+
+<h2 id="a-quick-note-about-this-section">A Quick Note about this Section</h2>
+<p>All the material on SISO systems below only pertains to variations at the input.</p>
+
+<h2 id="why-use-disk-margin">Why use Disk Margin?</h2>
+<ol>
+  <li>
+    <p>Even though increasing delay or increasing gain individually (reducing GM and PM respectively) may not cause the system to be unstable, adding a mix of the two can unstabilize the system. The disk margin therefore needs to be considered. To anaylze the effect of adding phase and gain, use Nyquist Plot.</p>
+  </li>
+  <li>
+    <p>Disk margin can be used on MIMO.</p>
+  </li>
+</ol>
+
+<h2 id="disk-margin">Disk Margin</h2>
+
+<p><img src="../figures/disk_margin_complex_plane.png" alt="disk margin" width="700" /></p>
+
+<p>The disk reads “Given \(e=0.0\), the maximum disk margin is 0.56”</p>
+
+<h3 id="parameters-of-the-disk">Parameters of the disk</h3>
+<p>The disk must be fit entirely in the stable region and includes the nominal point \(f =1 + 0i\)</p>
+<ol>
+  <li>Skew factor \(e\). how far off the center of the disk is to the nominal point.</li>
+  <li>\(\alpha\) measures the size of the disk. It represents the size of the disk given a certain \(e\) such that the disk is entirely in the stable region.</li>
+</ol>
+
+<h3 id="disk-placement">Disk Placement</h3>
+<p>You can choose where the disk is:</p>
+
+<ol>
+  <li>
+    <p>If you think real system gain is bigger than model gain, use a bigger \(e\)</p>
+
+    <ul>
+      <li>If unsure, choose \(e = 0.0\)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Disk margin may not be conservative even if it may only covers a small area of stability zone.</p>
+
+    <p><img src="../figures/disk_margin_conservativeness.png" alt="disk margin conservativeness" width="500" /></p>
+
+    <ul>
+      <li>in this case, while gain margin is bigger, at those bigger gain values, not much wiggle room for phase -&gt; not optimal</li>
+    </ul>
+  </li>
+  <li>
+    <p>May need to check all three margins to ensure accurate representation of the stability.</p>
+
+    <ul>
+      <li>Some systems are robust to pure phase or gain variations but not a mix of the two</li>
+    </ul>
+
+    <p><img src="../figures/disk_margin_example.png" alt="disk margin example" width="500" /></p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="disk-margin-for-mimo">Disk Margin for MIMO</h2>
+
+<h3 id="multi-loop-input-disk-margin-input-to-plant-only">Multi-loop Input Disk Margin (Input TO PLANT Only)</h3>
+
+<p>The Multi-loop Input disk margin is the largest disk such that any \(n\) independent variations within the disk were applied to the \(n\) plant inputs, the loop would be stable.</p>
+
+<h3 id="multi-loop-output-disk-margin-output-only">Multi-loop Output Disk Margin (Output Only)</h3>
+
+<p>The Multi-loop Output disk margin is the</p>
+
+<h3 id="multi-loop-inputoutput-disk-margin">Multi-loop Input/Output Disk Margin</h3>
+
+<p><img src="../figures/disk_margin_mimo.png" alt="Disk Margin MIMO" /></p>
+
+<h3 id="mimo-disk-margin-example">MIMO Disk Margin Example</h3>
+<p>A simple MIMO controller can be designed by taking the inverse of the plant transfer functions matrix \(G(s)\). We can then use loop shaping and mulitply the controller with \(\frac{1}{s}\). In this case the system behaves like an integrator.</p>
+
+<p>Input:</p>
+
+<ol>
+  <li>
+    <p>Loop-at-a-time input disk margins (varying input one at a time):</p>
+
+    <ul>
+      <li>Infinite Gain margins and large phase margins</li>
+    </ul>
+  </li>
+  <li>
+    <p>MLIDM is very similar to Loop-at-a-time:</p>
+
+    <ul>
+      <li>Infinite Gain margins and large phase margins</li>
+      <li>This is because the channels are decoupled by the inverse!</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Output:
+Since we mulitplied G(s) by its inverse, this practically decoupled the channels.</p>
+
+<ol>
+  <li>Loop-at-a-time output disk margin (varying output one at a time)</li>
+  <li>MLODM also yields</li>
+</ol>
+
+<p>MIMO (Multi-loop concurrent input/output disk margins):</p>
+
+<ol>
+  <li>Very little Gain Margin and Phase Margin</li>
+</ol>
+
+<p>Reasoning: Inverting the plant is not desirable since this is assuming perfectly cancellation between the pole and zero. If there’s any perturbation, the design falls apart.</p>
+
+<hr />
+
+<h2 id="system-parameter-uncertainty">System Parameter Uncertainty</h2>
+
+<p><img src="../figures/dual_cart_problem.png" alt="dual cart problem" /></p>
+
+<p>For a dual-cart system, there may be uncertainties in model parameters such as spring constant K and mass m.</p>
+
+<h3 id="undesirable-monte-carlo">Undesirable: Monte Carlo</h3>
+
+<p>Generate random models within a threashold of the model parameters and check stability. Monte Carlo may claim false positives.</p>
+
+<h3 id="matlab-robstab">Matlab robstab</h3>
+
+<p>This approach analytically solves for the cases where the system becomes unstable</p>
+
+<hr />
+
+<h2 id="three-equivalent-representations-of-linear-systems">Three Equivalent Representations of Linear Systems</h2>
+<ol>
+  <li>State space representation
+ \(\dot{x}=Ax+Bu \\ y=Cx\)</li>
+  <li>Transfer functions
+\(G(s)=C(sI-A)^{-1}B\)</li>
+  <li>Impulse response time domain
+\(y(t)=\int_{0}^{t}h(t-\tau)u(\tau)d\tau\) 
+This is a convolution between impulse response and control input</li>
+</ol>
+
+<p><strong>Note</strong> there are different usages for each of the three representations.</p>
+<ol>
+  <li>If physics can be represented, State space representation can be very useful.</li>
+  <li>Transfer functions can be useful for investigating robustness and performance</li>
+</ol>
+
+<hr />
+
+<h2 id="deriving-sensitivity-and-complementary-sensitivity-with-loop-transfer-function">Deriving Sensitivity and Complementary Sensitivity with Loop Transfer Function</h2>
+<p><img src="../figures/controller_loop.png" alt="controller loop diagram with noise" /></p>
+
+<p>where d is disturbance, n is measurement noise, r is reference setpoint, P is the system transfer function, and K is the controller transfer function.</p>
+
+\[L = PK\]
+
+<p>Note K is applied first to the error before P.</p>
+
+\[I*y = P_{d}*d+ PK(r-y-n), \text{where} (r-y-n) = \epsilon\]
+
+\[(I+Pk)*y = PKr + P_{d}*d - PKn\]
+
+\[y = (I+P*K)^{-1} * PKr + (I+PK)^{-1}P_{d}d - (I+PK)^{-1}PKn\]
+
+<p>\(\text{Therefore, } (I+PK)^{-1}PK \text{ is called complimentary sensitivity matrix, and } (I+(Pk))^{-1} \text{ is the sensitivity matrix}\)</p>
+<ol>
+  <li>first term of y tracks trajectory</li>
+  <li>second term of y rejects disturbance</li>
+  <li>third term of y attenuates noise</li>
+</ol>
+
+<hr />
+
+<h2 id="sensitivity-and-complementary-sensitivity-functions">Sensitivity and Complementary Sensitivity Functions</h2>
+
+<p>In a standard negative feedback loop:</p>
+
+<ul>
+  <li>Plant: \(G(s)\)</li>
+  <li>Controller: \(K(s)\)</li>
+  <li>Loop transfer function: \(L(s) = K(s)G(s)\)</li>
+</ul>
+
+<h3 id="1-sensitivity-function-ss">1. <strong>Sensitivity Function</strong> \(S(s)\)</h3>
+
+\[S(s) = \frac{1}{1 + L(s)} = \frac{1}{1 + K(s)G(s)}\]
+
+<ul>
+  <li>Measures the system’s sensitivity to disturbances and model uncertainty.</li>
+  <li>A smaller 
+\(|S(j\omega)|\text{ means better disturbance rejection at frequency }\omega\).</li>
+</ul>
+
+<h3 id="2-complementary-sensitivity-function-ts">2. <strong>Complementary Sensitivity Function</strong> \(T(s)\)</h3>
+
+\[T(s) = \frac{L(s)}{1 + L(s)} = \frac{K(s)G(s)}{1 + K(s)G(s)}\]
+
+<ul>
+  <li>Measures the system’s response to the reference input and its sensitivity to measurement noise.</li>
+  <li>A larger 
+\(|T(j\omega)|\) at low frequencies means better reference tracking.</li>
+</ul>
+
+<h3 id="3-transfer-functions-bode-plots">3. <strong>Transfer Functions Bode Plots</strong></h3>
+<p><img src="../figures/sensitvity_transfer.png" alt="Sensitivity and Complementary Sensitivity Transfer Function" /></p>
+
+<p>Error Term \(\mathcal{E} = r - y_{m} = S*r - S*P_{d}*d + T*n\)
+where</p>
+<ul>
+  <li>\(n\) is measurement noise</li>
+  <li>\(P_{d}\) is disturbance Transfer Function and d is disturbance. \((\text{L loop output} + P_{d}*d=y)\)</li>
+  <li>\(r\) is reference setpoint</li>
+  <li>\(S\) is Sensitivity and \(T\) is Complementary Sensitivity</li>
+</ul>
+
+<p><strong>Why does the Bode plot look like that?</strong></p>
+<ol>
+  <li>S needs to be small in low frequencies to minimize error \(\mathcal{E}\) (first term in \(\mathcal{E}\) formula), since a realistic \(r\) would be low in frequency for system to follow.</li>
+  <li>Reference Tracking and disturbance rejection are typically low frequency phenomemon.</li>
+  <li>T needs to be small in maganitude for high frequencies, since noise \(n\) is generally high in frequency.</li>
+  <li>\(\omega_ {c}\) denotes the <strong>crossover frequency</strong>, being the frequency at which Sensitivity starts to increase and Complementary Sensitivity begins to decrease.</li>
+  <li>\(\omega_ {c}\) can be tuned to be where the user thinks noise begin to overwhelm the system.</li>
+  <li><strong>Peaks or bumps in Sensitivty transfer function is undesirable and needs to be attenuated</strong></li>
+</ol>
+
+<h3 id="4-relationship">4. <strong>Relationship</strong></h3>
+
+\[S(s) + T(s) = 1\]
+
+<hr />
+
+<h3 id="mimo-case-matrix-form">MIMO Case (Matrix Form)</h3>
+
+<p>Let:</p>
+
+<ul>
+  <li>\(G(s) \in \mathbb{R}^{p \times m}\) be the plant</li>
+  <li>\(K(s) \in \mathbb{R}^{m \times p}\) be the controller</li>
+  <li>
+\[L(s) = G(s)K(s)\]
+  </li>
+</ul>
+
+<p>Then:</p>
+
+<p>\(S(s) = (I + L(s))^{-1}\)
+\(T(s) = L(s)(I + L(s))^{-1}\)</p>
+
+<p>These satisfy:</p>
+
+\[S(s) + T(s) = I\]
+
+<hr />
+
+<h3 id="summary">Summary</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Formula</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>\(S(s)\)</td>
+      <td>\(\frac{1}{1 + K(s)G(s)}\) or \((I + G(s)K(s))^{-1}\)</td>
+      <td>Sensitivity to disturbances</td>
+    </tr>
+    <tr>
+      <td>\(T(s)\)</td>
+      <td>\(\frac{K(s)G(s)}{1 + K(s)G(s)}\) or \(G(s)K(s)(I + G(s)K(s))^{-1}\)</td>
+      <td>Response to reference / noise sensitivity</td>
+    </tr>
+    <tr>
+      <td>Relation</td>
+      <td>\(S + T = 1\) or \(S + T = I\)</td>
+      <td>Always holds</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="loop-shaping">Loop Shaping</h2>
+<p><img src="../figures/loop_shaping_graph.png" alt="Loop Shaping Diagram" /></p>
+
+<ol>
+  <li>The Bode plot of the Loop Transfer Function looks like an <strong>Integrator</strong>
+    <ul>
+      <li>high gain at low frequencies for good reference tracking and noise rejection (S needs to be small so L needs to be big )</li>
+      <li>low gain at high frequencies to attenuate noise</li>
+      <li><strong>bode plot can be shifted left or right by multiplying transfer function by \(\omega_{s}/s\)</strong></li>
+    </ul>
+  </li>
+  <li>Loop shaping is a collection of several different design methods based on the idea of choosing a
+compensator that gives a loop transfer function with a desired shape.</li>
+  <li>One possibility is to start with the loop transfer function of the process and modify it by changing the gain and adding poles and zeros to the controller until the desired shape is obtained.</li>
+</ol>
+
+<p>If you have a model for the system and a desired Loop Transfer Function, MATLAB can tune <strong>K, the controller transfer function</strong> to robustify control system. No LQG needed.</p>
+
+<h3 id="non-robustness-for-loop-shaping">Non-Robustness for Loop Shaping</h3>
+<p>The peaks in Sensitivity graph is undesirable since the larger the peak, the closer the controller system gets to instability (-1 point on the Nyquist plot).</p>
+
+<p><img src="../figures/nyquist_loop_shaping.png" alt="Loop Shaping Nyquist plot" /></p>
+
+<p>where
+\(max|s|=1/m\)</p>
+
+<p>Therefore a larger peak in sensitivity <strong>S</strong> correspond to a closer distance to instability.</p>
+
+<p>The actual system dynamics can rotate the curve (Phase) or shift it left to make the system unstable.</p>
+
+<h3 id="cone-of-uncertainty">Cone of Uncertainty</h3>
+<p><img src="../figures/cone_of_uncertainty.png" alt="cone of uncertainty on Nyquist plot" /></p>
+
+<p>This takes into account of model uncertainty in P.</p>
+
+<hr />
+
+<h3 id="causes-of-non-robustness-and-instability">Causes of Non-Robustness and Instability</h3>
+<ol>
+  <li>model uncertainty. The real system gain is smaller or bigger than the model</li>
+  <li><strong>Time delays.</strong></li>
+  <li>Right Half Plane (RHP) zeros of P (the system transfer function)</li>
+</ol>
+
+<p><strong>Important Note:</strong> Time delay and RHP zeros of P give a <strong>fundamental limit</strong> on how small \(max(|S|)\) can be!
+To satisfy these hard rules set by Time delay and RHP zeros, one needs to shift \(\omega_{c}\) (the crossover frequency) to the left. This means the systems can only track low frequency references and reject lower frequency disturbances.</p>
+
+<p>Recall: a RHP zero would cause the system to go in the wrong direction before converging. (This behavior is similar to a time delay.)</p>
+
+<p>A RHP zero introduces Non-minimum Phase and would cause the system to go in the wrong direction before converging.</p>
+
+<p>Example: 1. Aircraft gaining altitude. 2. parallel park.</p>
+
+<hr />
+
+<h2 id="gang-of-four-no-feedforward-f--1-and-gang-of-six-feedforward">Gang of Four (No Feedforward F = 1) and Gang of Six (Feedforward)</h2>
+<p><img src="../figures/feedback_system_diagram.png" alt="Block Diagram for Feedback and Feedforward control system" /></p>
+
+<h3 id="setup">Setup</h3>
+<ol>
+  <li>Varaibles:
+    <ul>
+      <li>control input: u</li>
+      <li>system state: x</li>
+      <li>system output: y</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="gang-of-four-no-feedforward-control-f--1">Gang of Four (No Feedforward Control F = 1)</h2>
+
+\[S = \frac{1}{1 + PC} \quad \text{sensitivity function}\]
+
+\[T = \frac{PC}{1 + PC} \quad \text{complementary sensitivity function}\]
+
+\[PS = \frac{P}{1 + PC} \quad \text{ disturbance sensitivity function}\]
+
+\[CS = \frac{C}{1 + PC} \quad \text{noise sensitivity function}\]
+
+<h2 id="gang-of-six-with-feedforward-control">Gang of Six (with Feedforward Control)</h2>
+<p>Easy to Derive:</p>
+
+\[X = \frac{P}{1 + PC} D - \frac{PC}{1 + PC} N + \frac{PCF}{1 + PC} R\]
+
+\[Y = \frac{P}{1 + PC} D + \frac{1}{1 + PC} N + \frac{PCF}{1 + PC} R\]
+
+\[U = -\frac{PC}{1 + PC} D - \frac{C}{1 + PC} N + \frac{CF}{1 + PC} R\]
+
+\[\frac{PCF}{1 + PC}, \quad\]
+
+\[\frac{PC}{1 + PC}, \quad\]
+
+\[\frac{P}{1 + PC}, \quad\]
+
+\[\frac{CF}{1 + PC}, \quad\]
+
+\[\frac{C}{1 + PC}, \quad\]
+
+\[\frac{1}{1 + PC}\]
+
+<hr />
+
+<h1 id="h_infty">\(H_\infty\)</h1>
+
+<h2 id="h_infty-synthesis">\(H_\infty\) Synthesis</h2>
+
+<p>\(H_\infty\) methods are used to synthesize controllers to achieve stabilization with guaranteed performance. To use such methods, one needs to express the control problem as a  mathematical optimization problem and then finds the controller that solves this optimization.</p>
+
+<p>The resulting controller is only optimal with respect to the prescribed cost function and does not necessarily represent the best controller in terms of the usual performance measures used to evaluate controllers such as settling time, energy expended, etc. Also, non-linear constraints such as saturation are generally not well-handled.</p>
+
+<p>\(H_\infty\) techniques can be used to minimize the closed loop impact of a perturbation. May not be robust for variations in system model.</p>
+
+<h3 id="advantages">Advantages</h3>
+<p>Advantages:</p>
+<ol>
+  <li>\(H_\infty\) is readily applicable to problems with multivariate systems with cross-coupling between channels.</li>
+</ol>
+
+<h3 id="disadvantages">Disadvantages</h3>
+<ol>
+  <li>Complex math</li>
+  <li>A good model is required</li>
+</ol>
+
+<hr />
+
+<h2 id="h_infty-example-modeling-car-tire-over-a-bump">\(H_\infty\) example modeling car tire over a bump</h2>
+
+<h3 id="system-setup">System Setup</h3>
+
+<p float="left">
+  <img src="../figures/wheel_model.png" width="500" />
+  <img src="../figures/wheel_model_setup.png" width="500" />
+</p>
+
+<h3 id="h_infty-setup">\(H_\infty\) Setup</h3>
+
+<p><img src="../figures/h_infy_setup.png" alt="H_infty problem setup" /></p>
+
+<p>A controller that takes two measured external signals, \(S_d\) suspension travel and \(a_d\) body acceleration.</p>
+
+<hr />
+
+<h1 id="mu-synthesis">\(\mu\) Synthesis</h1>
+
+<p>\(\mu\) synthesis is an extension of \(H_\infty\). It solves the same problem but try to minimize the worst case gain over the entire uncertainty space. It aims to reduce the impact of model uncertainty in \(H_\infty\).</p>
+
+<h2 id="d-k-iteration">D-K Iteration.</h2>
+<ol>
+  <li>Run \(H_\infty\) to find a nomial controller</li>
+  <li>Checks robustness</li>
+  <li>Scales the problem based on the uncertainty in the system and runs another \(H_\infty\)</li>
+</ol>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

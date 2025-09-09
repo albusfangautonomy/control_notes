@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Controllability | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Controllability" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/controllability.html" />
+<meta property="og:url" content="http://localhost:4000/notes/controllability.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Controllability" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Controllability","url":"http://localhost:4000/notes/controllability.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Controllability</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="equivalence">Equivalence</h1>
+<ol>
+  <li>System is controllable</li>
+  <li>Arbitrary Eigenvalue (Pole) placement is allowed
+    <ul>
+      <li>
+\[u = -Kx \Rightarrow \dot{x} = (A-BK)x\]
+      </li>
+    </ul>
+  </li>
+  <li>Reachability (full in \(\mathbb{R}^n\))
+    <ul>
+      <li>Theoretically one can drive from Massachusetts to California in a second</li>
+      <li>This can be proven by Cayley-Hamilton theorem</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="cayley-hamilton-theorem">Cayley-Hamilton Theorem</h2>
+<p>Almost every square matrix satisfies its own characteristic equation</p>
+
+<p>The characteristic polynomial of matrix \(A\) is defined as:
+\(p_A(\lambda) = \det(\lambda I_n - A)\)
+Since this is a degree-\(n\) monic polynomial, it can be written as:
+\(p_A(\lambda) = \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0\)
+By replacing the scalar variable \(\lambda\) with the matrix \(A\), we define the matrix polynomial:
+\(p_A(A) = A^n + c_{n-1} A^{n-1} + \cdots + c_1 A + c_0 I_n\)</p>
+
+<h1 id="controllability">Controllability</h1>
+
+<h2 id="stabilizability">Stabilizability</h2>
+
+<p>Controllability for a large dimension space may be too extreme and sometimes unrealistic. For this purpose, stabilizability is defined as:</p>
+
+<p><strong>Stabilizability</strong><br />
+A system is stabilizable if and only if all unstable (or lightly damped) eigenvectors of A are in controllable subspace. (Anything unstable can be damped)</p>
+
+<p>Actuator B should be designed so that the unstable dynamic directions correspond to the big singular vector of the controllability matrix.</p>
+
+<h3 id="examples-of-stabilizability">Examples of Stabilizability</h3>
+
+<ol>
+  <li>Inverted Pendulum on a cart
+    <ul>
+      <li><strong>Unstable Mode</strong>: the pendulum tipping over (angle grows exponentially).</li>
+      <li><strong>Why Stabilizable</strong>:
+        <ul>
+          <li>The cart can move left or right, providing a restoring torque - can be damped.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Rocket During Takeoff
+    <ul>
+      <li><strong>Unstable Mode</strong>: pitch/roll drift - if thrust isn’t perfectly aligned, rocket tips and diverges.</li>
+      <li><strong>Why Stabilizable</strong>:
+        <ul>
+          <li>Thrust vector control changes the direction of the force relative to the center of mass. This gives direct control authority over the unstable angular dynamics.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Drone in hover (quadcopter)
+    <ul>
+      <li><strong>Unstable Mode</strong>: attitude - if it tilts slightly, gravity pulls it further, the drone accelerates away.</li>
+      <li><strong>Why stabilizable</strong>:
+        <ul>
+          <li>Each rotor produces torque about pitch, roll, and yaw.</li>
+          <li>These torques directly act on the unstable angular states.</li>
+          <li>Feedback (from IMU + controllers) lets you push those unstable poles into the stable LHP</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="controllability-of-linear-system">Controllability of Linear system</h2>
+<p>\(\dot{x}=Ax+Bu\)
+\(y=Cx\)<br />
+This system is controllable if and only if the controllability matrix \(C=[B\ AB\ A^2B\ ...\ A^{n-1}B]\) is of full column rank</p>
+
+<p><strong>Note</strong>: This is a binary check. To see how controllable this system is, investigate the SVD of C.</p>
+
+<h2 id="degrees-of-controllability">Degrees of Controllability</h2>
+<p>The Singular Value Decomposition (SVD) of the controllability matrix provides deep insight into the degree and direction of controllability of a linear system:</p>
+<ol>
+  <li>
+    <p>Controllability Rank<br />
+ If \(C\) has full rank (i.e. rank = number of states \(n\)), the system is completely controllable.</p>
+
+    <p>The number of nonzero singular values = the rank of \(C\).</p>
+  </li>
+  <li>
+    <p>Strength of Controllability (Conditioning)<br />
+ The magnitude of the singular values tells you how “strongly” controllable the system is in different directions:</p>
+
+    <p>Large singular values → easy to move the system in that direction.<br />
+ Tiny singular values → very difficult to control (require large input energy).<br />
+ Zero singular values → system not controllable in that direction.</p>
+  </li>
+  <li>
+    <p>Controllable Directions<br />
+ The right singular vectors \(V\) from \(C = U \Sigma V^\top\) span the input space.<br />
+ The left singular vectors \(U\) represent orthogonal directions in the state space.</p>
+
+    <p>Directions associated with large singular values in \(U\) are the most controllable.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="controllability-gramian">Controllability Gramian</h2>
+<p><strong>The eigenvectors of the Gramian (\(W_t\)) that correspond to the biggest eigenvalues are the most controllable directions in state space. This is the same as the first column vector of the U matrix of the SVD of controllability matrix</strong></p>
+
+<p>\(W_{t} \approx CC^T\)<br />
+The determinant of the Gramian indicates the volume of the ellipsoid and the <strong>signal-to-noise ratio</strong>.</p>
+
+<p>The <strong>controllability Gramian</strong> is a matrix that quantifies how easily a system’s state can be driven by the input. It measures the <strong>energy</strong> required to move the system from the origin to a particular state.</p>
+
+<hr />
+
+<h3 id="-system-setup">🔧 System Setup</h3>
+
+<p>For a linear time-invariant (LTI) system:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t)\]
+
+<p>The <strong>finite-horizon controllability Gramian</strong> over the time interval \([0, T]\) is:</p>
+
+\[W_c(T) = \int_0^T e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
+
+<p>If \(A\) is stable and \(T \to \infty\), the <strong>infinite-horizon controllability Gramian</strong> is:</p>
+
+\[W_c = \int_0^\infty e^{A\tau} B B^\top e^{A^\top \tau} \, d\tau\]
+
+<hr />
+
+<h3 id="-what-the-gramian-tells-you">📌 What the Gramian Tells You</h3>
+
+<h4 id="-1-controllability-test">✅ 1. Controllability Test</h4>
+
+<ul>
+  <li>The system is <strong>controllable</strong> if and only if \(W_c\) is <strong>positive definite</strong>.</li>
+  <li>If \(W_c\) is singular (has zero eigenvalues), some states cannot be reached from the origin.</li>
+</ul>
+
+<h4 id="-2-energy-to-reach-a-state">⚡ 2. Energy to Reach a State</h4>
+
+<p>The <strong>minimum energy</strong> to reach a state \(x_f\) from the origin is:</p>
+
+\[E = x_f^\top W_c^{-1} x_f\]
+
+<p>States in directions with <strong>small eigenvalues</strong> of \(W_c\) require <strong>more energy</strong> to reach.</p>
+
+<h4 id="-3-geometric-interpretation">📐 3. Geometric Interpretation</h4>
+
+<p>The ellipsoid:</p>
+
+\[\left\{ x \in \mathbb{R}^n : x^\top W_c^{-1} x \leq 1 \right\}\]
+
+<p>describes the set of states reachable with <strong>unit energy</strong>. This is known as the <strong>reachable ellipsoid</strong>.</p>
+
+<h4 id="-4-mode-wise-controllability">🎯 4. Mode-wise Controllability</h4>
+
+<p>If \(W_c\) has a mix of <strong>large</strong> and <strong>small</strong> eigenvalues, then <strong>some state directions are harder to control</strong> than others.</p>
+
+<p><strong>Notes</strong></p>
+<ol>
+  <li>The controllability Gramian is only defined for <strong>linear</strong> systems and often assumes zero initial state.</li>
+  <li>The controllability Gramian is symmetric and positive semi-definite.</li>
+</ol>
+
+<h2 id="pbh-test">PBH Test</h2>
+<p>(A,B) is controllable if and only if
+\(\text{rank}[(A-\lambda I)\ B] = n \quad \forall \lambda \in \mathbb{C}\)</p>
+<ol>
+  <li>\(\text{rank}(A-\lambda I)=n\) except for eigenvalues \(\lambda\)</li>
+  <li>B needs to have some component in each eigenvector direction</li>
+  <li>(Advanced) A random vector B would make (A,B) controllable with high probability</li>
+</ol>
+
+<hr />
+
+<h2 id="reachability">Reachability</h2>
+<p>In control theory, <strong>reachability</strong> describes whether it is possible to move a system from an initial state to a desired final state using admissible control inputs over a finite time interval.</p>
+
+<p>For a continuous-time linear time-invariant (LTI) system described by:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t)\]
+
+<p>where:</p>
+<ul>
+  <li>\(x(t) \in \mathbb{R}^n\) is the state vector,</li>
+  <li>\(u(t) \in \mathbb{R}^m\) is the control input,</li>
+  <li>\(A \in \mathbb{R}^{n \times n}\) is the system matrix,</li>
+  <li>\(B \in \mathbb{R}^{n \times m}\) is the input matrix,</li>
+</ul>
+
+<p>the system is <strong>reachable</strong> if, for any initial state \(x(0)\) and any final state \(x_f\), there exists an input \(u(t)\) that drives the system from \(x(0)\) to \(x_f\) in finite time.</p>
+
+<hr />
+
+<h3 id="reachability-matrix">Reachability Matrix</h3>
+
+<p>The reachability of the system can be tested using the <strong>reachability matrix</strong>:</p>
+
+\[\mathcal{R} = \begin{bmatrix} B &amp; AB &amp; A^2B &amp; \cdots &amp; A^{n-1}B \end{bmatrix}\]
+
+<p>If \(\mathcal{R}\) has <strong>full rank</strong> (i.e., \(\text{rank}(\mathcal{R}) = n\)), then the system is reachable.</p>
+
+<h3 id="-reachability-set">🎯 Reachability Set</h3>
+
+<p>The <strong>reachability set</strong> (or reachable set) at time \(t_f\) is the set of all states that the system can reach from an initial state \(x(0)\) under some admissible input \(u(t)\) over the time interval \([0, t_f]\).</p>
+
+<p>Formally, for a continuous-time LTI system:</p>
+
+\[\dot{x}(t) = A x(t) + B u(t), \quad x(0) = 0\]
+
+<p>the <strong>reachability set</strong> at time \(t_f\) is defined as:</p>
+
+\[\mathcal{R}(t_f) = \left\{ x(t_f) \in \mathbb{R}^n \;\middle|\; x(t_f) = \int_0^{t_f} e^{A(t_f - \tau)} B u(\tau) \, d\tau,\; u(\cdot) \in \mathcal{L}^2[0, t_f] \right\}\]
+
+<p>This set contains all possible states the system can reach at time \(t_f\) from the origin with square-integrable inputs \(u(t)\).</p>
+
+<p>If \(\mathcal{R}(t_f)\) spans \(\mathbb{R}^n\) for some finite \(t_f\), the system is reachable.</p>
+
+<p>For discrete-time systems:</p>
+
+\[x[k+1] = A x[k] + B u[k], \quad x[0] = 0\]
+
+<p>the reachability set after \(N\) steps is:</p>
+
+\[\mathcal{R}_d(N) = \left\{ x[N] = \sum_{i=0}^{N-1} A^i B u[N-1-i] \;\middle|\; u[i] \in \mathbb{R}^m \right\}\]
+
+<p>The union of all such sets over all \(t_f\) (or \(N\) in discrete time) is the <strong>total reachable set</strong> from the origin.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

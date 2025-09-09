@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>PID Control | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="PID Control" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/pid.html" />
+<meta property="og:url" content="http://localhost:4000/notes/pid.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PID Control" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"PID Control","url":"http://localhost:4000/notes/pid.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="pid-control">PID Control</h1>
+<p>This page only covers continuous-time PID control. For more advanced topics on discrete PID, visit Discrete Time Control page for more details.</p>
+
+<p>PID by itself is a linear controller. Gain scheduling, anti-windup schemes, derivative filtering, gain scheduling can make it non-linear.</p>
+
+<h2 id="limitations-of-pid">Limitations of PID</h2>
+<ol>
+  <li>PID in general do not provide <em>optimal</em> control.</li>
+  <li>PID controllers have difficulties in the presence of non-linearities.</li>
+  <li>PID may be the best controller for an observer that has no model of the process. However, better performance can be obtained by modeling the actor of the process.</li>
+</ol>
+
+<h2 id="how-to-improve-a-pid">How to Improve a PID</h2>
+<ol>
+  <li>The most significant <strong>improvement</strong> is to incorporate feed-forward control and use PID only to control error.</li>
+  <li>PID can be coupled with gain scheduling, improving measurement (higher sampling rate for instance).</li>
+  <li>The derivative term can be coupled with low-pass filtering.</li>
+  <li>Cascading multiple PID controllers.</li>
+</ol>
+
+<hr />
+
+<h2 id="which-controller-to-use">Which controller to use?</h2>
+<p>\(\begin{array}{c|c|c|c}
+Example &amp; System Order &amp; Controller &amp; Reasoning\\
+\hline
+\text{Controlling mass position using force} &amp; 2 &amp; \text{PD or PID} &amp; \text{Typically needs damping like mass-spring damper, otherwise will oscillate} \\
+\text{Controlling V across C using current} &amp; 1 &amp; \text{P or PI} &amp; \text{Not much danger of over-shoot or oscillation}  \\
+\text{Controlling I across R using voltage} &amp; 0 &amp; \text{P or PI} &amp; \text{Not much danger, direct mapping}
+\end{array}\)</p>
+
+<p><strong>Note</strong> System order denotes how many ‘integrations’ away your control input is from the output. For instance, controlling position with force would be a second-order system.</p>
+
+<h2 id="pi-vs-pd-vs-pid">PI vs PD vs PID</h2>
+<p>The derivative controller is highly sensitive to noise and may throw the system into instability.</p>
+
+<h3 id="pi-controller">PI controller</h3>
+<p>PI controller reduces both rise time and the steady-state errors of the system. The integral term introduces phase lag, which may slow down response time.</p>
+
+<h3 id="pd-controller">PD controller</h3>
+<p>A PD controller reduces transients like rise time, overshoot, and oscillations in the output. D controller cannot exist on its own since itself doesn’t stabilize the system but amplifies noise.</p>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th>Gain</th>
+      <th><strong>Too Low</strong></th>
+      <th><strong>Too High</strong></th>
+      <th><strong>Why</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Proportional \(K_p\)</strong></td>
+      <td>- Sluggish response<br />- Large steady-state error (SSE)<br />- Poor disturbance rejection</td>
+      <td>- Large overshoot<br />- Increased oscillations or ringing<br />- Reduced phase margin → possible instability<br />- High sensitivity to noise and disturbances</td>
+      <td>\(K_p\) increases loop gain and bandwidth, improving speed but reducing stability margins and increasing oscillatory behavior.</td>
+    </tr>
+    <tr>
+      <td><strong>Integral \(K_i\)</strong></td>
+      <td>- SSE remains<br />- Poor low-frequency disturbance rejection<br />- System may never reach setpoint</td>
+      <td>- Overshoot and oscillations from windup<br />- Long settling time after overshoot<br />- Possible instability even for stable P-only systems</td>
+      <td>\(K_i\) accumulates error to remove SSE, but excessive accumulation (windup) drives large corrective action, overshooting the setpoint before unwinding.</td>
+    </tr>
+    <tr>
+      <td><strong>Derivative \(K_d\)</strong></td>
+      <td>- Underdamped response if damping from D is needed<br />- More overshoot than necessary<br />- Poor transient shaping</td>
+      <td>- High-frequency noise amplification<br />- Chattering or actuator vibration<br />- Possible instability if noise excites system dynamics</td>
+      <td>\(K_d\) acts on error rate, improving damping. Too much magnifies sensor noise, creating large, rapid control signals that stress actuators and excite high-frequency dynamics.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="strategies-for-tuning-a-pid-controller">Strategies for Tuning a PID Controller</h2>
+<p><img src="../figures/PID_tuning.png" alt="PID tuning chart" /></p>
+
+<h3 id="diagram-walkthrough">Diagram Walkthrough</h3>
+<ol>
+  <li>Model representation</li>
+</ol>
+
+<p><img src="../figures/model_repres.png" alt="What's a model" /></p>
+<ol>
+  <li>Run input sequence
+    <ul>
+      <li>Observe step response for Cohen-Coon</li>
+    </ul>
+  </li>
+  <li>Heuristic Methods:
+System model not required, only need to measure certain traits such as process gain, time constant, and dead time.
+    <ol>
+      <li>Cohen-Coon</li>
+      <li>Ziegler–Nichols (needs to be careful on hardware, due to oscillatory behavior)</li>
+    </ol>
+  </li>
+  <li>System Identification.
+    <ol>
+      <li>Measure step-response of system.</li>
+      <li>Tweak your model coefficients so step responses match.</li>
+      <li>Model needs to be defined beforehand.</li>
+    </ol>
+  </li>
+  <li>Tuning method with Model
+    <ul>
+      <li>Manual tuning
+        <ol>
+          <li>Pole placement</li>
+          <li>Loop shaping</li>
+          <li>Heuristic Methods (make model oscillatory NOT hardware)</li>
+        </ol>
+      </li>
+      <li>Auto tuning</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="manual-pid-tuning-strategy">Manual PID Tuning Strategy</h3>
+
+<ol>
+  <li><strong>Start with:</strong></li>
+</ol>
+
+\[K_P &gt; 0, \quad K_I = 0, \quad K_D = 0\]
+
+<ol>
+  <li><strong>Increase \(K_P\)</strong> until:
+    <ul>
+      <li>The system starts responding to setpoint changes.</li>
+      <li>It begins to <strong>oscillate consistently without settling</strong>.</li>
+    </ul>
+
+    <p>This means it’s reached the <strong>edge of stability</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Back off \(K_P\)</strong> by ~10–20% to get a stable (but responsive) system.</p>
+  </li>
+  <li><strong>Increase \(K_D\)</strong> to:
+    <ul>
+      <li>Dampen the oscillations.</li>
+      <li>Improve settling time and reduce overshoot.</li>
+    </ul>
+  </li>
+  <li><strong>Increase \(K_I\)</strong> slowly to:
+    <ul>
+      <li>Eliminate steady-state error (e.g. small drift from setpoint).</li>
+      <li>Watch for <strong>overshoot or oscillation</strong> due to <strong>integral windup</strong>.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="-zieglernichols-method-ultimate-gain-method">🧪 Ziegler–Nichols Method (Ultimate Gain Method)</h2>
+
+<p>This is a classical tuning rule. It gives you a starting point for 
+\(K_P,\ K_I,\ \text{and}\ K_D\)
+based on when the system first starts oscillating.</p>
+
+<h3 id="-steps">🔧 Steps:</h3>
+
+<ol>
+  <li>
+    <p><strong>Set:</strong>
+\(K_I = 0,\quad K_D = 0\)</p>
+  </li>
+  <li>
+    <p><strong>Increase \(K_P\)</strong> until the system output shows <strong>sustained oscillations</strong> (constant amplitude).</p>
+
+    <ul>
+      <li>That value of \(K_P\) is called the <strong>ultimate gain</strong>, denoted:
+\(K_u\)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Measure the oscillation period</strong> — the time between peaks — and call it:
+\(T_u\)</p>
+  </li>
+</ol>
+
+<h3 id="-use-these-tables-to-compute-gains">📐 Use these tables to compute gains:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Controller</th>
+      <th>\(K_P\)</th>
+      <th>\(K_I\)</th>
+      <th>\(K_D\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>P</strong></td>
+      <td>\(0.5K_u\)</td>
+      <td>–</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td><strong>PI</strong></td>
+      <td>\(0.45K_u\)</td>
+      <td>\(1.2K_u / T_u\)</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td><strong>PID</strong></td>
+      <td>\(0.6K_u\)</td>
+      <td>\(2K_u / T_u\)</td>
+      <td>\(K_u T_u / 8\)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Control Type</th>
+      <th>\(K_p\)</th>
+      <th>\(T_i\)</th>
+      <th>\(T_d\)</th>
+      <th>\(K_i\)</th>
+      <th>\(K_d\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>P</strong></td>
+      <td>\(0.5K_u\)</td>
+      <td>–</td>
+      <td>–</td>
+      <td>–</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td><strong>PI</strong></td>
+      <td>\(0.45K_u\)</td>
+      <td>\(0.8\overline{3}T_u\)</td>
+      <td>–</td>
+      <td>\(0.54K_u / T_u\)</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td><strong>PD</strong></td>
+      <td>\(0.8K_u\)</td>
+      <td>–</td>
+      <td>\(0.125T_u\)</td>
+      <td>–</td>
+      <td>\(0.10K_u T_u\)</td>
+    </tr>
+    <tr>
+      <td><strong>Classic PID</strong></td>
+      <td>\(0.6K_u\)</td>
+      <td>\(0.5T_u\)</td>
+      <td>\(0.125T_u\)</td>
+      <td>\(1.2K_u / T_u\)</td>
+      <td>\(0.075K_u T_u\)</td>
+    </tr>
+    <tr>
+      <td><strong>Pessen Integral Rule</strong></td>
+      <td>\(0.7K_u\)</td>
+      <td>\(0.4T_u\)</td>
+      <td>\(0.15T_u\)</td>
+      <td>\(1.75K_u / T_u\)</td>
+      <td>\(0.105K_u T_u\)</td>
+    </tr>
+    <tr>
+      <td><strong>Some Overshoot</strong></td>
+      <td>\(0.3\overline{3}K_u\)</td>
+      <td>\(0.50T_u\)</td>
+      <td>\(0.3\overline{3}T_u\)</td>
+      <td>\(0.6\overline{6}K_u / T_u\)</td>
+      <td>\(0.1\overline{1}K_u T_u\)</td>
+    </tr>
+    <tr>
+      <td><strong>No Overshoot</strong></td>
+      <td>\(0.20K_u\)</td>
+      <td>\(0.50T_u\)</td>
+      <td>\(0.3\overline{3}T_u\)</td>
+      <td>\(0.40K_u / T_u\)</td>
+      <td>\(0.06\overline{6}K_u T_u\)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="️-notes-for-drone-applications">⚠️ Notes for Drone Applications</h3>
+
+<ul>
+  <li>Ziegler–Nichols gives <strong>aggressive</strong> tuning, often with <strong>overshoot</strong>.</li>
+  <li>For drones, it’s safer to:
+    <ul>
+      <li>Start with <strong>rate control loops</strong> (angular velocity).</li>
+      <li>Then move to <strong>attitude control</strong> (roll, pitch, yaw).</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="integral-windup">Integral Windup</h2>
+<p>Error builds up even though actuator saturates. Takes time for negative error to be reflected in the controller.</p>
+
+<p><img src="../figures/windup.png" alt="Integral Windup scenario" /></p>
+
+<h3 id="anti-windup">Anti-Windup</h3>
+<p><strong>Most anti-windup schemes prevent the integral from accumulating error past a threshold</strong></p>
+<ol>
+  <li>Clamping: two checks (if both true, shut off integration)
+    <ul>
+      <li>Output is saturating (clamp the output of the PID (<strong>this needs to be conservative</strong>), if the output before and after the clamp are the same, then the actuator is beginning to get saturated.)</li>
+      <li>Input and output have the same sign</li>
+    </ul>
+  </li>
+  <li>Block calculation</li>
+  <li>Observer approach</li>
+</ol>
+
+<h2 id="derivative-control">Derivative Control</h2>
+<p>Derivative control “predicts the future” in contrast to integral control - a decrease in error gives a decrease in control input. Noise amplifies derivative control output.</p>
+
+<h3 id="derivative-control-example">Derivative Control Example</h3>
+<p>Altitude Control for Quadcopter:<br />
+Desired altitude 50m, as drone shoots up, error term decreases (negative derivative) -&gt; negative value from derivative term, slows motors down, reduces overshoot.</p>
+
+<hr />
+
+<h2 id="how-to-derive-a-model">How to derive a model</h2>
+<h3 id="first-principles">First principles</h3>
+<p>This method also works if one knows the individual components of the system.</p>
+<ol>
+  <li>Newtonian Mechanics</li>
+  <li>Lagrangian Mechanics</li>
+</ol>
+
+<h3 id="system-id">System ID</h3>
+<p>If the model is too complicated, system ID can work (black box method). No need to know the details of the system.</p>
+
+<hr />
+
+<h2 id="pid-pole-placement-lqg-and-loop-shaping-robust-control">PID Pole Placement (LQG) and Loop Shaping (Robust Control)</h2>
+
+<h3 id="pid-transfer-function">PID Transfer Function</h3>
+<p>\(C(s) = K_p + \frac{K_i}{s} + K_d s\)</p>
+
+<p><img src="../figures/pid_loopshaping_poleplacement.png" alt="PID pole placement and loop shaping png" /></p>
+
+<h3 id="how-does-pid-affect-loop-shaping-bode-plot">How does PID affect Loop Shaping (Bode Plot):</h3>
+<p><strong>1. Proportional term (\(K_p\))</strong></p>
+<ul>
+  <li>Simply scales the magnitude of the open-loop transfer function across all frequencies by \(K_p\) (shifts the Bode magnitude plot up or down).</li>
+  <li>No slope change, no phase lead/lag (phase stays the same as the plant’s at each frequency).</li>
+</ul>
+
+<p><strong>2. Integral term (\(\frac{K_i}{s}\))</strong></p>
+<ul>
+  <li>Adds a pole at \(s=0\) and a zero at \(s=-K_i/K_p\) (if expressed in standard form for PI control).</li>
+  <li>In the Bode plot: increases low-frequency gain slope by +20 dB/dec below the zero, giving <strong>better low-frequency tracking</strong> and disturbance rejection.</li>
+  <li>Phase: introduces <strong>–90° lag</strong> below the zero frequency (eventually reduced to 0° after the zero).</li>
+</ul>
+
+<p><strong>3. Derivative term (\(K_d s\))</strong></p>
+<ul>
+  <li>Adds a zero at the origin and a pole at infinity (in practice, implemented with a high-frequency roll-off to avoid noise).</li>
+  <li>In the Bode plot: increases high-frequency gain slope by +20 dB/dec above the zero’s frequency, giving <strong>phase lead</strong> and faster response.</li>
+  <li>Phase: can give up to +90° lead around its zero.</li>
+</ul>
+
+<p><strong>Putting them together in loop shaping:</strong></p>
+<ul>
+  <li><strong>Integral</strong> boosts the low-frequency magnitude to push the gain crossover lower and improve steady-state accuracy.</li>
+  <li><strong>Derivative</strong> boosts magnitude at mid-frequencies to increase phase margin, which can stabilize a plant with low natural phase margin.</li>
+  <li><strong>Proportional</strong> shifts the entire magnitude plot up or down to meet your crossover frequency and gain margin targets.</li>
+</ul>
+
+<hr />
+
+<h2 id="pid-effect-on-pole-placement">PID Effect on Pole Placement</h2>
+
+<h3 id="1️⃣-starting-point--closed-loop-poles-come-from-1--ls--0">1️⃣ Starting point — closed-loop poles come from \(1 + L(s) = 0\)</h3>
+
+<p>For unity feedback:</p>
+
+\[T(s) = \frac{C(s) G(s)}{1 + C(s) G(s)}\]
+
+<p>The <strong>closed-loop poles</strong> are the roots of:</p>
+
+\[1 + C(s) G(s) = 0\]
+
+<p>Adding a PID means replacing \(C(s)\) with:</p>
+
+\[C(s) = K_p + \frac{K_i}{s} + K_d s\]
+
+<p>That changes the polynomial \(1 + C(s) G(s) = 0\), which changes the pole locations.</p>
+
+<hr />
+
+<h3 id="2️⃣-how-each-term-influences-pole-placement">2️⃣ How each term influences pole placement</h3>
+
+<p><strong>(a) Proportional \(K_p\)</strong></p>
+<ul>
+  <li>Multiplies the plant’s transfer function by a constant.</li>
+  <li>Effect: Moves the closed-loop poles along the <em>root locus</em> without changing its shape.</li>
+  <li>Higher \(K_p\) → poles move toward/into the left-half plane faster (increasing speed) but can reduce stability margin.</li>
+</ul>
+
+<hr />
+
+<p><strong>(b) Integral \(\frac{K_i}{s}\)</strong></p>
+<ul>
+  <li>Adds a <strong>pole at the origin</strong> to the <em>open-loop</em> transfer function.</li>
+  <li>This changes the root locus shape, not just shifts along it.</li>
+  <li>Forces the steady-state error for step inputs to zero by making the closed-loop a <strong>Type 1</strong> system (or higher).</li>
+  <li>Because it adds a pole, it can also slow down the system and reduce damping unless compensated.</li>
+</ul>
+
+<hr />
+
+<p><strong>(c) Derivative \(K_d s\)</strong></p>
+<ul>
+  <li>Adds a <strong>zero</strong> to the open-loop transfer function.</li>
+  <li>Zeros bend the root locus toward themselves, which can move dominant poles to locations with higher damping ratio.</li>
+  <li>Used to improve transient response (overshoot, settling time) by pulling poles into a “nicer” part of the complex plane.</li>
+</ul>
+
+<hr />
+
+<h3 id="3️⃣-big-picture-pid-in-pole-placement-terms">3️⃣ Big picture: PID in pole placement terms</h3>
+
+<ul>
+  <li><strong>P</strong>: Changes <em>gain</em> → moves poles along an existing root-locus path.</li>
+  <li><strong>I</strong>: Adds a pole at origin → changes the <em>shape</em> of the root locus, introduces the integrator effect.</li>
+  <li><strong>D</strong>: Adds a zero → bends the root locus toward more desirable damping.</li>
+</ul>
+
+<p>The net effect is that PID changes <strong>both</strong>:</p>
+<ol>
+  <li>The <em>geometry</em> of the root locus (via added poles/zeros)</li>
+  <li>The <em>position</em> along that locus (via gain tuning)</li>
+</ol>
+
+<hr />
+
+<h2 id="gain-scheduling---control-systems-in-practice">Gain Scheduling - Control Systems in Practice</h2>
+
+<h3 id="motivation">Motivation</h3>
+<p>Linear controllers may only work well under certain operating conditions but not all.</p>
+
+<p>Linear Parameter Varying systems:<br />
+A fixed linear transfer function but different parameters under different operating conditions.</p>
+
+<p><strong>How to deal with LPV systems?</strong></p>
+<ol>
+  <li>Build nonlinear controller.</li>
+  <li>Build linear robust controller. Drop in performance and may not even be possible.</li>
+  <li>Limit operations.</li>
+  <li>Gain scheduling.</li>
+</ol>
+
+<h3 id="visualization">Visualization</h3>
+<p><img src="../figures/gain_scheduling.png" alt="visualizing PID gain scheduling" /></p>
+
+<h3 id="implementation">Implementation</h3>
+<p>Steps</p>
+<ol>
+  <li>Linearize plant at each design operating condition. (linear controller for linear plant)
+    <ul>
+      <li>Find a critical point in each of the regions that represents the whole area well</li>
+      <li>Linearize plant at the point</li>
+    </ul>
+  </li>
+  <li>Tune gains at each design point
+    <ul>
+      <li>Performance (or even stability in some cases) is only guaranteed at the design points</li>
+      <li>Either use a single gain for the entire area or <strong>interpolate</strong> gains between two points</li>
+      <li>Make controller more robust or add more design points</li>
+    </ul>
+  </li>
+  <li>Choose the gain scheduling architecture
+    <ul>
+      <li>A switch system. However, it may produce some unintended transients at the switch condition</li>
+      <li>See next section for more details</li>
+    </ul>
+  </li>
+  <li>Assess the control performance
+    <ul>
+      <li>Often simulated</li>
+      <li>All critical transitions and corner cases should be covered</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="preventing-drastic-changes">Preventing drastic changes</h3>
+<p><strong>Scenario</strong>: At the boundary points of the gain areas, errors don’t change much, but a discrete switch causes controller gain to change -&gt; causing erratic behavior.</p>
+
+<p><strong>Methods</strong></p>
+<ol>
+  <li>
+    <p>Transient-free switch
+<img src="../figures/transient_free_switch.png" alt="Transient Free Switch" /></p>
+  </li>
+  <li>
+    <p>Gain curve (2D) and Gain surface (3D)
+<img src="../figures/gain_surface.png" alt="Gain Curve and Gain Surface" /></p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="important-advanced-pid-concepts-for-further-study">Important Advanced PID concepts for Further Study</h2>
+
+<h3 id="cascade-loops">Cascade Loops</h3>
+
+<p><img src="../figures/cascade_pid.png" alt="Cascade PID Diagram" /></p>
+
+<p>Why multiple loops?</p>
+<ol>
+  <li><strong>Inner loops can be tuned to respond quickly to local disturbances, the outer loop can be tuned more conservatively to reject sensor noise and increase stability</strong></li>
+  <li>Cascade approach makes it easier to isolate the problem</li>
+  <li>Multiple groups can work on separate parts.
+    <ul>
+      <li>The motor you buy has a built-in controller</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<p>How to Tune Cascade loops</p>
+<ol>
+  <li>Case 1: Inner loop speed » outer loop speed
+    <ul>
+      <li>Can be tuned separately. Assume the other loop is not present and tune like normal</li>
+    </ul>
+  </li>
+  <li>Case 2: Inner loop speed \(\approx\) Outer loop speed
+    <ul>
+      <li>Tune inner loop with a guess</li>
+      <li>Tune outer loop</li>
+      <li>Iterate</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="discrete-pid">Discrete PID</h3>
+<p>There are three major characteristics of a digital system:  1. <strong>Sample Time</strong> 2. <strong>Quantization</strong> 3. <strong>Transport Delay</strong></p>
+
+<p><strong>Please check out discrete time control page for more details on discrete PID controller</strong></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

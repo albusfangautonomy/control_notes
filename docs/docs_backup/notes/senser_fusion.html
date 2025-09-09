@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Stability Analysis | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Stability Analysis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/senser_fusion.html" />
+<meta property="og:url" content="http://localhost:4000/notes/senser_fusion.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Stability Analysis" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Stability Analysis","url":"http://localhost:4000/notes/senser_fusion.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="sensor-fusion">Sensor Fusion</h1>
+
+<h2 id="definition">Definition</h2>
+<p>Sensor fusion is a technique that combines two or more data sources in a way taht geneartes a more consistent, accurate, and dependable understanding of the system.</p>
+
+<h2 id="advantages-and-use-cases">Advantages and Use Cases</h2>
+<ol>
+  <li>
+    <p>It can increase the quality of the data by fusing either two sensors of either the same type or different types together.</p>
+  </li>
+  <li>
+    <p>It can increase reliability.</p>
+  </li>
+  <li>
+    <p>It can estimate unmeasured states.</p>
+  </li>
+  <li>
+    <p>It can be used to increase coverage.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="sensor-fusion-examples">Sensor Fusion Examples</h1>
+
+<h2 id="attitude-and-heading-reference-system-ahrs">Attitude and heading reference system (AHRS)</h2>
+<p>To defin an orientation:</p>
+<ol>
+  <li>
+    <p>Reference Frame</p>
+  </li>
+  <li>
+    <p>Specify rotation</p>
+  </li>
+</ol>
+
+<h3 id="measuring-attitude-and-heading">Measuring Attitude and Heading</h3>
+
+<h3 id="sensors---imu-magnetometer-accelerometer-and-gyro">Sensors - IMU (Magnetometer, Accelerometer, and Gyro)</h3>
+<p>The absolute orientation for a static object can be determined just with M and A and taking cross products.</p>
+
+<p><strong>Magnetometer</strong> measures the strength and direction of a magnetic field and determines heading relative to the Earth’s magnetic north.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- readings can be corrupted by other magnetic sources.
+- Hard Iron sources (Magnet or Coil) shift the sphere, soft irons (nails) distorts the sphere. Sphere refers to 
+- needs to calibrate by rotate the device around
+</code></pre></div></div>
+
+<p><strong>Accelerometer</strong> measures acceleration</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- if the accelerometer is not at center of rotation, readings can be off.
+- linear acceleration can corrcupt Acc measurement of "down"
+</code></pre></div></div>
+
+<p><strong>Gyro</strong> measures angular rate
+    - Dead reckoning refers to integrating gyro readings (integration is a low pass filter, which filters out high frequency noise)
+    - Gyros have drift</p>
+
+<h3 id="sensor-fusion-algorithm-for-imu">Sensor Fusion algorithm for IMU</h3>
+<ol>
+  <li>Initialize attitude</li>
+  <li>Use mag field and gravity to correct gyro drift</li>
+</ol>
+
+<p>In <strong>complementary filter</strong>, the user decides how much accel+mag and gyro data need to be trusted. Kalman filter automatically computes the confidence.</p>
+
+<hr />
+
+<h2 id="sensor-fusion-with-gps-and-imu-algorithm---extended-kalman">Sensor Fusion with GPS and IMU: Algorithm - Extended Kalman</h2>
+<p><a href="https://www.mathworks.com/help/fusion/ug/pose-estimation-from-asynchronous-sensors.html">Matlab Example</a></p>
+
+<p>Note that the model in Extended Kalman is not vehicle specific. This model refers to how each state of the filter is affected by other states of the filter. The ‘model’ just dead-reckon the sensor data adjusted for biases and predict the pose.</p>
+
+<p>GPS measured velocity and position.
+If GPS reading doesn’t need to be very accurate or fast, adding IMU is not helping much. (driving with google maps)
+If GPS reading needs to be accurate and fast velocity constantly changing, adding IMU helps. (drone flying around obstacles)</p>
+
+<p><strong>Estimating the sensor bias is extremely imporant</strong> because bias drifts over time.</p>
+
+<h3 id="step-1-initializing-the-filter">Step 1: Initializing the filter</h3>
+
+<p><strong>28 state kalman state vector:</strong></p>
+<ol>
+  <li>Orientation (4 states quaternion)</li>
+  <li>Angular Velocity(XYZ) (3) where XYZ means angular rates about body x,y,z, axes</li>
+  <li>Position (NED) (3)</li>
+  <li>Velocity (NED) (3)</li>
+  <li>Acceleration (NED) (3)</li>
+  <li>Accelerometer Bias (XYZ) (3)</li>
+  <li>Geomagnetic Field Vector (NED) (3)</li>
+  <li>Magnetometer Bias (XYZ) (3)</li>
+</ol>
+
+<p>If no estimates of sensor bias is available at system start, let the kalman filter converge to the correct solution while the vehicle is stationary.</p>
+
+<p><img src="../figures/sensor_bias.png" alt="sensor bias over time" /></p>
+
+<p><strong>Note:</strong> Extended Kalman linearizes the nonlinear model at current estimate and uses the linear model to predict state into the future. If the filter is not initialized close to the true state, the linearization result would deviate and estimate would not converge.</p>
+
+<p>Initializing a real system</p>
+
+<p><img src="../figures/initialize_filter_real_system.png" alt="Initializing filter for a real system" /></p>
+
+<h3 id="step-2-kalman">Step 2: Kalman</h3>
+<p><strong>Predict</strong> and <strong>Correct</strong></p>
+
+<ol>
+  <li>
+    <p>Predict the state based on model and keep track of confidence (Process Noise). When new measurement comes in with measurement noise, the filter compare the measurement with predicted model and corrects its estimate based on the confidence.</p>
+  </li>
+  <li>
+    <p>If there is an update from any of the sensors, update the state based on the relative confidence based on the estimate and the measurement.</p>
+
+    <ul>
+      <li>The sensor can therefore run with <strong>asyncronous measurements</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="tracking-remote-objects">Tracking Remote Objects</h1>
+
+<h2 id="interacting-multiple-model-filter-imm---how-to-track-a-single-remote-object-with-remote-sensors">Interacting Multiple Model Filter (IMM) - How to track a single remote object with remote sensors</h2>
+
+<p>Tracking a remote object. Key difference: with Kalman filters, one knows the state model to predict the future state of an object. However, when tracking a remote object, we typically don’t have access to the input to the plant.</p>
+
+<p>Cooperative Tracking: tracked object shares control input.</p>
+
+<p><img src="../figures/cooperative_tracking.png" alt="cooperative tracking" /></p>
+
+<p>Unkown inputs are taken into account by <strong>process noise</strong>.</p>
+
+<p>Uncoorperative Tracking: tracked object does not share control input.</p>
+
+<p><img src="../figures/uncooperative_tracking.png" alt="Uncooperative Tracking" /></p>
+
+<hr />
+
+<h3 id="uncooperative-tracking-with-a-remote-object">Uncooperative tracking with a remote object</h3>
+
+<p>Trade-off between High process noise and low process noise.</p>
+
+<p>Example: constant velocity model but don’t know the exact control inputs</p>
+
+<p>Scheme: Increase Process noise to trust prediction less and trust measurement more. This would reduce noise when the actual dynamics is not constant velocity. However, this comes at the cost of error for area which the model predicts the dynamics well (constant velocity case).</p>
+
+<p><img src="../figures/process_noise_tradeoff.png" alt="Process Noise trade-off" /></p>
+
+<hr />
+
+<h3 id="interactive-multiple-model-filter-single-object-tracking">Interactive Multiple Model Filter (single object tracking)</h3>
+<p>To have one model for each type of motion. Allowing each model to interact to reduce transient error</p>
+
+<p><img src="../figures/imm.png" alt="IMM" /></p>
+
+<p>Interactive Multi-Model filter vs Multi-Model Filter</p>
+<ol>
+  <li>IMM reduces transient error compared to independent models in Multi-Model filters</li>
+  <li>IMM blends all models together based on the likelihood of each representing the true motion</li>
+</ol>
+
+<h3 id="disadvantages-of-too-many-models-in-imm">Disadvantages of too many models in IMM</h3>
+<p>A large number of models for IMM can introduce both computationall cost and performance hit</p>
+
+<p>Performance:</p>
+<ol>
+  <li>More models means more transitions between models</li>
+  <li>Harder to know when to make a transitions</li>
+</ol>
+
+<p>Try to find the <strong>smallest number</strong> of models that adequetly predicts the possible motion of the object you’re tracking.</p>
+
+<hr />
+
+<h2 id="tracking-multiple-remote-objects">Tracking Multiple Remote Objects</h2>
+
+<p><img src="../figures/multi_object_tracking.png" alt="Multi-Object Tracking" /></p>
+
+<h3 id="challenges-of-multi-object-tracking">Challenges of multi-object tracking</h3>
+
+<p>Date Association Problem</p>
+<ol>
+  <li>Uncertainty in observations and predictions play a major role in the challenges.</li>
+  <li>Objects can be close enough to accurately attribute a measurement to an object.</li>
+  <li>Uncertainty can be great enough that a measurement can be of more than one object.</li>
+</ol>
+
+<p>Track Maintanence Problem</p>
+<ol>
+  <li>The number of objects being tracked is not fixed.</li>
+  <li>Sometimes tracks need to be created or removed (stop tracking when plane lands).</li>
+  <li>False positive or missed detection measurements</li>
+</ol>
+
+<h3 id="diagram-breakdown">Diagram Breakdown</h3>
+<ol>
+  <li>
+    <p>Observations</p>
+
+    <ul>
+      <li>Measured Quantities: range, range rate, line of sight</li>
+      <li>Measured Attributes: target type, ID number, object shape</li>
+    </ul>
+  </li>
+  <li>
+    <p>Assignment: Matching an Observation to a Tracked Object</p>
+
+    <ul>
+      <li>Mahalanobis distance: the closest probability distance (normalized by stadard deviation)</li>
+      <li>Joint Probabilistic Data Association (JPDA): does not commit to a single observation and assgin one object to one track but instead make a weighted combinations of all neighboring observations (closer ones have bigger weight)</li>
+    </ul>
+
+    <p><img src="../figures/jpda.png" alt="jpda" /></p>
+  </li>
+  <li>
+    <p>Track Maintenance (deleting and creating track)</p>
+
+    <ul>
+      <li>Delete a track if not detected at least P times in R updates with R and P tunable.</li>
+      <li>Create a track: tentative track an observation not assigned to an object. Confirm trakc if object has been detected M times in N updates.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Estimation Filters</p>
+
+    <ul>
+      <li>Each filter runs. Fused measured state \(\hat{x}\) and fused covariance \(\bar{P}\) are captured.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Gating</p>
+
+    <ul>
+      <li>Screens all detections to detect which detections are feasible to look at for assignment.</li>
+      <li>Ignores detections outside of a region, also called “gate”.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="track-level-fusion">Track Level Fusion</h1>
+
+<p>Central-level tracking vs Sensor-level Tracking and Track Level Fusion</p>
+
+<p><img src="../figures/central_vs_sensor_level.png" alt="central vs sensor level tracking" /></p>
+
+<p>source tracks provide their own track with distribution. The track fuser determines if these are the same object or different objects</p>
+
+<p>sensor level tracking:</p>
+
+<p><img src="../figures/sensor_level_tracking.png" alt="sensor level tracking" /></p>
+
+<h2 id="advantages-and-challenges-of-track-level-fusion">Advantages and Challenges of Track Level Fusion</h2>
+
+<h3 id="advantages">Advantages</h3>
+
+<ol>
+  <li>
+    <p>Access to data</p>
+
+    <ul>
+      <li>TLF is necessary if you don’t have access to raw sensor data. For instance, a Lidar sensor that doesn’t return point cloud but instead the tracks. No track level data available</li>
+    </ul>
+
+    <p><img src="../figures/track_level_access_to_data.png" alt="track level access to data" /></p>
+  </li>
+  <li>
+    <p>Bandwidth</p>
+
+    <ul>
+      <li>Transmitting data from sensors in real time to computing centers that runs tracking.</li>
+      <li>Track level fusion data is smaller than raw sensor data.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Compute</p>
+
+    <ul>
+      <li>Local computer can pre-process data to reduce processing time.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Specialize</p>
+
+    <ul>
+      <li>TLF allows sensor level trackers to be specialized to the particular sensor type.</li>
+      <li>Since these trackers need motion and sensor models. Track maintenance needs to be tuned.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="../figures/track_level_specialize.png" alt="track level specialize" /></p>
+
+<h3 id="challengs-of-tlf">Challengs of TLF</h3>
+
+<ol>
+  <li>
+    <p>Reduced Accuracy</p>
+
+    <ul>
+      <li>Track distills sensor raw data to a lot less info. We may remove useful info.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Correlated noise</p>
+
+    <ul>
+      <li>If tracks are correlated, then we can’t multiply the probabilities like Kalman.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="appendix">Appendix</h1>
+
+<h2 id="imm-walkthrough">IMM walkthrough</h2>
+
+<section id="imm-one-cycle">
+  <h3>Interacting Multiple Model (IMM): One Cycle</h3>
+  <ol>
+    <li>
+      <h3>Model-conditioned reinitialization (mixing), for each model \( m_i \in \mathcal{M} \)</h3>
+      <ol>
+        <li>
+          <strong>Predicted model probability</strong><br />
+          \[
+            \mu_{k|k-1}^{(i)} = \sum_{j} \pi_{ji}\,\mu_{k-1}^{(j)}
+          \]
+        </li>
+        <li>
+          <strong>Mixing probabilities</strong> (previous model \(j\) given current \(i\))<br />
+          \[
+            \mu_{k-1}^{j|i} = \frac{\pi_{ji}\,\mu_{k-1}^{(j)}}{\mu_{k|k-1}^{(i)}}
+          \]
+        </li>
+        <li>
+          <strong>Mixed initial state</strong><br />
+          \[
+            \bar{x}_{k-1|k-1}^{(i)} = \sum_{j} \hat{x}_{k-1|k-1}^{(j)} \,\mu_{k-1}^{j|i}
+          \]
+        </li>
+        <li>
+          <strong>Mixed initial covariance</strong><br />
+          \[
+            \bar{P}_{k-1|k-1}^{(i)} =
+            \sum_{j}\Big(
+              P_{k-1|k-1}^{(j)}
+              + (\bar{x}_{k-1|k-1}^{(i)}-\hat{x}_{k-1|k-1}^{(j)})
+                (\bar{x}_{k-1|k-1}^{(i)}-\hat{x}_{k-1|k-1}^{(j)})^\top
+            \Big)\,\mu_{k-1}^{j|i}
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Model-conditioned filtering (per model)</h3>
+      <ol>
+        <li>
+          <strong>Prediction</strong><br />
+          \[
+            \hat{x}_{k|k-1}^{(i)} = F_{k-1}^{(i)}\,\bar{x}_{k-1|k-1}^{(i)},\qquad
+            P_{k|k-1}^{(i)} = F_{k-1}^{(i)}\,\bar{P}_{k-1|k-1}^{(i)}\,(F_{k-1}^{(i)})^\top + Q_{k-1}^{(i)}
+          \]
+        </li>
+        <li>
+          <strong>Update</strong><br />
+          \[
+            \tilde{z}_{k}^{(i)} = z_k - H_{k}^{(i)} \hat{x}_{k|k-1}^{(i)},\qquad
+            S_{k}^{(i)} = H_{k}^{(i)} P_{k|k-1}^{(i)} (H_{k}^{(i)})^\top + R_{k}^{(i)}
+          \]
+          \[
+            K_{k}^{(i)} = P_{k|k-1}^{(i)} (H_{k}^{(i)})^\top (S_{k}^{(i)})^{-1}
+          \]
+          \[
+            \hat{x}_{k|k}^{(i)} = \hat{x}_{k|k-1}^{(i)} + K_{k}^{(i)} \tilde{z}_{k}^{(i)},\qquad
+            P_{k|k}^{(i)} = P_{k|k-1}^{(i)} - K_{k}^{(i)} S_{k}^{(i)} (K_{k}^{(i)})^\top
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Model probability update (per model)</h3>
+      <ol>
+        <li>
+          <strong>Likelihood</strong><br />
+          \[
+            L_{k}^{(i)} = \mathcal{N}\!\big(\tilde{z}_{k}^{(i)};\; 0,\; S_{k}^{(i)}\big)
+          \]
+        </li>
+        <li>
+          <strong>Bayesian update</strong><br />
+          \[
+            \mu_{k}^{(i)} =
+            \frac{\mu_{k|k-1}^{(i)}\, L_{k}^{(i)}}{\sum_{j} \mu_{k|k-1}^{(j)}\, L_{k}^{(j)}}
+          \]
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h3>Estimate fusion</h3>
+      \[
+        \hat{x}_{k|k} = \sum_{i} \hat{x}_{k|k}^{(i)} \,\mu_{k}^{(i)}
+      \]
+      \[
+        P_{k|k} = \sum_{i}\Big(
+          P_{k|k}^{(i)}
+          + (\hat{x}_{k|k}-\hat{x}_{k|k}^{(i)})(\hat{x}_{k|k}-\hat{x}_{k|k}^{(i)})^\top
+        \Big)\,\mu_{k}^{(i)}
+      \]
+    </li>
+  </ol>
+
+  <details>
+    <summary><strong>Symbol notes</strong></summary>
+    <ul>
+      <li>\(\pi_{ji}\): probability of switching from model \(j\) to model \(i\)</li>
+      <li>\(\mu_{k}^{(i)}\): probability model \(i\) is correct at time \(k\)</li>
+      <li>\(\hat{x}, P\): state mean and covariance; bars \((\bar{\cdot})\) denote mixed (pre-prediction) quantities</li>
+      <li>\(F^{(i)}, Q^{(i)}\): dynamics and process noise for model \(i\)</li>
+      <li>\(H^{(i)}, R^{(i)}\): measurement model and noise for model \(i\)</li>
+      <li>\(\tilde{z}\): measurement residual; \(S\): residual covariance; \(K\): Kalman gain</li>
+    </ul>
+  </details>
+</section>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

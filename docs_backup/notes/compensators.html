@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Compensators | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Compensators" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/compensators.html" />
+<meta property="og:url" content="http://localhost:4000/notes/compensators.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Compensators" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Compensators","url":"http://localhost:4000/notes/compensators.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Compensators</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="lead-lag-and-lead-lag-compensators">Lead, Lag, and Lead-Lag Compensators</h1>
+<h2 id="phase-margin">Phase Margin</h2>
+<h3 id="definition">Definition</h3>
+<p>Phase margin is a measure of stability for a feedback control system. It represents the amount of phase shift, expressed in degrees, that can be added to the open-loop transfer function before the system reaches the point of instability, specifically where the Bode plot crosses the -180° line at the gain crossover frequency.</p>
+
+<hr />
+
+<h3 id="phase-margin-calculation">Phase Margin Calculation:</h3>
+
+\[\text{Phase Margin} = 180^\circ + \angle G(j\omega_{gc})H(j\omega_{gc})\]
+
+<ul>
+  <li>\(\omega_{gc}\) is the <strong>gain crossover frequency</strong> — the frequency at which the <strong>magnitude</strong> of the open-loop transfer function 
+\(|G(j\omega)H(j\omega)| = 1\) (i.e., <strong>0 dB</strong>).</li>
+  <li>\(\angle G(j\omega)H(j\omega)\) is the <strong>phase</strong> of the open-loop transfer function at that frequency.</li>
+</ul>
+
+<hr />
+
+<h2 id="phase-lead-and-lag">Phase Lead and Lag</h2>
+<p>A zero (s) adds phase while pole (1/s) subtracts phase.</p>
+
+<p>Phase lead compensators add positive phase to the output, so the output leads the input.<br />
+Phase lag compensators add negative phase to the output, so the output lags behind the input.</p>
+
+<h3 id="phase-lead">Phase Lead</h3>
+<p>Example: Differentiator</p>
+
+<p>input: sin(t) output: cos(t)</p>
+
+<p>Cosine is leading sine by 90 degrees -&gt; phase lead</p>
+
+<p>A differentiator circuit introduces a positive phase shift of 90 degrees</p>
+
+<h3 id="phase-lag">Phase Lag</h3>
+<p>Example: Integrator</p>
+
+<hr />
+
+<h2 id="lead-lag-compensator-formulae">Lead Lag Compensator Formulae</h2>
+<p><img src="../figures/lead_lag_compensators.png" alt="Lead Lag compensator formula" /></p>
+
+<hr />
+
+<h2 id="lead-compensator">Lead Compensator</h2>
+
+<h3 id="formula">Formula</h3>
+<p>\(\frac{\omega_p}{\omega_z} * \frac{s+\omega_z}{s+\omega_p}\) or
+\(\frac{s+\omega_z}{\omega_z} * \frac{\omega_p}{s+\omega_p}\)</p>
+
+<ol>
+  <li>1 pole and 1 zero</li>
+  <li><strong>\(\omega_z &lt; \omega_p\)</strong></li>
+</ol>
+
+<h3 id="bode-plot">Bode Plot</h3>
+
+<p><img src="../figures/lead_compensator.png" alt="Lead Compensator Bode Plot" /></p>
+
+<ol>
+  <li>Lead compensators <em>increase gain at high frequencies</em> <strong>but not as much as a real zero = less noise amplification</strong></li>
+  <li>Lead compensator adds phase (phase lead) between the corner frequencies \(\omega_z \text{ and } \omega_p\) and nowhere else. By adjusting the corner frequencies, you can move the phase lead around</li>
+</ol>
+
+<h3 id="intuition">Intuition</h3>
+
+<p><img src="../figures/lead_asymptote.png" alt="Lead moves asymptote to the left of root locus" /></p>
+
+<ol>
+  <li>
+    <p>Lead compensator (phase lead) drags the asymptotes and the closed loop poles to the left, which adds stability.</p>
+
+    <ul>
+      <li>Lead compensated system is more stable and has a faster rise time.</li>
+      <li>Lead compensator shapes the root locus</li>
+    </ul>
+  </li>
+  <li>
+    <p>Lag compensator is typically <strong>not</strong> used for dragging asymptotes closer to imaginary axis, but rather for reducing steady-state errors.</p>
+
+    <ul>
+      <li>We want to reduce steady-state errors without changing the pole locations</li>
+      <li>Lag compensator doesn’t shape the root locus plot</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="notes-on-lead-compensators">Notes on Lead Compensators</h3>
+<ol>
+  <li>A lead compensator doesn’t guarantee stability</li>
+  <li>Lead compensator can be tried if PID doesn’t work</li>
+  <li>Faster response means responding to noise</li>
+</ol>
+
+<hr />
+
+<h2 id="lag-compensator">Lag Compensator</h2>
+
+<h3 id="formula-1">Formula</h3>
+<p>\(\frac{\omega_p}{\omega_z} * \frac{s+\omega_z}{s+\omega_p}\) or
+\(\frac{s+\omega_z}{\omega_z} * \frac{\omega_p}{s+\omega_p}\)</p>
+
+<ol>
+  <li>1 pole and 1 zero</li>
+  <li><strong>\(\omega_z &lt; \omega_p\)</strong></li>
+</ol>
+
+<h3 id="lag-compensator-bode-plot">Lag Compensator Bode Plot</h3>
+<p><img src="../figures/lag_compensator.png" alt="Bode plot of Lag Compensator" /></p>
+
+<h3 id="how-does-lag-compensator-reduce-sse">How does Lag compensator reduce SSE</h3>
+
+<p>Lag compensator can only reduce SSE but not eliminate it. To eliminate, change system Type.</p>
+
+<h3 id="lag-compensator-step-response">Lag Compensator Step Response</h3>
+<p><img src="../figures/lag_compensator_step.png" alt="Lag Compensator Step" /></p>
+
+<p>\(E_{ssc}\) is the desired steady-state error given by spec.</p>
+
+<p>\(\frac{z}{p}\) is the zero-to-pole ratio and can be calculated. However, the exact location needs further analysis</p>
+
+<h3 id="where-should-you-place-the-zero-and-pole-given-zero-to-pole-ratio">Where should you place the zero and pole given zero-to-pole ratio</h3>
+
+<p>A locus exists where the angles add to 180 degrees. We do NOT want to move the dominant pole much with lag compensators. We want to place them in such a way that the angles of the compensator zero and pole cancel each other out.</p>
+
+<ul>
+  <li>
+    <p>If we place the zero and pole to the left of the dominant poles, the difference between the two angles will be significant, which will drag the dominant poles to the right (undesirable behavior).</p>
+  </li>
+  <li>
+    <p>If we place the zero and pole close to the imaginary axis but keep zero-to-pole ratio \(\frac{z}{p}\)</p>
+  </li>
+</ul>
+
+<p><strong>Rule of Thumb</strong></p>
+<ol>
+  <li>Maintain \(\frac{z}{p}\) needed for steady-state error</li>
+  <li>Place lag compensator as close to imaginary axis as possible to reduce moving the roots.
+    <ul>
+      <li>Not too close since it’s hard to implement</li>
+      <li>Zero should be \(Z_{lag} = \frac{\text{real(Dominant Pole)}}{50}\)</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="lead-lag-compensator">Lead Lag Compensator</h2>
+<p><img src="../figures/lead_lag_bode.png" alt="Lead Lag bode" /></p>
+
+<hr />
+
+<h2 id="designing-a-lead-lag-compensator-with-root-locus">Designing a Lead-Lag compensator with Root Locus</h2>
+
+<h3 id="designing-lead-first">Designing Lead first</h3>
+
+<ol>
+  <li>
+    <p>Decide on desired poles given criteria (making the system appear second order) (e.g. rise time, damping ratio)</p>
+  </li>
+  <li>
+    <p>Place lead zero in a position that minimizes effect on dominant closed-loop poles</p>
+
+    <ul>
+      <li>
+        <p>Keep zero left of closed-loop poles OR</p>
+      </li>
+      <li>
+        <p>Cancel an existing system pole</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Find where lead pole needs to be placed to get desired poles on root locus</p>
+
+    <ul>
+      <li>
+        <p>For a desired pole (either one of the complex conjugate, answers are the same), ignoring its complex conjugate pole in the following formula:
+  \(\Sigma \theta_z - \Sigma \theta_p = -180^\circ\)</p>
+      </li>
+      <li>
+        <p>Use trigonometry to figure out \(l\) and \(\theta\), distance between each open-loop pole and zero and angle between the line that connects a desired pole to each of the open-loop poles or zeros and the positive x-axis, respectively.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Find what gain (K) this desired pole corresponds to:</p>
+
+    <ul>
+      <li>
+        <p>\(K = \frac{\Pi L_{poles}}{\Pi L_{zeroes}}\), where \(\Pi\) is the multiplication function OR</p>
+      </li>
+      <li>
+\[K = \frac{1}{|GH|}\]
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="designing-lag">Designing Lag</h3>
+
+<ol>
+  <li>Calculate SSE with lead controller using Final Value Theorem and determining the <strong>type</strong> of the system
+    <ul>
+      <li>Lag compensator will reduce SSE</li>
+    </ul>
+  </li>
+  <li>Find ratio \(\frac{z}{p}\) from SSE criteria where \(e_{lead\_lag}\) is the desired SSE given by spec.
+    <ul>
+      <li>
+\[\frac{e_{lead}}{e_{lead\_lag}} = \frac{z}{p}\]
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Pick \(P_{lag}\) or \(Z_{lag}\) so it is close to the origin, typically \(Z_{lag}\).</p>
+  </li>
+  <li>Calculate \(P_{lag}\) given the ratio \(\frac{z}{p}\). Should end up with \(Z_{lag}\) and \(P_{lag}\) very close to each other to have pole-zero cancellation and an almost unchanged root locus plot</li>
+</ol>
+
+<h3 id="dominant-poles-and-system-requirement-constraints">Dominant poles and System Requirement Constraints</h3>
+
+<p>Many system requirements pertaining to transient response (rise time, overshoot, settling time) are only well-defined for a second-order system. It is therefore important to determine where the dominant poles should reside to resemble a second-order system.</p>
+
+<h3 id="pole-placement">Pole Placement</h3>
+<ol>
+  <li>
+    <p>If the dominant poles are to the <strong>left</strong> of the uncompensated root-locus, then <strong>lead</strong> must be added to the system.</p>
+  </li>
+  <li>
+    <p>If the dominant poles are to the <strong>right</strong> of the uncompensated root-locus, then <strong>lag</strong> must be added to the system.</p>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="designing-a-lead-compensator-with-bode-plots">Designing a Lead Compensator with Bode Plots</h2>
+
+<h3 id="equations-of-lead-compensator-in-frequency-domain">Equations of Lead Compensator in Frequency Domain</h3>
+<ol>
+  <li>\(\text{Lead } = \frac{\alpha_2 * \tau * s + 1}{\tau s + 1}\), where \(\alpha_2 &gt; 1\), and \(\alpha_2 = \frac{\omega_p}{\omega_z}\) is the pole-to-zero ratio.</li>
+  <li>Upper Cutoff frequency \(\omega_{high} = \omega_p = \alpha \omega_z = \frac{1}{\tau}\).</li>
+  <li>Lower Cutoff freqeuncy \(\omega_{low} = \omega_z = \frac{1}{\alpha_2 \tau}\).</li>
+  <li>Maximum Phase Lead Compensator can provide: \(\phi_{max} = sin^{-1}(\frac{\alpha_2 - 1}{\alpha_2 + 1})\).</li>
+  <li>Maximum Frequency at which \(\phi_{max}\) occurs. \(\omega_{m} = \frac{1}{\tau \sqrt{\alpha_2}}\)</li>
+  <li>Gain at \(\omega_{m}\) = \(\sqrt{\alpha_2}\)</li>
+</ol>
+
+<p><img src="../figures/lead_compensator_parameters.png" alt="parameters for lead compensators" width="500" /></p>
+
+<p><strong>Note:</strong></p>
+
+<h3 id="step-1-always-start-with-system-type">Step 1: Always Start with System Type</h3>
+<p>If you have a steady state error \(E_{ss}\) requirement for a given input, then checking system type and adding the corresponding number of integrators must be the first step.</p>
+
+<p>Adding an integrator (pole at 0) generally imposes complexity in your design and in your hardware. It is therefore <strong>not recommended</strong> to add an integrator just to drive \(E_{ss}\) to 0. A finite \(E_{ss}\) is often enough.</p>
+
+<h3 id="step-2-choose-gain-to-meet-ess-requiremnt">Step 2: Choose gain to meet Ess requiremnt</h3>
+<p>Calculate the gain necessary to drive \(E_{ss}\) below the specified requirement.</p>
+
+\[E_ss = \lim_{s \to 0} s * E(s) = \lim_{s \to 0} \frac{R(s)}{1+G(s)}\]
+
+<h3 id="step-3-draw-bode-plot-of-gs-and-verify-if-phase-margin-satisfies-the-requirement">Step 3: Draw Bode Plot of G(s) and Verify if Phase Margin Satisfies the requirement.</h3>
+<ol>
+  <li>Calculate the Phase Margin based on the plot</li>
+</ol>
+
+<h3 id="step-4-designing-a-lead-compensators-with-equations">Step 4: Designing a Lead Compensators with Equations</h3>
+<ol>
+  <li>Choose a \(\phi_{max}\) -&gt; solve for \(\alpha_2\).</li>
+  <li>Choose a \(\omega_m\) -? solve for \(\tau\).</li>
+  <li>Constuct Lead Compensator.</li>
+</ol>
+
+<h3 id="step-5-evaluate-new-phase-margin-theres-a-catch">Step 5: Evaluate New Phase Margin (There’s a catch!)</h3>
+<p>While Lead Compensator adds damping and increases the phase margin, it increases the gain from the zero frequency \(\omega_z\) as well, which reduces phase margin, so full phase margin cannot be achieved. To mitigate this:</p>
+<ol>
+  <li>Design desired phase lead to be bigger than required OR</li>
+  <li>Build a table over a range of \(\alpha_2\) and pick the best.</li>
+</ol>
+
+<p><strong>Note:</strong> Even though the theoretical maximum phase lead one can add with lead compensator is \(90^\circ\), one should only try to add \(55^\circ\). If you need more than \(55^\circ\), you would need two lead compensators <strong>in series</strong>.</p>
+
+<hr />
+
+<h2 id="designing-a-lag-compensator-with-bode-plot">Designing a Lag Compensator with Bode Plot</h2>
+
+<p><img src="../figures/lag_compensator_bode.png" alt="Phase Lag Compensator bode plot" /></p>
+
+<p>We want the critical region where the system needs more gain margin to the right of the red box. The phase lag needs to be added at really low frequencies.</p>
+
+<h3 id="lag-compensator-1">Lag Compensator</h3>
+
+<h3 id="important-notes">Important Notes</h3>
+<ol>
+  <li>While a lead compensator adds phase margin by changing the phase plot, a lag compensator can also add phase in the critical region by <strong>reducing the gain plot</strong> at the critical region, **keeping the \(E_{ss}\), and not disturbing the phase plot.</li>
+</ol>
+
+<h3 id="problem-setup">Problem Setup</h3>
+<p>Our current phase margin is \(18^\circ\), but we want the phase margin to be</p>
+
+<h3 id="steps-to-design-a-lag-compensator">Steps to design a lag compensator</h3>
+<ol>
+  <li>Compute the frequency (\(\omega_r\))at which the phase margin requirement is set (frequency at which Phase Margin = \(48^\circ\)).</li>
+  <li>Compute the Gain at that frequency (\(G_r\)) and add a little extra gain to ensure the compensator fulfills the requirement (18 dB -&gt; 20 dB).</li>
+  <li>20 dB = a factor of 10. Therefore, the lag compensator becomes \(\frac{\tau s + 1}{10 \tau s + 1}\)</li>
+  <li>Place the zero (\(\omega_z\)) approximately 50 times closer to the origin as the dominant pole.</li>
+  <li>
+\[\tau = \omega_z\]
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="comparing-lead-lag-compensators">Comparing Lead Lag Compensators</h2>
+
+<p><img src="../figures/lead_lag_comparison.png" alt="lead lag comparison" /></p>
+
+<p>Even though Phase Margins are the same for both compensated systems, lead composator <strong>increased \(\omega_{gc}\)</strong>, the gain crossover frequency, while the lag compensator <strong>decreased \(\omega_{gc}\)</strong>.</p>
+
+<p>\(\omega_{gc}\) is related to the speed of the control system, as shown in the picture below.</p>
+
+<p><img src="../figures/lead_lag_comparison_step.png" alt="lead lag comparison in time domain step response" /></p>
+
+<h3 id="potential-benefits-of-a-slower-system">Potential benefits of a slower system</h3>
+<ol>
+  <li>A slower system won’t react as much to high frequency noise.</li>
+  <li>A slower system is safer if you’re uncertain about your high frequency modes.</li>
+</ol>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
