@@ -45,3 +45,35 @@ $$
     <img src="../figures/pade_phase_order.png" alt="Pade choose order" width="500" height="500">
     <figcaption>Higher-frequency features are approximated better by higher order Pade Approximations</figcaption>
     </figure>
+
+---
+
+# Algebraic Riccati Equation
+
+After some term re-arragnement, the cost function $$J(x,u)$$ for LQR can be written as:
+
+![Algebraic Riccati for LQR](../figures/riccati.png)
+
+**Notes:**
+
+1. $$P$$ is solved to make the first part of the integral operand 0 (minimizes cost).
+2. Plug in $$P$$ to compute $$K = R^{-1}B^TP$$, which, when plugged into $$ u = - K x,  makes the second term of integral operand 0, where $$ R $$ is the cost matrix for control effort and $$B$$ is the control input Matrix.
+
+## Quadratic Cost
+
+$$
+J = \int_{0}^{\infty} (x^T Q x + u^T R u) dt
+$$
+
+where Q is the process Noise Covariance, and R is the Measurement Noise Covariance.
+
+## Solving LQR with ARE (Finding u to minimize J)
+
+Other methods such as brute force or gradient descent are computationally expensive. ARE yeilds an analytic solution in comparison.
+
+Let $$P = P^T$$, $$P$$ is the Estimate Error Covariance, and represents how uncertain the filter currently is about the estimated state.
+
+$$
+A^\top P + P A - P B R^{-1} B^\top P + Q = 0
+$$
+

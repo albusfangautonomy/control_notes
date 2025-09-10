@@ -3,7 +3,11 @@ layout: default
 title: Lyapunov Stability
 ---
 
-# Chain Rule → Lie Derivative → Lyapunov Stability (Autonomous Systems)
+# Lyapunov Stability
+
+## Intuitive Summary of Stability in the Sense of Lyapunov (isL)
+
+1. Stable isL
 
 ## Setup
 Consider an **autonomous** system

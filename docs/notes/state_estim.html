@@ -9,17 +9,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
-<link rel="canonical" href="https://albusfangautonomy.github.io/control_notes/notes/state_estim.html" />
-<meta property="og:url" content="https://albusfangautonomy.github.io/control_notes/notes/state_estim.html" />
+<link rel="canonical" href="http://localhost:4000/notes/state_estim.html" />
+<meta property="og:url" content="http://localhost:4000/notes/state_estim.html" />
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="State Estimation" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"State Estimation","url":"https://albusfangautonomy.github.io/control_notes/notes/state_estim.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"State Estimation","url":"http://localhost:4000/notes/state_estim.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/control_notes/assets/main.css">
-  <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
     MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -34,7 +34,7 @@
 </head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/control_notes/">Albus&#39;s Control Notes</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -45,7 +45,7 @@
         </label>
 
         <div class="trigger">
-          <a class="page-link" href="/control_notes/">Home</a></div>
+          <a class="page-link" href="/">Home</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -74,6 +74,55 @@ This is a tall matrix and therefore its rank is the column rank.
 <hr />
 
 <h2 id="kalman-filter-linear-quadratic-estimator">Kalman Filter (Linear Quadratic Estimator)</h2>
+
+<h3 id="key-assumption">Key Assumption</h3>
+<p>Optimality of Kalman filtering assumes that errors have a normal (Gaussian) distribution. Regardless of Gaussianity, however, if the process and measurement covariances are known, then the Kalman filter is the best possible linear estimator in the minimum mean-square-error sense, although there may be better nonlinear estimators.</p>
+
+<h3 id="system-dynamics-and-measurement-model">System Dynamics and Measurement Model</h3>
+<p>\(\mathbf{x}_{k} = \mathbf{F}_{k} \mathbf{x}_{k-1} + \mathbf{B}_{k} \mathbf{u}_{k} + \mathbf{w}_{k}\)</p>
+
+<p>where:</p>
+
+<ul>
+  <li>\(\mathbf{F}_{k}\) is the state transition model applied to the previous state \(\mathbf{x}_{k-1}\).</li>
+  <li>\(\mathbf{B}_{k}\) is the control-input model applied to the control vector \(\mathbf{u}_{k}\).</li>
+  <li>\(\mathbf{w}_{k}\) is the process noise, assumed to be drawn from a zero-mean multivariate normal distribution:
+\(\mathbf{w}_{k} \sim \mathcal{N}(0, \mathbf{Q}_{k})\)
+where \(\mathbf{Q}_{k}\) is the process noise covariance.</li>
+</ul>
+
+<h3 id="predict">Predict</h3>
+
+<p>Predicted (a priori) state estimate:<br />
+\(\hat{\mathbf{x}}_{k|k-1} = \mathbf{F}_k \hat{\mathbf{x}}_{k-1|k-1} + \mathbf{B}_k \mathbf{u}_k\)</p>
+
+<p>Predicted (a priori) estimate covariance: <br />
+\(\mathbf{P}_{k|k-1} = \mathbf{F}_k \mathbf{P}_{k-1|k-1} \mathbf{F}_k^{\mathsf{T}} + \mathbf{Q}_k\)</p>
+
+<hr />
+
+<h3 id="update">Update</h3>
+
+<p>Innovation or measurement pre-fit residual: <br />
+\(\tilde{\mathbf{y}}_k = \mathbf{z}_k - \mathbf{H}_k \hat{\mathbf{x}}_{k|k-1}\)</p>
+
+<p>Innovation (or pre-fit residual) covariance:<br />
+\(\mathbf{S}_k = \mathbf{H}_k \mathbf{P}_{k|k-1} \mathbf{H}_k^{\mathsf{T}} + \mathbf{R}_k\)</p>
+
+<p>Optimal Kalman gain: <br />
+\(\mathbf{K}_k = \mathbf{P}_{k|k-1} \mathbf{H}_k^{\mathsf{T}} \mathbf{S}_k^{-1}\)</p>
+
+<p>Updated (a posteriori) state estimate:<br />
+\(\hat{\mathbf{x}}_{k|k} = \hat{\mathbf{x}}_{k|k-1} + \mathbf{K}_k \tilde{\mathbf{y}}_k\)</p>
+
+<p>Updated (a posteriori) estimate covariance:<br />
+\(\mathbf{P}_{k|k} = \left( \mathbf{I} - \mathbf{K}_k \mathbf{H}_k \right) \mathbf{P}_{k|k-1}\)</p>
+
+<p>Measurement post-fit residual:<br />
+\(\tilde{\mathbf{y}}_{k|k} = \mathbf{z}_k - \mathbf{H}_k \hat{\mathbf{x}}_{k|k}\)</p>
+
+<hr />
+
 <h3 id="notes">Notes</h3>
 <ol>
   <li><strong>Both Kalman Filter and LQR solve an algebraic Riccati Equation, yielding a closed-form solution</strong></li>
@@ -89,7 +138,8 @@ This is a tall matrix and therefore its rank is the column rank.
 <p>\(J= \mathbb{E}[(x-\hat{x})^T(x-\hat{x})]\)</p>
 
 <h3 id="measurement-noise">Measurement Noise</h3>
-<p>\(\epsilon = x - \hat{x} \\ \dot{\epsilon}=(A-KC) \epsilon + w_{d} - Kw_{n}\), where K is the Kalman gain and C is the measurement matrix, W_{d} is the process noise from system dynamics and w_{n} is the sensor noise</p>
+<p>\(\epsilon = x - \hat{x} \\ \dot{\epsilon}=(A-KC) \epsilon + w_{d} - Kw_{n}\), where K is the Kalman gain and C is the measurement matrix, \(w_{d}\) is the process noise from system dynamics and \(w_{n}\) is the sensor noise</p>
+
 <h3 id="two-major-noises">Two Major noises</h3>
 <ol>
   <li>Model Noise \(w_{d}\)</li>
@@ -99,7 +149,7 @@ if one is high, trust the other more.</li>
 
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/control_notes/"></data>
+  <data class="u-url" href="/"></data>
 
   <div class="wrapper">
 
@@ -111,7 +161,7 @@ if one is high, trust the other more.</li>
           <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">

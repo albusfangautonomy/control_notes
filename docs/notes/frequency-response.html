@@ -3,23 +3,23 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Frequency Response and Fourier Transform | Albus’s Control Notes</title>
+<title>Transfer Functions and Frequency Response | Albus’s Control Notes</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Frequency Response and Fourier Transform" />
+<meta property="og:title" content="Transfer Functions and Frequency Response" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
-<link rel="canonical" href="https://albusfangautonomy.github.io/control_notes/notes/frequency-response.html" />
-<meta property="og:url" content="https://albusfangautonomy.github.io/control_notes/notes/frequency-response.html" />
+<link rel="canonical" href="http://localhost:4000/notes/frequency-response.html" />
+<meta property="og:url" content="http://localhost:4000/notes/frequency-response.html" />
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Frequency Response and Fourier Transform" />
+<meta property="twitter:title" content="Transfer Functions and Frequency Response" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Frequency Response and Fourier Transform","url":"https://albusfangautonomy.github.io/control_notes/notes/frequency-response.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Transfer Functions and Frequency Response","url":"http://localhost:4000/notes/frequency-response.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/control_notes/assets/main.css">
-  <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
     MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -34,7 +34,7 @@
 </head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/control_notes/">Albus&#39;s Control Notes</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -45,7 +45,7 @@
         </label>
 
         <div class="trigger">
-          <a class="page-link" href="/control_notes/">Home</a></div>
+          <a class="page-link" href="/">Home</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -53,11 +53,49 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Frequency Response and Fourier Transform</h1>
+    <h1 class="post-title">Transfer Functions and Frequency Response</h1>
   </header>
 
   <div class="post-content">
-    <h2 id="quick-notes-on-damping">Quick Notes on Damping</h2>
+    <h2 id="poles-and-zeros">Poles and Zeros</h2>
+<ol>
+  <li>
+    <p>The stability of an LTI system depends solely on the poles of its transfer function, including stability, speed of decay/growth, or natural oscillaitons.</p>
+  </li>
+  <li>Zeros (roots of the numerator) don’t directly affect stability because they don’t appear in the characteristic equation that governs the natural modes of the system.
+    <ul>
+      <li>This can be deduced using <strong>partial fraction expansion</strong> of a transfer function. Zeros only change the <strong>residue</strong>, not the pole location.</li>
+      <li>Residual and the pole location determines the total contribution of a pole to the time response.
+ ​</li>
+    </ul>
+  </li>
+  <li>Poles define how the system <em>naturally behaves</em> (transients, stability). Zeroes shape how the system reacts to inputs (modify transients, steady-state gain/phase, can cancel or distort modes)</li>
+</ol>
+
+<h3 id="what-can-zeros-do">What can Zeros do?</h3>
+
+<ol>
+  <li>Transient Shape and Overshoot
+    <ul>
+      <li>Zeros can introduce additional terms in the time response that can increase or decrease overshoot, depending on their location.</li>
+      <li>A zero close to the origin (s = 0) or near the imaginary axis can significantly change the transient waveform.</li>
+    </ul>
+  </li>
+  <li>Direction and Phase
+    <ul>
+      <li>Zeros affect the phase of the frequency response.</li>
+    </ul>
+  </li>
+  <li>Magnitude Shaping
+    <ul>
+      <li>Zeros can boost or attenuate specific frequency components, affecting bandwidth and disturbance rejection.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="quick-notes-on-damping">Quick Notes on Damping</h2>
 <h3 id="underdamped-critically-damped-and-overdamped-only-defined-for-second-order-systems">Underdamped, Critically damped, and Overdamped (Only defined for second order systems)</h3>
 <p>Underdamped: imgarinary poles</p>
 
@@ -114,6 +152,7 @@
 
 <p>Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at \(i\omega\), with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform.
 <strong>Inpulse response</strong> h(t) given \(u = \delta(t)\) is \(L^{-1}{G(s), \text{ where } Y(s) = G(s)X(s)}\) ie the inverse Laplace Transform of the Transfer function (G(s))</p>
+
 <h3 id="fourier-series">Fourier Series</h3>
 
 <p>If \(f(t)\) is a periodic function with period $T$, its <strong>Fourier series</strong> representation is:</p>
@@ -296,7 +335,7 @@
 
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/control_notes/"></data>
+  <data class="u-url" href="/"></data>
 
   <div class="wrapper">
 
@@ -308,7 +347,7 @@
           <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">

@@ -1,6 +1,30 @@
 ---
 layout: page
-title: Frequency Response and Fourier Transform
+title: Transfer Functions and Frequency Response
+---
+
+
+## Poles and Zeros
+1. The stability of an LTI system depends solely on the poles of its transfer function, including stability, speed of decay/growth, or natural oscillaitons.
+
+2. Zeros (roots of the numerator) don’t directly affect stability because they don’t appear in the characteristic equation that governs the natural modes of the system.
+    - This can be deduced using **partial fraction expansion** of a transfer function. Zeros only change the **residue**, not the pole location.
+    - Residual and the pole location determines the total contribution of a pole to the time response.
+	​
+3. Poles define how the system *naturally behaves* (transients, stability). Zeroes shape how the system reacts to inputs (modify transients, steady-state gain/phase, can cancel or distort modes)
+
+### What can Zeros do?
+
+1. Transient Shape and Overshoot
+    - Zeros can introduce additional terms in the time response that can increase or decrease overshoot, depending on their location.
+    - A zero close to the origin (s = 0) or near the imaginary axis can significantly change the transient waveform.
+
+2. Direction and Phase
+    - Zeros affect the phase of the frequency response.
+
+3. Magnitude Shaping
+    - Zeros can boost or attenuate specific frequency components, affecting bandwidth and disturbance rejection.
+
 ---
 
 ## Quick Notes on Damping
@@ -83,6 +107,7 @@ $$
 
 Laplace Tranform is a generialized form of Fourier Transform. Specifically, Fourier Transform evaluates Laplace Transform at $$i\omega$$, with no real parts, ie. Fourier Transform only evaluates purely imaginary arguments for Laplace Transform.
 **Inpulse response** h(t) given $$u = \delta(t)$$ is $$L^{-1}{G(s), \text{ where } Y(s) = G(s)X(s)}$$ ie the inverse Laplace Transform of the Transfer function (G(s))
+
 ### Fourier Series
 
 If $$f(t)$$ is a periodic function with period $T$, its **Fourier series** representation is:

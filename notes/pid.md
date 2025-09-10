@@ -20,6 +20,74 @@ PID by itself is a linear controller. Gain scheduling, anti-windup schemes, deri
 4. Cascading multiple PID controllers.
 
 ---
+## Imporant Intuitions of the PID controller
+
+### Poles and Zeros
+1. Zeros only affect the residue associated with each pole after the **partial fraction expansion** of a transfer function.
+   - Residues change how much each pole contributes to the overall time response.
+   - Residue along does not affect the dominance of a pole. Both residual and the pole location determines the total contribution of a pole to the time response.
+2. The closer a zero is placed to a pole, the less contribution that pole would contribute.
+3. Through adjusting the PID gains, we can **place** the two open-loop zeros whereever we want
+   - This can be used to place the two zeros close to the two dominant imaginary poles to cancel out oscillation in closed loop time response.
+
+
+### PID Transfer Function
+
+If you write the transfer function of a PID controller in the Laplace domain:  
+
+$$
+C(s) = K_p + \frac{K_i}{s} + K_d s
+$$  
+
+and factor it into a standard form, you can see why it’s described as **one pole at the origin + two zeros**.  
+
+---
+
+### Step 1 — Combine terms  
+$$
+C(s) = \frac{K_d s^2 + K_p s + K_i}{s}
+$$  
+
+The denominator $$ s $$ is the **integrator pole** (at the origin).  
+The numerator $$ K_d s^2 + K_p s + K_i $$ is a quadratic, so it can be factored into:  
+
+$$
+C(s) = \frac{K_d (s - z_1)(s - z_2)}{s}
+$$  
+
+---
+
+### Step 2 — Zero Placement
+The zeros $$ z_1 $$ and $$ z_2 $$ depend on the gains:
+
+$$
+z_{1,2} = \frac{-K_p \pm \sqrt{K_p^2 - 4 K_d K_i}}{2 K_d}
+$$  
+
+**Key points about their relationship:**
+
+1. **Location and spacing**  
+   - If $$K_p^2 > 4K_d K_i$$, both zeros are **real** (distinct or repeated).
+   - If $$K_p^2 = 4K_d K_i$$, the zeros are **repeated** at $$-K_p / (2K_d)$$.
+   - If $$K_p^2 < 4K_d K_i$$, the zeros are **complex conjugates**.
+
+2. **Coupling via gain ratios**  
+   - The **product** of the zeros:  
+     $$
+     z_1 z_2 = \frac{K_i}{K_d}
+     $$  
+   - The **sum** of the zeros:  
+     $$
+     z_1 + z_2 = \frac{K_p}{K_d}
+     $$  
+   These relationships mean that if you fix one zero by tuning gains, the other is constrained by the gain ratios.
+
+3. **Practical tuning**  
+   - Often, the zeros are placed to **cancel or partially cancel plant poles** or to **shape transient response**.
+   - In many PID designs, one zero is put close to the origin (to work with the integrator), and the other is placed farther away to control overshoot and speed.
+
+
+---
 
 ## Which controller to use?
 $$

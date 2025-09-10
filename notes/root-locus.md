@@ -4,6 +4,21 @@ title: Root Locus Analysis
 ---
 
 # Root Locus Analysis
+
+## Essential Tips/Reminders
+1. Root locus plot displays open-loop poles and zeroes as starting points and end points respectively, for the trajectories of the closed loop poles.
+    - This is because both zeros and poles of the open loop system affects the poles (by extension stability) of the closed-loop system.
+    - The locations of the closed-loop poles are dictated by gain K, as shown below.
+    - Zeroes do not move on the plot, only poles.
+
+
+![root locus derivation](../figures/root_locus_deriv.png)
+2. We can see from the equations above that closed-loop poles move from open-loop poles to open-loop zeros as we increase K.
+
+3. Important intuition of the PID controller with root locus is developed on the page for [PID](./pid.html).
+
+---
+
 ## Poles and Zeros
 1. The stability of an LTI system depends solely on the poles of its transfer function, including stability, speed of decay/growth, or natural oscillaitons.
 

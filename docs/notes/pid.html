@@ -9,17 +9,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
-<link rel="canonical" href="https://albusfangautonomy.github.io/control_notes/notes/pid.html" />
-<meta property="og:url" content="https://albusfangautonomy.github.io/control_notes/notes/pid.html" />
+<link rel="canonical" href="http://localhost:4000/notes/pid.html" />
+<meta property="og:url" content="http://localhost:4000/notes/pid.html" />
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="PID Control" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"PID Control","url":"https://albusfangautonomy.github.io/control_notes/notes/pid.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"PID Control","url":"http://localhost:4000/notes/pid.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/control_notes/assets/main.css">
-  <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
     MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -34,7 +34,7 @@
 </head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/control_notes/">Albus&#39;s Control Notes</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -45,7 +45,7 @@
         </label>
 
         <div class="trigger">
-          <a class="page-link" href="/control_notes/">Home</a></div>
+          <a class="page-link" href="/">Home</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -68,6 +68,77 @@
   <li>PID can be coupled with gain scheduling, improving measurement (higher sampling rate for instance).</li>
   <li>The derivative term can be coupled with low-pass filtering.</li>
   <li>Cascading multiple PID controllers.</li>
+</ol>
+
+<hr />
+<h2 id="imporant-intuitions-of-the-pid-controller">Imporant Intuitions of the PID controller</h2>
+
+<h3 id="poles-and-zeros">Poles and Zeros</h3>
+<ol>
+  <li>Zeros only affect the residue associated with each pole after the <strong>partial fraction expansion</strong> of a transfer function.
+    <ul>
+      <li>Residues change how much each pole contributes to the overall time response.</li>
+      <li>Residue along does not affect the dominance of a pole. Both residual and the pole location determines the total contribution of a pole to the time response.</li>
+    </ul>
+  </li>
+  <li>The closer a zero is placed to a pole, the less contribution that pole would contribute.</li>
+  <li>Through adjusting the PID gains, we can <strong>place</strong> the two open-loop zeros whereever we want
+    <ul>
+      <li>This can be used to place the two zeros close to the two dominant imaginary poles to cancel out oscillation in closed loop time response.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="pid-transfer-function">PID Transfer Function</h3>
+
+<p>If you write the transfer function of a PID controller in the Laplace domain:</p>
+
+\[C(s) = K_p + \frac{K_i}{s} + K_d s\]
+
+<p>and factor it into a standard form, you can see why it’s described as <strong>one pole at the origin + two zeros</strong>.</p>
+
+<hr />
+
+<h3 id="step-1--combine-terms">Step 1 — Combine terms</h3>
+<p>\(C(s) = \frac{K_d s^2 + K_p s + K_i}{s}\)</p>
+
+<p>The denominator \(s\) is the <strong>integrator pole</strong> (at the origin).<br />
+The numerator \(K_d s^2 + K_p s + K_i\) is a quadratic, so it can be factored into:</p>
+
+\[C(s) = \frac{K_d (s - z_1)(s - z_2)}{s}\]
+
+<hr />
+
+<h3 id="step-2--zero-placement">Step 2 — Zero Placement</h3>
+<p>The zeros \(z_1\) and \(z_2\) depend on the gains:</p>
+
+\[z_{1,2} = \frac{-K_p \pm \sqrt{K_p^2 - 4 K_d K_i}}{2 K_d}\]
+
+<p><strong>Key points about their relationship:</strong></p>
+
+<ol>
+  <li><strong>Location and spacing</strong>
+    <ul>
+      <li>If \(K_p^2 &gt; 4K_d K_i\), both zeros are <strong>real</strong> (distinct or repeated).</li>
+      <li>If \(K_p^2 = 4K_d K_i\), the zeros are <strong>repeated</strong> at \(-K_p / (2K_d)\).</li>
+      <li>If \(K_p^2 &lt; 4K_d K_i\), the zeros are <strong>complex conjugates</strong>.</li>
+    </ul>
+  </li>
+  <li><strong>Coupling via gain ratios</strong>
+    <ul>
+      <li>The <strong>product</strong> of the zeros:<br />
+\(z_1 z_2 = \frac{K_i}{K_d}\)</li>
+      <li>The <strong>sum</strong> of the zeros:<br />
+\(z_1 + z_2 = \frac{K_p}{K_d}\)<br />
+These relationships mean that if you fix one zero by tuning gains, the other is constrained by the gain ratios.</li>
+    </ul>
+  </li>
+  <li><strong>Practical tuning</strong>
+    <ul>
+      <li>Often, the zeros are placed to <strong>cancel or partially cancel plant poles</strong> or to <strong>shape transient response</strong>.</li>
+      <li>In many PID designs, one zero is put close to the origin (to work with the integrator), and the other is placed farther away to control overshoot and speed.</li>
+    </ul>
+  </li>
 </ol>
 
 <hr />
@@ -395,7 +466,7 @@ Desired altitude 50m, as drone shoots up, error term decreases (negative derivat
 
 <h2 id="pid-pole-placement-lqg-and-loop-shaping-robust-control">PID Pole Placement (LQG) and Loop Shaping (Robust Control)</h2>
 
-<h3 id="pid-transfer-function">PID Transfer Function</h3>
+<h3 id="pid-transfer-function-1">PID Transfer Function</h3>
 <p>\(C(s) = K_p + \frac{K_i}{s} + K_d s\)</p>
 
 <p><img src="../figures/pid_loopshaping_poleplacement.png" alt="PID pole placement and loop shaping png" /></p>
@@ -604,7 +675,7 @@ A fixed linear transfer function but different parameters under different operat
 
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/control_notes/"></data>
+  <data class="u-url" href="/"></data>
 
   <div class="wrapper">
 
@@ -616,7 +687,7 @@ A fixed linear transfer function but different parameters under different operat
           <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
