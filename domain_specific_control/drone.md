@@ -369,3 +369,9 @@ In a cascade loop setup, the **matched disturbance** means disturbance that ente
 ---
 
 # Disturbance Observer
+In short a disturbance observer tries to estimate non-constant, time-varying disturbances an aircraft is subjected to.
+
+## Motivation
+1. Classic PID controllers can handle constant, slow-varying disturbances reasonably well
+  - Remember Sensitivity Function which rejects disturbances.
+2. PID falls short when dealing with non-constant, time varying disturbances.

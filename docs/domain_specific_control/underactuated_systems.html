@@ -3,20 +3,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Manipulator Control | Albus’s Control Notes</title>
+<title>Underactuated Systems | Albus’s Control Notes</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Manipulator Control" />
+<meta property="og:title" content="Underactuated Systems" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
-<link rel="canonical" href="http://localhost:4000/domain_specific_control/manipulator.html" />
-<meta property="og:url" content="http://localhost:4000/domain_specific_control/manipulator.html" />
+<link rel="canonical" href="http://localhost:4000/domain_specific_control/underactuated_systems.html" />
+<meta property="og:url" content="http://localhost:4000/domain_specific_control/underactuated_systems.html" />
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Manipulator Control" />
+<meta property="twitter:title" content="Underactuated Systems" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Manipulator Control","url":"http://localhost:4000/domain_specific_control/manipulator.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Underactuated Systems","url":"http://localhost:4000/domain_specific_control/underactuated_systems.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
@@ -53,87 +53,12 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Manipulator Control</h1>
+    <h1 class="post-title">Underactuated Systems</h1>
   </header>
 
   <div class="post-content">
-    <h1 id="manipulator-equation">Manipulator Equation</h1>
-
-<p>The general manipulator equation is:</p>
-
-\[M(q) \ddot{q} + C(q, \dot{q}) \dot{q} = \tau_g(q) + B u\]
-
-<p>where:</p>
-<ul>
-  <li>q is the generalized coordinates of the arm (revolute and prismatic joints)</li>
-  <li>\(M(q)\): inertia (mass) matrix</li>
-  <li>\(C(q, \dot{q})\): Coriolis/centrifugal matrix</li>
-  <li>\(\tau_g(q)\): gravity torque</li>
-  <li>\(B u\): additional actuation/input mapping, B is the actuation</li>
-</ul>
-
-<hr />
-
-<h2 id="1-dimensions-and-properties-of-mq">1. Dimensions and Properties of \(M(q)\)</h2>
-<ul>
-  <li><strong>Size:</strong> \(n \times n\) for an \(n\)-DOF robot.</li>
-  <li><strong>Symmetric:</strong> \(M(q) = M(q)^T\).</li>
-  <li><strong>Positive-definite:</strong> \(x^T M(q) x &gt; 0\) for all nonzero \(x\).</li>
-  <li><strong>Depends only on \(q\):</strong> not on \(\dot{q}\) or \(\ddot{q}\).</li>
-</ul>
-
-<hr />
-
-<h2 id="2-general-form">2. General Form</h2>
-<p>\(M(q)\) is derived from the manipulator’s kinetic energy:</p>
-
-\[T = \tfrac{1}{2} \dot{q}^T M(q) \dot{q}\]
-
-<p>It accounts for:</p>
-<ul>
-  <li><strong>Rotational inertia</strong> of each link.</li>
-  <li><strong>Mass distribution</strong> (translational inertia).</li>
-  <li><strong>Coupling terms</strong> (off-diagonal) when motion in one joint affects others.</li>
-</ul>
-
-<hr />
-
-<h2 id="3-example-2-link-planar-arm">3. Example: 2-Link Planar Arm</h2>
-<p>For a 2-link planar manipulator with:</p>
-<ul>
-  <li>link lengths \(l_1, l_2\)</li>
-  <li>link masses \(m_1, m_2\)</li>
-  <li>COM distances \(r_1, r_2\)</li>
-  <li>inertias \(I_1, I_2\)</li>
-  <li>joint angles \(q_1, q_2\)</li>
-</ul>
-
-<p>the inertia matrix is:</p>
-
-\[M(q) =
-\begin{bmatrix}
-I_1 + I_2 + m_1 r_1^2 + m_2(l_1^2 + r_2^2 + 2 l_1 r_2 \cos q_2) &amp;
-I_2 + m_2(r_2^2 + l_1 r_2 \cos q_2) \\
-I_2 + m_2(r_2^2 + l_1 r_2 \cos q_2) &amp;
-I_2 + m_2 r_2^2
-\end{bmatrix}\]
-
-<ul>
-  <li><strong>Diagonal terms</strong>: inertia seen at each joint.</li>
-  <li><strong>Off-diagonal terms</strong>: dynamic coupling between joints.</li>
-</ul>
-
-<hr />
-
-<h2 id="4-interpretation">4. Interpretation</h2>
-<ul>
-  <li><strong>Diagonal entries</strong>: difficulty of accelerating a single joint.</li>
-  <li><strong>Off-diagonal entries</strong>: how one joint’s acceleration induces torques in another.</li>
-  <li>\(M(q)\) changes with \(q\), since link orientations change the inertia distribution.</li>
-</ul>
-
-<h1 id="simple-pendulum">Simple Pendulum</h1>
-
+    <h2 id="feedback-equivalence">Feedback Equivalence</h2>
+<p>In short, underactuated systems are not feedback equivalent to \(\ddot{q} = u\).</p>
 
   </div>
 

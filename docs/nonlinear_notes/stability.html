@@ -55,13 +55,28 @@
 <h2 id="intuitive-summary-of-stability-in-the-sense-of-lyapunov-isl">Intuitive Summary of Stability in the Sense of Lyapunov (isL)</h2>
 
 <ol>
-  <li>Stable isL</li>
-</ol>
-
-<h2 id="setup">Setup</h2>
-<p>Consider an <strong>autonomous</strong> system
+  <li>Locally Stable isL: A fixed point \(x^*\) is locally stable i.s.L. if for every small \(\epsilon &gt; 0, \exists \delta &gt; 0\) such that if 
+\(|| x(0) - x^* || &lt; \delta\), 
+then 
+\(\forall t, || x(t) - x^* || &lt; \epsilon\)
+    <ul>
+      <li>for any ball of size \(\epsilon\) around the fixed point, one can create a ball of size \(\delta\) which guarantees that if hte system started inside the \(\delta\) ball then it will remain inside the \(\epsilon\) ball for all of time.</li>
+      <li>typically \(\delta \leq \epsilon\)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Locally Attarctive i.s.L: A fixed point is locally attractive if for every small \(\epsilon\) we have \(x(0) = x^* + \epsilon\) implies that \(lim_{t-&gt;\infty}x(t)=x^*\).</p>
+  </li>
+  <li>
+    <p>Locally asymptotically stable: A fixed poitn is locally asymptotically stable if it is locally stable i.s.L. and locally attractive.</p>
+  </li>
+  <li>Locally exponentially stable. A fixed point is locally exponentially stable if for every small \(\epsilon\), we have \(x(0) = x^*+\epsilon\) implies that \(||x(t)-x^*||&lt; Ce^{-\alpha t}\), for some positive constants \(C\) and \(\alpha\).
+    <h2 id="setup">Setup</h2>
+    <p>Consider an <strong>autonomous</strong> system
 \(\dot x = f(x),\quad x\in\mathbb{R}^n,\)
 and a scalar candidate \(V:\mathbb{R}^n\to\mathbb{R}\) (no explicit time dependence).</p>
+  </li>
+</ol>
 
 <hr />
 

@@ -94,6 +94,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Autonomous Cars](./domain_specific_control/car.html)
 
+- [Manipulator Control](./domain_specific_control/manipulator.html)
 
 ## Interview Prep
 
@@ -102,8 +103,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Drone Control](./interview_prep/drone_control.html)
 
 ## Data Driven Control
-
 - [Reinforcement Learning]()
+
+## Optimal Control
 
 
 ## 🛠️ Tools and Techniques

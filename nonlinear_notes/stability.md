@@ -7,8 +7,20 @@ title: Lyapunov Stability
 
 ## Intuitive Summary of Stability in the Sense of Lyapunov (isL)
 
-1. Stable isL
+1. Locally Stable isL: A fixed point $$x^*$$ is locally stable i.s.L. if for every small $$\epsilon > 0, \exists \delta > 0 $$ such that if 
+$$
+|| x(0) - x^* || < \delta
+$$, 
+then 
+$$\forall t, || x(t) - x^* || < \epsilon $$
+    - for any ball of size $$ \epsilon $$ around the fixed point, one can create a ball of size $$ \delta $$ which guarantees that if hte system started inside the $$ \delta $$ ball then it will remain inside the $$\epsilon$$ ball for all of time.
+    - typically $$\delta \leq \epsilon$$
 
+2. Locally Attarctive i.s.L: A fixed point is locally attractive if for every small $$\epsilon $$ we have $$x(0) = x^* + \epsilon $$ implies that $$lim_{t->\infty}x(t)=x^*$$.
+
+3. Locally asymptotically stable: A fixed poitn is locally asymptotically stable if it is locally stable i.s.L. and locally attractive.
+
+4. Locally exponentially stable. A fixed point is locally exponentially stable if for every small $$\epsilon$$, we have $$x(0) = x^*+\epsilon$$ implies that $$||x(t)-x^*||< Ce^{-\alpha t}$$, for some positive constants $$C$$ and $$\alpha$$.
 ## Setup
 Consider an **autonomous** system
 $$

@@ -77,3 +77,7 @@ $$
 A^\top P + P A - P B R^{-1} B^\top P + Q = 0
 $$
 
+---
+
+# Phase Portraits
+
