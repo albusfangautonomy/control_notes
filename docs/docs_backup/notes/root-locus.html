@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Root Locus Analysis | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Root Locus Analysis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/notes/root-locus.html" />
+<meta property="og:url" content="http://localhost:4000/notes/root-locus.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Root Locus Analysis" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Root Locus Analysis","url":"http://localhost:4000/notes/root-locus.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="root-locus-analysis">Root Locus Analysis</h1>
+<h2 id="poles-and-zeros">Poles and Zeros</h2>
+<ol>
+  <li>
+    <p>The stability of an LTI system depends solely on the poles of its transfer function, including stability, speed of decay/growth, or natural oscillaitons.</p>
+  </li>
+  <li>
+    <p>Zeros (roots of the numerator) don’t directly affect stability because they don’t appear in the characteristic equation that governs the natural modes of the system.</p>
+  </li>
+  <li>
+    <p>Poles define how the system <em>naturally behaves</em> (transients, stability). Zeroes shape how the system reacts to inputs (modify transients, steady-state gain/phase, can cancel or distort modes)</p>
+  </li>
+</ol>
+
+<h3 id="what-can-zeros-do">What can Zeros do?</h3>
+
+<ol>
+  <li>Transient Shape and Overshoot
+    <ul>
+      <li>Zeros can introduce additional terms in the time response that can increase or decrease overshoot, depending on their location.</li>
+      <li>A zero close to the origin (s = 0) or near the imaginary axis can significantly change the transient waveform.</li>
+    </ul>
+  </li>
+  <li>Direction and Phase
+    <ul>
+      <li>Zeros affect the phase of the frequency response.</li>
+    </ul>
+  </li>
+  <li>Magnitude Shaping
+    <ul>
+      <li>Zeros can boost or attenuate specific frequency components, affecting bandwidth and disturbance rejection.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="root-locus-plot">Root Locus plot</h2>
+<p><img src="../figures/root_locus.png" alt="Root Locus plot" /></p>
+
+<p>Where \(\mathcal{Z}\) is the damping ratio. \(\mathcal{Z}=1\) means critically damped, \(\mathcal{Z}&lt;1\) means underdamped and \(\mathcal{Z}&gt;1\) means over damped.</p>
+
+<p>The radial lines denote the lines of constant damping ratio \(\mathcal{Z}=cos(\phi)\), which defines a <strong>cone of damping ratio</strong> to satisfy design specs.</p>
+
+<hr />
+
+<h3 id="typical-design-requiremnts---applications-of-root-locus-plots">Typical Design Requiremnts - Applications of Root Locus Plots</h3>
+<p><img src="../figures/root_locus_requirements.png" alt="Root Locus plot" /></p>
+
+<h3 id="what-is-a-root-locus-plot">What is a Root Locus Plot?</h3>
+<p>root locus analysis is a graphical method for examining how the roots of a system change with variation of a certain system parameter, commonly a gain within a feedback system.</p>
+
+<h3 id="setting-up-root-locus-plot">Setting up Root Locus Plot</h3>
+<p>We need to get the pole to the correct form <strong>1 + G(s) = 0</strong></p>
+
+<p><img src="../figures/root_locus_system_def.png" alt="Root Locus System" /></p>
+
+<p><img src="../figures/root_locus_pole_formula.png" alt="Root Locus Form" /></p>
+
+<hr />
+
+<h2 id="10-rules-of-root-locus">10 Rules of Root Locus</h2>
+
+<p>Setting the system up in this form: \(1 + K \frac{Q(s)}{P(s)}\)</p>
+
+<p>let</p>
+
+<p>n = number of poles of G(s) (also the number of loci), the open loop transfer function<br />
+m = number of zeros of G(s)<br />
+l = 0, 1, 2, 3… natural numbers<br />
+q=order of repeated pole or zero<br />
+\(\psi_{p} = \text{angle from a pole}\). Connect each pole with the pole/zero of interest, the angle between that line and positive x axis is \(\psi_p\) <br />
+\(\psi_{z} = \text{angle from a zero}\). Connect each zero with the pole/zero of interest, the angle between that line and positive x axis is \(\psi_z\)</p>
+
+<p>A root refers to a <strong>closed-loop pole</strong> of the system for a particular value of the gain <strong>K</strong>.</p>
+
+<p><strong>Rule 1</strong>: There are <strong>n</strong> lines (loci), where \(n = max(deg(Q), deg(P))\)</p>
+
+<p><strong>Rule 2</strong>: As K increases from 0 to \(\infty\), the closed loop poles move from the poles of open loop \(G(s)\) to the zeroes of open loop \(G(s)\)<br />
+    - if there are same number of poles and zeroes, they form a pair the roots travel from one pole to a zero.<br />
+    - if there are more Poles than Zeroes, the lines from the extra poles go to \(\infty\)<br />
+    - if there are more Zeroes than Poles, the lines come from infinity to the extra zeroes</p>
+
+<p><strong>Rule 3</strong>: When roots are complex, they occur in conjugate pairs and move together but mirrored across the real plane</p>
+
+<p><strong>Rule 4</strong>: At no time will the same root cross over its path<br />
+    - Paths of other roots may cross each other</p>
+
+<p><strong>Rule 5</strong>: The portion of the real axis to the left of an odd number of open loop poles and zeroes are part of the loci<br />
+    - Another way to restate: For K&gt;0, loci exist on the real axis to the left of odd numbered poles and zeroes</p>
+
+<p><strong>Rule 6</strong>: Lines leave and enter the real axis at \(90^\circ\).</p>
+
+<p><strong>Rule 7</strong>: If there are not enough poles or zeroes to make a pair then the extra lines go to (for poles) or come from (for zeroes) infinity.</p>
+
+<p><strong>Rule 8</strong>: Line go to infinity along asymptotes <br />
+    - The angles of the asymptotes, \(\phi_{A} = \frac{(2l+1)}{n - m} * 180^\circ\)<br />
+    - Asymptotes intercept the real axis at \(\sigma_{0}\) (ie. centroid of the asymptotes), \(\sigma = \frac{\Sigma \text{finite poles} - \Sigma \text{finite zeroes}}{n - m}\)<br />
+    - <strong>Angle of departure</strong> from a pole: \(\frac{1}{q}(\Sigma(\psi_z)-\Sigma(\psi_p)-180-360l)\)</p>
+
+<p><strong>Rule 9</strong>: If there are at least two lines to infinity, then the sum of all roots is constant</p>
+
+<p><strong>Rule 10</strong>: K going from 0 to \(-\infty\) can be drawn by reversing rule 5 and adding \(180^\circ\) to the asymptote angles.</p>
+
+<hr />
+
+<h3 id="more-details-on-the-10-rules">More details on the 10 rules</h3>
+
+<p><strong>Rule 2:</strong> \(P(s) +KQ(s) = 0\) by re-arranging the terms. When K = 0, P(s) = 0, which is the definition of poles for G(s). As K increases, more emphasis is put on Q(s)</p>
+
+<p><strong>Rule 9:</strong></p>
+
+<p><img src="../figures/root_locus_rule_9.png" alt="Rule 9" /></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
