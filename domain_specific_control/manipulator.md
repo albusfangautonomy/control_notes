@@ -75,4 +75,59 @@ $$
 
 
 # Simple Pendulum
+**Nonlinear EoM (about the pivot, with viscous damping):**
+$$
+I\,\ddot{\theta} + b\,\dot{\theta} + m g \ell \sin\theta \;=\; u
+$$
 
+- For a point mass at distance $$\ell$$: $$I = m\ell^{2}$$.
+- $$u$$ is the torque applied about the pivot (control input).
+
+**State-space form ($$x = [\theta, \dot{\theta}]^T$$):**
+
+$$
+\begin{aligned}
+\dot{\theta} &= \dot{\theta} \\
+\ddot{\theta} &= \frac{u - b\,\dot{\theta} - m g \ell \sin\theta}{I}
+\end{aligned}
+$$
+
+So,
+
+$$
+\dot{x} =
+\begin{bmatrix}
+\dot{\theta}\\[4pt]
+\dfrac{u - b\,\dot{\theta} - m g \ell \sin\theta}{I}
+\end{bmatrix}.
+$$
+
+**Small-angle linearization (around $$\theta \approx 0$$):**
+$$
+I\,\ddot{\theta} + b\,\dot{\theta} + m g \ell\,\theta \;=\; u
+$$
+$$
+\ddot{\theta} \approx \frac{u - b\,\dot{\theta} - m g \ell\,\theta}{I}.
+$$
+
+## Graphical Analysis - Vector Field
+
+<!-- ![control input shapes vector field](../figures/control_input_shapes_vector_field.png) -->
+<p align="center">
+  <img src="../figures/control_input_shapes_vector_field.png" 
+       alt="Control input shapes vector field (overlay comparison)" 
+       style="max-width:900px; width:100%; border-radius:10px;">
+  <br>
+  <em>Figure: Control input shapes vector field (u=0 vs u=1 overlay)</em>
+</p>
+For state $$x=\begin{bmatrix}\theta\\ \dot\theta\end{bmatrix}$$ and control torque $$u$$ about the pivot, the dynamics are
+$$
+\dot{x} = 
+\begin{bmatrix}
+\dot\theta \\
+\frac{u - b\,\dot\theta - m g \ell \sin\theta}{I}
+\end{bmatrix},
+$$
+where $$I=m\ell^2$$ for a point mass at distance $$\ell$$. Each vector $$[u,v]^T$$ at coordinate $$(\theta, \dot{\theta})$$ would be shown on the vector field.
+
+**Note:** Since u is only present in the second element in the vector, changing $$u$$ only changes the **vertical component** of this vector field.

@@ -133,7 +133,50 @@ I_2 + m_2 r_2^2
 </ul>
 
 <h1 id="simple-pendulum">Simple Pendulum</h1>
+<p><strong>Nonlinear EoM (about the pivot, with viscous damping):</strong>
+\(I\,\ddot{\theta} + b\,\dot{\theta} + m g \ell \sin\theta \;=\; u\)</p>
 
+<ul>
+  <li>For a point mass at distance \(\ell\): \(I = m\ell^{2}\).</li>
+  <li>\(u\) is the torque applied about the pivot (control input).</li>
+</ul>
+
+<p><strong>State-space form (\(x = [\theta, \dot{\theta}]^T\)):</strong></p>
+
+\[\begin{aligned}
+\dot{\theta} &amp;= \dot{\theta} \\
+\ddot{\theta} &amp;= \frac{u - b\,\dot{\theta} - m g \ell \sin\theta}{I}
+\end{aligned}\]
+
+<p>So,</p>
+
+\[\dot{x} =
+\begin{bmatrix}
+\dot{\theta}\\[4pt]
+\dfrac{u - b\,\dot{\theta} - m g \ell \sin\theta}{I}
+\end{bmatrix}.\]
+
+<p><strong>Small-angle linearization (around \(\theta \approx 0\)):</strong>
+\(I\,\ddot{\theta} + b\,\dot{\theta} + m g \ell\,\theta \;=\; u\)
+\(\ddot{\theta} \approx \frac{u - b\,\dot{\theta} - m g \ell\,\theta}{I}.\)</p>
+
+<h2 id="graphical-analysis---vector-field">Graphical Analysis - Vector Field</h2>
+
+<!-- ![control input shapes vector field](../figures/control_input_shapes_vector_field.png) -->
+<p align="center">
+  <img src="../figures/control_input_shapes_vector_field.png" alt="Control input shapes vector field (overlay comparison)" style="max-width:900px; width:100%; border-radius:10px;" />
+  <br />
+  <em>Figure: Control input shapes vector field (u=0 vs u=1 overlay)</em>
+</p>
+<p>For state \(x=\begin{bmatrix}\theta\\ \dot\theta\end{bmatrix}\) and control torque \(u\) about the pivot, the dynamics are
+\(\dot{x} = 
+\begin{bmatrix}
+\dot\theta \\
+\frac{u - b\,\dot\theta - m g \ell \sin\theta}{I}
+\end{bmatrix},\)
+where \(I=m\ell^2\) for a point mass at distance \(\ell\). Each vector \([u,v]^T\) at coordinate \((\theta, \dot{\theta})\) would be shown on the vector field.</p>
+
+<p><strong>Note:</strong> Since u is only present in the second element in the vector, changing \(u\) only changes the <strong>vertical component</strong> of this vector field.</p>
 
   </div>
 

@@ -33,7 +33,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
   Routh-Hurwitz, Nyquist, Lyapunov methods and practical insights.
 
 - [Sensor Fusion](./notes/senser_fusion.html) \\
-  Common Sensor Fusion algorithms.
+  Common Sensor Fusion algorithms. Including IMM and multi-object remote tracking.
 
 - [PID Control](./notes/pid.html)  \\
   Overview of Proportional-Integral-Derivative control, tuning methods, use cases.
@@ -88,13 +88,15 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Sliding Mode Control](./nonlinear_notes/sliding_mode.html) \\
   Sliding Mode Control derivation and design.
 
-## Domain Specific Control
+### Domain Specific Control
 
 - [Quadcoptor Control](./domain_specific_control/drone.html)
 
 - [Autonomous Cars](./domain_specific_control/car.html)
 
 - [Manipulator Control](./domain_specific_control/manipulator.html)
+
+---
 
 ## Interview Prep
 

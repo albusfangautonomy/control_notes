@@ -66,7 +66,7 @@ $$ \text{Phasor Magnitude} \propto \frac{\Pi \text{magnitude of zero phasors in 
 <img src="../figures/nyquist_plot_directed.png" alt="Nyquist Plot example" width="300">
 
 ### Plotting Nyquist plot by hand
-Step 1: Substituting $$s=j \omega$$ into the give transfer function.
+Step 1: Substituting $$s=j \omega$$ into the given transfer function.
 
 Step 2: Sweep $$\omega$$ from 0 to $$\infty$$.
 
@@ -94,7 +94,7 @@ A fighter jet open loop system has one slightly positve real pole which makes th
 
 ## Nichols Plot 
 <img src="../figures/nichols_plot.png" alt="Nichols Plot example" width="300">
-Frequency is not explicitly shown just as Nyquist plot
+Frequency is not explicitly shown just as Nyquist plot.
 
 ## Applications
 

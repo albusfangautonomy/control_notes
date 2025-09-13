@@ -234,7 +234,9 @@ We want the critical region where the system needs more gain margin to the right
 
 ### Lag Compensator
 
+Lag compensators can also be designed to increase phase lead at the operating point.
 
+---  
 
 ### Important Notes
 1. While a lead compensator adds phase margin by changing the phase plot, a lag compensator can also add phase in the critical region by **reducing the gain plot** at the critical region, **keeping the $$E_{ss}$$, and not disturbing the phase plot. 

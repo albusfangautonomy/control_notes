@@ -8,9 +8,9 @@ title: Useful Tips
 
 2. Margins are local properties measured at specific crossover points. It is very possible for a higher-order system to have multiple crossover frequencies and therefore multiple Stability Margins. **Conservative Rule** the smallest (worst-case) margin dictates stability.
 
-3. The Nyquist stability criterion $$Z = N + P$$ or $$ N = Z - P$$ dictates if the Nyquist plot of a transfer function can encircle the critical point -1.
+3. The Nyquist stability criterion $$Z = N + P$$ or $$ N = Z - P$$ dictates if the Nyquist plot of a transfer function can encircle the critical point $$-1$$.
     - Classical stability margins (phase and gain margins) don't apply in this case since they would be negative.
-    - Disk Margins can be used in this case. Disk margin is defined in terms of the smallest disk in the complex plane, centered on the critical point –1, that just touches the Nyquist plot of the open-loop transfer function $$L(s)$$.
+    - Disk Margins can be used in this case. Disk margin is defined in terms of the smallest disk in the complex plane, centered on the critical point $$–1$$, that just touches the Nyquist plot of the open-loop transfer function $$L(s)$$.
     - Disk Margin only works on closed loop stable systems, which needs to satisfy the Nyquist Stability Criterion ie $$Z = N + P$$.
 
 4. Disk Margin investigate the closed loop robustness for all complex perturbations. Disk Margin works for **MIMO systems**.
@@ -18,6 +18,22 @@ title: Useful Tips
 
 5. A matrix is Hurwitz if the real part of all of its eigenvalues are negative.
 
+---
+
+# PID Tips
+1. A PID controller is essentailly adding one pole at the origin (increasing system type) and two zeros.
+    - The location of the two zeros are dependent on the gains, and are governed by $$z_1z_2 = \frac{K_i}{K_d}, z_1 + z_2 = \frac{Kp}{Kd}$$.
+    - The zeros can be real, complex conjugate pair, or repeated.
+    - Often, the zeros are placed to cancel or partially cancel plant poles or to shape transient response.
+
+2. There is an **inherent trade-off** between *faster disturbance rejection* and *faster setpoint tracking*, especially when reference has mid-frequency and high-frequency profiles.
+    - $$y = (I+P*K)^{-1} * PKr + (I+PK)^{-1}P_{d}d - (I+PK)^{-1}PKn = T * r + S * P_{d}*d + T * n$$
+    - Since $$S + T = I$$, there is a trade-off between disturbance and reference tracking. 
+        - At mid or high frequencies (near the bandwidth), T needs to be low to reject sensor noise, but S also needs to be low to reject disturbance, which cannot happen at the same time.
+
+    -  Another way of thinking about it: Assuming the control bandwidth is fixed, faster disturbance rejection requires more gain inside the bandwidth, which can only be achieved by increasing the slope near the crossover frequency. Because a larger slope means a smaller phase margin, this typically comes at the expense of more overshoot in the response to setpoint changes.
+
+6. PID deals well with constant or slow-varying disturbances but not non-constant disturbances (e.g. harmonic disturbances.)
 
 ---
 
@@ -100,6 +116,9 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 
 7. **Dominant Poles** are typically those with the **smallest damping** since the impulse response of poles with larger real parts quickly disappears.
 
+8. Partial fraction decomposition breaks down transfer functions with a pole and its residue.
+    - The residue and the pole location collectively determine how much a pole contributes to the time domain response.
+    - Adding a zero only changes the residue (a number), which means it changes the contribution of a pole but not the stability.
 
 
 --- 
@@ -109,17 +128,21 @@ $$|L(s)| = 0 dB, \angle L(s) = -180^\circ, \text{ where } |L(s)| \text{ is the o
 1. Sensitivity plots also have peaks at gain crossover frequencies. These peaks occur where the **Open Loop Transfer Function** $$L(s)$$ is close to -1 in the complex plane. This often happens near the gain crossover frequency and when there is low damping (phase lag close to $$-180^\circ$$).
 
     - Complementary sensitivity plots have bumps at open-loop resonance frequencies.
+    - We need peaks in $$S$$ to be small!
 
 2. Gain Crossover frequency is defined as the frequency 
 $$\omega_{gc}$$ at which $$|L(j\omega)|=1$$
 
 3. Time delay and Non-minimum phase place a **fundamental limit** on how small
 $$ max(|S|)$$ can be! This is a hard rule that needs to be satisfied. One can shift $$\omega_{gc}$$ to the left, which means the system can only track low frequency references and reject lower frequency disturbances. 
+    - This means time delayed and NMP systems have a fundamental lack of robustness.
 
 4. Peaks in Sensitivity Plots are directly correlated with Gain and Phase Margins. The smaller the margins, the bigger the peak.
+    - Peaks in Sensitivity Plots are bad! The peaks in $$S$$ means the system is non-robust, which means if there are slight variations in disturbance or model uncertainty or controller is slightly different or even time delay (rotates the Nyquist Plot ), the system is going close to the $$-1$$ point on the Nyquist plot and become unstable.
 
-5. Design requirements in time domain can be characterized by features in frequency domain. Since $$ T_r \omega_b=2$$, where $$T_r$$ is the rise time and $$\omega_b$$ is the bandwidth, increasing rise time is the same as increasing bandwidth.
-    - 
+5. Design requirements in time domain can be characterized by features in frequency domain. Since $$ T_r \omega_b=2$$, where $$T_r$$ is the rise time and $$\omega_b$$ is the bandwidth, decreasing rise time is the same as increasing bandwidth.
+
+6. higher loop gain (L(s)) → smaller S → better disturbance rejection. The **gain** we refer to when enabling faster disturbance rejection and reference tracking is the open loop ($$L(s)$$) gain.
 
 ## Loop shaping Tips
 

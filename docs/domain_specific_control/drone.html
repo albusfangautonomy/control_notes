@@ -463,7 +463,9 @@ where \(m\) is the mass.</li>
 <ol>
   <li>Classic PID controllers can handle constant, slow-varying disturbances reasonably well
     <ul>
-      <li>Remember Sensitivity Function which rejects disturbances.</li>
+      <li>Recall that Sensitivity Function rejects disturbance and Complementary Sensitivity tracks reference.</li>
+      <li>$y = (I+P*K)^{-1} * PKr + (I+PK)^{-1}P_{d}d - (I+PK)^{-1}PKn$</li>
+      <li>Since \(S + T = I\), there is a trade-off between disturbance and reference tracking.</li>
     </ul>
   </li>
   <li>PID falls short when dealing with non-constant, time varying disturbances.</li>

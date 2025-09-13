@@ -7,10 +7,10 @@ title: General Interview Prep
 Both introduce nonlinear effects that can significantly influence a control system's stability and performance.
 
 ### Actuator Saturation
-1. Loss of Phase Margin: we assume actuator perfectly tracks the commanded signal. Often increaes effective delay and reduce stability margins
+1. Loss of Phase Margin: we assume actuator perfectly tracks the commanded signal. Often increaes effective delay and reduce stability margins.
 2. Integral wind-up. The integral term keeps accumulating even though motors are saturated.
 3. Limit Cycles.
-
+4. Added undesirable fixed points.
 
 How to resolve:
 1. Integrator clamping for anti-windup.

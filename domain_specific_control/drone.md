@@ -373,5 +373,7 @@ In short a disturbance observer tries to estimate non-constant, time-varying dis
 
 ## Motivation
 1. Classic PID controllers can handle constant, slow-varying disturbances reasonably well
-  - Remember Sensitivity Function which rejects disturbances.
+  - Recall that Sensitivity Function rejects disturbance and Complementary Sensitivity tracks reference.
+  - $y = (I+P*K)^{-1} * PKr + (I+PK)^{-1}P_{d}d - (I+PK)^{-1}PKn$
+  - Since $$S + T = I$$, there is a trade-off between disturbance and reference tracking.
 2. PID falls short when dealing with non-constant, time varying disturbances.
