@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Pole Placement | Albus’s Control Notes</title>
+<title>Pole Placement and Optimal Control | Albus’s Control Notes</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Pole Placement" />
+<meta property="og:title" content="Pole Placement and Optimal Control" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Pole Placement" />
+<meta property="twitter:title" content="Pole Placement and Optimal Control" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Pole Placement","url":"https://albusfangautonomy.github.io/control_notes/notes/pole_placement.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Pole Placement and Optimal Control","url":"https://albusfangautonomy.github.io/control_notes/notes/pole_placement.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/control_notes/assets/main.css">
   <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
@@ -79,44 +79,72 @@ u=-Kx,
 <hr />
 
 <h1 id="linear-quadratic-regulator">Linear Quadratic Regulator</h1>
-<h3 id="formulation">Formulation</h3>
+<h2 id="formulation">Formulation</h2>
 <p>Cost function \(J=\int_{0}^{\infty}(x^TQx + u^TRu)dt\), where Q is positive semidefinite and x and u are dependet on t. There are <strong>two</strong> components of the cost:</p>
 <ol>
   <li>first term penalizes difference between desired state and actual state, which accelerates convergence.</li>
   <li>second term penalizes bigger u - for instance, gas may be expensive and the cost cannot be exorbitant.
-The term <strong>linear</strong> refers to \(u=-Kx\), which is a linear controller; <strong>Quadratic</strong> refers to the Cost function; <strong>Regulator</strong> means this stabilizes the system.
-    <h3 id="result">Result</h3>
-    <p>LQR gives u=-Kx specifically the K matrix that yields the best strategy.</p>
-  </li>
+The term <strong>linear</strong> refers to \(u=-Kx\), which is a linear controller; <strong>Quadratic</strong> refers to the Cost function; <strong>Regulator</strong> means this stabilizes the system.</li>
 </ol>
+
+<h2 id="local-stabilization-of-nonlinear-systems-general-result">Local stabilization of nonlinear systems (General Result)</h2>
+<p>Given the nonlinear auitonomous system \(\dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u})\) and a stabilizable operating point, 
+\((\mathbf{x}_0, \mathbf{u}_0)\) 
+with 
+\(f(\mathbf{x}_0,\mathbf{u}_0) = 0.\)</p>
+
+<p>We can define a relative coordinate system 
+\(\bar{\mathbf{x}} = \mathbf{x} - \mathbf{x}_0, \quad \bar{\mathbf{u}} = \mathbf{u} - \mathbf{u}_0.\)</p>
+
+<p>Observe that 
+\(\dot{\bar{\mathbf{x}}} = \dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u})\) 
+which we can approximate with a first-order Taylor series to</p>
+
+\[\dot{\bar{\mathbf{x}}} \approx 
+f(\mathbf{x}_0,\mathbf{u}_0) + 
+\frac{\partial f(\mathbf{x}_0,\mathbf{u}_0)}{\partial \mathbf{x}}(\mathbf{x} - \mathbf{x}_0) + 
+\frac{\partial f(\mathbf{x}_0,\mathbf{u}_0)}{\partial \mathbf{u}}(\mathbf{u} - \mathbf{u}_0) 
+= A \bar{\mathbf{x}} + B \bar{\mathbf{u}}\]
+
+<p>where \(A\) and \(B\) are the Jacobian matrices.</p>
+
+<p>The resulting controller takes the form 
+\(\bar{\mathbf{u}}^* = -K \bar{\mathbf{x}}\)</p>
+
+<p>or</p>
+
+\[\boxed{\mathbf{u}^* = \mathbf{u}_0 - K(\mathbf{x} - \mathbf{x}_0) = \mathbf{u}_0 - K*{\mathbf{e_state}}}\]
+
+<hr />
+
+<h1 id="lqr-example">LQR example</h1>
+<h2 id="cartpole">Cartpole</h2>
+<h3 id="generlized-coordinates">Generlized coordinates</h3>
+<p>\(x\) and \(theta\), both scalars. \(\mathbf{q} = [x, \theta]^T\). \(\dot{\mathbf{q}} = [\dot{x}, \dot{\theta}]^T\)</p>
+
+<p>\(\mathbf{x} = [q, \dot{q}]^T\), \(\mathbf{x_0} = [0, \pi, 0, 0 ]^T\)</p>
 
 <h2 id="linear-quadratic-estimator">Linear Quadratic Estimator</h2>
 <p>The Kalman filter is an example of an LQE. More details are in State Estimation page.</p>
 
-<h3 id="brysons-rule-for-initial-q-and-r">Bryson’s Rule for Initial Q and R</h3>
-
 <hr />
 
-<h2 id="brysons-rule-for-initial--q--and--r--in-lqr">Bryson’s Rule for Initial ( Q ) and ( R ) in LQR</h2>
+<h2 id="brysons-rule-for-initial-q-and-r-in-lqr">Bryson’s Rule for Initial \(Q\) and \(R\) in LQR</h2>
 
-<p>Bryson’s Rule is a practical heuristic for choosing initial values for the weighting matrices ( Q ) and ( R ) in LQR when you don’t yet have a fine-tuned cost function.</p>
+<p>Bryson’s Rule is a practical heuristic for choosing initial values for the weighting matrices \(Q\) and \(R\) in LQR when you don’t yet have a fine-tuned cost function.</p>
 
 <hr />
 
 <h3 id="rule"><strong>Rule</strong></h3>
 <p>The idea is to scale each state and input so that their <strong>maximum acceptable excursion</strong> corresponds to a cost of 1 in the LQR objective:</p>
 
-<p>[
-Q_{ii} = \frac{1}{x_{i,\text{max}}^2}
-]
-[
-R_{jj} = \frac{1}{u_{j,\text{max}}^2}
-]</p>
+<p>\(Q_{ii} = \frac{1}{x_{i,\text{max}}^2}\)
+\(R_{jj} = \frac{1}{u_{j,\text{max}}^2}\)</p>
 
 <p>Where:</p>
 <ul>
-  <li>( x_{i,\text{max}} ) = maximum tolerable value of state ( i ) (in magnitude)</li>
-  <li>( u_{j,\text{max}} ) = maximum tolerable value of control input ( j ) (in magnitude)</li>
+  <li>\(x_{i,\text{max}}\) = maximum tolerable value of state \(i\) (in magnitude)</li>
+  <li>\(u_{j,\text{max}}\) = maximum tolerable value of control input \(j\) (in magnitude)</li>
 </ul>
 
 <hr />
@@ -125,27 +153,27 @@ R_{jj} = \frac{1}{u_{j,\text{max}}^2}
 <ol>
   <li><strong>Decide performance limits</strong>
     <ul>
-      <li>For each state ( x_i ), choose the largest magnitude you’re willing to allow.</li>
-      <li>For each control ( u_j ), choose the largest magnitude you can apply (actuator limit or desired bound).</li>
+      <li>For each state \(x_i\), choose the largest magnitude you’re willing to allow.</li>
+      <li>For each control \(u_j\), choose the largest magnitude you can apply (actuator limit or desired bound).</li>
     </ul>
   </li>
-  <li><strong>Build ( Q )</strong>
+  <li><strong>Build \(Q\)</strong>
     <ul>
-      <li>Place ( Q_{ii} = 1 / x_{i,\max}^2 ) on the diagonal.</li>
-      <li>If you want to weight some states more heavily, increase their ( Q_{ii} ).</li>
+      <li>Place \(Q_{ii} = 1 / x_{i,\max}^2\) on the diagonal.</li>
+      <li>If you want to weight some states more heavily, increase their \(Q_{ii}\).</li>
     </ul>
   </li>
-  <li><strong>Build ( R )</strong>
+  <li><strong>Build \(R\)</strong>
     <ul>
-      <li>Place ( R_{jj} = 1 / u_{j,\max}^2 ) on the diagonal.</li>
-      <li>Increasing ( R_{jj} ) penalizes control usage more.</li>
+      <li>Place \(R_{jj} = 1 / u_{j,\max}^2\) on the diagonal.</li>
+      <li>Increasing \(R_{jj}\) penalizes control usage more.</li>
     </ul>
   </li>
   <li><strong>Run LQR</strong>
     <ul>
-      <li>Solve the algebraic Riccati equation for ( K ).</li>
-      <li>If the closed-loop behavior is too aggressive → increase ( R ).<br />
-If it’s too sluggish → decrease ( R ) or increase ( Q ).</li>
+      <li>Solve the algebraic Riccati equation for \(K\).</li>
+      <li>If the closed-loop behavior is too aggressive → increase \(R\).<br />
+If it’s too sluggish → decrease \(R\) or increase \(Q\).</li>
     </ul>
   </li>
 </ol>
@@ -153,26 +181,23 @@ If it’s too sluggish → decrease ( R ) or increase ( Q ).</li>
 <hr />
 
 <h3 id="example"><strong>Example</strong></h3>
-<p>Say you have a 2-state system: position ( p ) and velocity ( v ), and 1 control ( u ).</p>
+<p>Say you have a 2-state system: position \(p\) and velocity \(v\), and 1 control \(u\).</p>
 <ul>
-  <li>Max tolerable ( p ): 0.2 m</li>
-  <li>Max tolerable ( v ): 0.5 m/s</li>
-  <li>Max control ( u ): 2 N</li>
+  <li>Max tolerable \(p\): 0.2 m</li>
+  <li>Max tolerable \(v\): 0.5 m/s</li>
+  <li>Max control \(u\): 2 N</li>
 </ul>
 
-<p>[
-Q = \begin{bmatrix}
-1/(0.2)^2 &amp; 0 <br />
+\[Q = \begin{bmatrix}
+1/(0.2)^2 &amp; 0 \\
 0 &amp; 1/(0.5)^2
 \end{bmatrix}
 = \begin{bmatrix}
-25 &amp; 0 <br />
+25 &amp; 0 \\
 0 &amp; 4
-\end{bmatrix}
-]
-[
-R = [ 1/(2)^2 ] = [ 0.25 ]
-]</p>
+\end{bmatrix}\]
+
+\[R = [ 1/(2)^2 ] = [ 0.25 ]\]
 
       </div>
     </main><footer class="site-footer h-card">
