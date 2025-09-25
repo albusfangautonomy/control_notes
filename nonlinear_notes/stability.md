@@ -97,3 +97,8 @@ If the only invariant set in $$\mathcal{S}$$ is $$\{0\}$$, then the origin is **
 - $$V(0)=0$$, $$V(x)>0$$ for $$x\neq 0$$ (positive definite); preferably radially unbounded.
 - Compute $$\dot V=\mathcal{L}_f V=\nabla V^\top f$$.
 - Aim for $$\dot V\le 0$$ (stability), $$\dot V<0$$ or LaSalle conditions (asymptotic), or $$\dot V\le -cV$$ (exponential).
+
+---
+
+# Poincare Maps
+

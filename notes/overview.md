@@ -3,6 +3,54 @@ layout: default
 title: Open loop vs closed loop control
 ---
 
+# Autonomous vs. Non-Autonomous Systems
+
+## Autonomous system:  
+  $$
+  \dot{x} = f(x)
+  $$  
+  Dynamics depend only on the state $$x$$.  
+
+  **Example**:  
+  $$
+  \dot{x} = -2x
+  $$  
+  Exponential decay, no explicit time dependence.
+
+## Non-autonomous system:  
+  $$
+  \dot{x} = f(x, t)
+  $$  
+  Dynamics explicitly depend on time $$t$$.  
+
+  **Example**:  
+  $$
+  \dot{x} = -2x + \sin(t)
+  $$  
+  State evolution depends on both $$x$$ and $$t$$.
+
+### Augmenting
+
+- To handle non-autonomous systems, augment the state with time:  
+  $$
+  \dot{x} = f(x, t), \quad \dot{t} = 1
+  $$  
+  New state vector:  
+  $$
+  z = \begin{bmatrix} x \\ t \end{bmatrix}, \quad \dot{z} = \begin{bmatrix} f(x, t) \\ 1 \end{bmatrix}
+  $$
+
+---
+
+### Why Augment?
+
+- Converts a **non-autonomous system into an autonomous system**.  
+- Autonomous form is easier for:
+  - Stability analysis (Lyapunov, equilibrium points).  
+  - Using standard control and simulation tools that assume autonomy.  
+
+---
+
 # Categorizing controllers
 
 ## Classical (Transfer Function-Based) Controllers

@@ -14,7 +14,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Useful Tips](./notes/tips.html) \\
   Important Intuitions for designing control systems.
 
-- [Overview](./notes/overview.html)\\
+- [Overview](./notes/overview.html) \\
   A comparison between Open Loop control and Closed Loop control, and categorizing controllers.
 
 - [Design Workflow](./notes/workflow.html) \\
@@ -23,8 +23,11 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Plot Reviews](./notes/important_plots.html)\\
   Review Nichols Chart, Nyquist Plot, Bode Plot, and Root Locus Plot.
 
+- [Euler Lagrange](./notes/euler_lagrange.html) \\
+  Deriving Equations of Motion using First principles
+
 - [Performance Specifications](./notes/performance_specs.html)  \\
-  Rise time, settling time, overshoot, **Steady-State Error** (error constants, system type, examples).
+  Rise time, settling time, overshoot, Steady-State Error (error constants, system type, examples).
 
 - [System ID](./notes/system_id.html) \\
   Linear, Nonlinear, Online and recursive system identification.
@@ -71,7 +74,7 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [SVD](./notes/svd.html) \\
   A basic review of SVD.
 
-- [Control Theory Techniques](../notes/techniques.html) \\
+- [Mathematical Control Theory Techniques](../notes/techniques.html) \\
   Commonly used techniques in controller desing. Pade Approximation, SVD.
 
 - [Data Driven Control](./notes/data_driven_control.html) \\
@@ -98,16 +101,20 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 ---
 
+## Reinforcement Learning
+- [Dynamic Programming](./rl_notes/dp.html)
+
+---
+
 ## Interview Prep
 
 - [Kodiak Autonomous Trucking](./interview_prep/kodiak.html)
 
 - [Drone Control](./interview_prep/drone_control.html)
 
-## Data Driven Control
-- [Reinforcement Learning]()
 
-## Optimal Control
+
+
 
 
 ## 🛠️ Tools and Techniques

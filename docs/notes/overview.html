@@ -50,7 +50,50 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <h1 id="categorizing-controllers">Categorizing controllers</h1>
+        <h1 id="autonomous-vs-non-autonomous-systems">Autonomous vs. Non-Autonomous Systems</h1>
+
+<h2 id="autonomous-system">Autonomous system:</h2>
+<p>\(\dot{x} = f(x)\)<br />
+  Dynamics depend only on the state \(x\).</p>
+
+<p><strong>Example</strong>:<br />
+  \(\dot{x} = -2x\)<br />
+  Exponential decay, no explicit time dependence.</p>
+
+<h2 id="non-autonomous-system">Non-autonomous system:</h2>
+<p>\(\dot{x} = f(x, t)\)<br />
+  Dynamics explicitly depend on time \(t\).</p>
+
+<p><strong>Example</strong>:<br />
+  \(\dot{x} = -2x + \sin(t)\)<br />
+  State evolution depends on both \(x\) and \(t\).</p>
+
+<h3 id="augmenting">Augmenting</h3>
+
+<ul>
+  <li>To handle non-autonomous systems, augment the state with time:<br />
+\(\dot{x} = f(x, t), \quad \dot{t} = 1\)<br />
+New state vector:<br />
+\(z = \begin{bmatrix} x \\ t \end{bmatrix}, \quad \dot{z} = \begin{bmatrix} f(x, t) \\ 1 \end{bmatrix}\)</li>
+</ul>
+
+<hr />
+
+<h3 id="why-augment">Why Augment?</h3>
+
+<ul>
+  <li>Converts a <strong>non-autonomous system into an autonomous system</strong>.</li>
+  <li>Autonomous form is easier for:
+    <ul>
+      <li>Stability analysis (Lyapunov, equilibrium points).</li>
+      <li>Using standard control and simulation tools that assume autonomy.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="categorizing-controllers">Categorizing controllers</h1>
 
 <h2 id="classical-transfer-function-based-controllers">Classical (Transfer Function-Based) Controllers</h2>
 <ol>

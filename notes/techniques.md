@@ -57,7 +57,7 @@ After some term re-arragnement, the cost function $$J(x,u)$$ for LQR can be writ
 **Notes:**
 
 1. $$P$$ is solved to make the first part of the integral operand 0 (minimizes cost).
-2. Plug in $$P$$ to compute $$K = R^{-1}B^TP$$, which, when plugged into $$ u = - K x,  makes the second term of integral operand 0, where $$ R $$ is the cost matrix for control effort and $$B$$ is the control input Matrix.
+2. Plug in $$P$$ to compute $$K = R^{-1}B^TP$$, which, when plugged into $$ u = - K x $$,  makes the second term of integral operand 0, where $$ R $$ is the cost matrix for control effort and $$B$$ is the control input Matrix.
 
 ## Quadratic Cost
 
@@ -78,6 +78,88 @@ A^\top P + P A - P B R^{-1} B^\top P + Q = 0
 $$
 
 ---
+
+# Runge-Kutta Numerical Integration
+
+## Motivation
+Given a vector field $$\dot{x}=f(x,t)$$, how to numerically integrate to get future values.
+### Forward Euler (first order Runga Kutta)
+$$x_{k+1} = x_{k} + \Delta t * f(x_k, t_k) = x_k + \Delta t * f_1$$
+Euler Integration is inaccurate.
+
+## Runge–Kutta 2nd Order (RK2)
+
+Given the ODE:  
+$$
+\frac{dy}{dt} = f(t, y), \quad y(t_0) = y_0
+$$
+
+Step size: $$h$$
+
+Algorithm:
+
+1. Compute:
+
+   $$
+   k_1 = f(t_n, y_n)
+   $$
+
+   $$
+   k_2 = f\!\Big(t_n + h, \; y_n + h k_1\Big)
+   $$
+
+2. Update:
+   $$
+   y_{n+1} = y_n + \frac{h}{2}\big(k_1 + k_2\big)
+   $$
+
+**OR** in one step:
+
+$$
+x_{k+1} = x_k + \Delta t f(x_k + \frac{\Delta t}{2} f(x_k, t_k), t_k + \frac{\Delta t}{2}))
+$$
+
+**Optimality**
+
+RK2 means the method is globally optimal in $$\sigma (2)$$, while being locally optimal in $$\sigma (3)$$.
+
+### Intuition behind RK (2)
+1. A half step along the vector field at $$f_1(x_k,t)$$
+
+---
+
+## Runge–Kutta 4th Order (RK4)
+
+Given the ODE:  
+$$
+\frac{dy}{dt} = f(t, y), \quad y(t_0) = y_0
+$$
+
+Step size: $$h$$
+
+Algorithm:
+
+1. Compute:
+   $$
+   k_1 = f(t_n, y_n)
+   $$
+   $$
+   k_2 = f\!\Big(t_n + \tfrac{h}{2}, \; y_n + \tfrac{h}{2} k_1\Big)
+   $$
+   $$
+   k_3 = f\!\Big(t_n + \tfrac{h}{2}, \; y_n + \tfrac{h}{2} k_2\Big)
+   $$
+   $$
+   k_4 = f(t_n + h, \; y_n + h k_3)
+   $$
+
+2. Update:
+   $$
+   y_{n+1} = y_n + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big)
+   $$
+
+
+___
 
 # Phase Portraits
 

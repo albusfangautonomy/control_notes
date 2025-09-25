@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Euler-Lagrange Equations | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Euler-Lagrange Equations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="https://albusfangautonomy.github.io/control_notes/notes/euler_lagrange.html" />
+<meta property="og:url" content="https://albusfangautonomy.github.io/control_notes/notes/euler_lagrange.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Euler-Lagrange Equations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Euler-Lagrange Equations","url":"https://albusfangautonomy.github.io/control_notes/notes/euler_lagrange.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/control_notes/assets/main.css">
+  <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/control_notes/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/control_notes/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Euler-Lagrange Equations</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="partial-derivative-review">Partial Derivative Review</h2>
+
+<p><strong>Example 1</strong><br />
+Let<br />
+$
+F(x, y, y’) = 2x + xyy’ + (y’)^2 + y
+$</p>
+
+<p>Then:</p>
+
+\[\frac{\partial F}{\partial y'} = xy + 2y'\]
+
+\[\frac{d}{dx} \left( \frac{\partial F}{\partial y'} \right) = y + xy' + 2y''\]
+
+\[\frac{\partial F}{\partial y} = xy' + 1\]
+
+\[\frac{\partial F}{\partial x} = 2 + yy'\]
+
+\[\frac{dF}{dx} = 2 + yy' + x(y')^2 + xy y'' + 2y'y'' + y'\]
+
+<p>and the Euler–Lagrange equation is:</p>
+
+\[y + xy' + 2y'' \;=\; xy' + 1 \quad\]
+
+<p><strong>Warning 1</strong></p>
+
+<p>You might be wondering what
+\(\frac{\partial F}{\partial y'}\)
+is supposed to mean: how can we differentiate with respect to a derivative?</p>
+
+<p>Think of it like this: <strong>F</strong> is given to you as a function of three variables, say \(F(u, v, w)\), and when we evaluate the functional \(I\), we plug in \(x, y(x), y'(x)\) for \(u, v, w\) and then integrate. The derivative 
+\(\frac{\partial F}{\partial y'}\)
+is just the partial derivative of \(F\) with respect to its third variable \(w\). In other words, to find<br />
+\(\frac{\partial F}{\partial y'}\)
+just pretend \(y'\) is a variable.</p>
+
+<p>Equally, there’s an important difference between
+\(\frac{dF}{dx}
+\quad \text{and} \quad
+\frac{\partial F}{\partial x}.\)</p>
+
+<p>The former is the derivative of \(F\) with respect to \(x\), <strong>taking into account</strong> the fact that \(y = y(x)\) and \(y' = y'(x)\) are functions of \(x\) too.</p>
+
+<p>The latter is the partial derivative of \(F\) with respect to its first variable, so it’s found by differentiating \(F\) with respect to \(x\) and pretending that \(y\) and \(y'\) are just variables and do not depend on \(x\). Hopefully the example makes this clear.</p>
+
+<h1 id="euler-lagrange-theorems">Euler-Lagrange Theorems</h1>
+
+<h2 id="theorem-1">Theorem 1</h2>
+<p>Let \(C^k[a, b]\) denote the set of continuous functions defined on the interval<br />
+\(a \leq x \leq b\) which have their first \(k\)-derivatives also continuous on \(a \leq x \leq b\).</p>
+
+<p>If \(I(y)\) is an extremum of the functional</p>
+
+\[I(y) = \int_a^b F(x, y, y') \, dx\]
+
+<p>defined on all functions \(y \in C^2[a, b]\) such that \(y(a) = A\), \(y(b) = B\),<br />
+then \(Y(x)\) satisfies the second-order ordinary differential equation</p>
+
+\[\frac{d}{dx} \left( \frac{\partial F}{\partial y'} \right) - \frac{\partial F}{\partial y} = 0. \tag{1}\]
+
+<h2 id="definitions">Definitions</h2>
+<p>Equation (1) is the <strong>Euler–Lagrange equation</strong>, or sometimes just <strong>Euler’s equation</strong>.</p>
+
+<p>A solution of the Euler-Lagrange equation is called an extremal of the functional.2</p>
+
+<hr />
+
+<h2 id="explanation">Explanation</h2>
+<h3 id="1-what-exactly-is-iy">1. What exactly is \(I(y)\)?</h3>
+<p>\(I(y)\) is a <strong>functional</strong>.</p>
+<ul>
+  <li>A <strong>function</strong> takes numbers → numbers (e.g., \(f(x)=x^2\)).</li>
+  <li>A <strong>functional</strong> takes a <em>whole function</em> → a number.</li>
+</ul>
+
+<p>Here:</p>
+
+\[I(y) = \int_a^b F(x, y(x), y'(x)) \, dx\]
+
+<ul>
+  <li>You give it a <em>candidate function</em> \(y(x)\).</li>
+  <li>It spits out a scalar (the value of the integral).</li>
+  <li>You then ask: which function \(y(x)\) makes \(I(y)\) extremal (minimized or maximized)?</li>
+</ul>
+
+<p>This is the variational problem.</p>
+
+<hr />
+
+<h3 id="2-why-is-this-important-physics--first-principles">2. Why is this important? (Physics / First Principles)</h3>
+<p>In <strong>modeling physical systems</strong>, nature often picks the trajectory \(y(x)\) that extremizes such a functional.</p>
+
+<ul>
+  <li>
+    <p><strong>Classical mechanics (Lagrangian mechanics):</strong><br />
+The functional is the <strong>action integral</strong>:<br />
+\(I[q] = \int_{t_0}^{t_1} L(q(t), \dot{q}(t), t) \, dt\)
+where \(q\) is the generalized coordinate, and \(L = T - V\) (kinetic – potential energy).<br />
+The extremum of this functional gives the <strong>Euler–Lagrange equations</strong>, i.e. Newton’s laws in disguised form.</p>
+  </li>
+  <li>
+    <p><strong>Optimal control:</strong><br />
+You choose \(F\) to encode cost (fuel usage, error, energy, etc.), then extremizing \(I(y)\) gives the optimal trajectory.</p>
+  </li>
+  <li>
+    <p><strong>Other examples:</strong></p>
+    <ul>
+      <li>Minimal surfaces (soap films): minimize area functional.</li>
+      <li>Geodesics: shortest path between two points minimizes length functional.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="3-the-link-to-first-principles-modeling">3. The link to <strong>first principles modeling</strong></h3>
+<p>First principles = start with physics laws (energy, Newton’s 2nd law, conservation, etc.), not black-box data.</p>
+
+<ul>
+  <li>The <strong>choice of \(F(x,y,y')\)</strong> comes from those first principles.
+    <ul>
+      <li>In mechanics, \(F\) is the Lagrangian.</li>
+      <li>In thermodynamics, \(F\) might encode entropy/energy.</li>
+      <li>In control, \(F\) encodes cost or performance.</li>
+    </ul>
+  </li>
+  <li>The fact that the true system trajectory satisfies the Euler–Lagrange equation is exactly what lets us <em>derive governing ODEs from physical principles</em>.</li>
+</ul>
+
+<p>So \(I(y)\) is the mathematical wrapper, and “minimizing/extremizing it” is how first principles get translated into <strong>differential equations describing system dynamics</strong>.</p>
+
+<hr />
+
+<h3 id="in-short">In short</h3>
+<ul>
+  <li>\(I(y)\) = a functional (integral of \(F\)) → extremized to find best/true trajectory.</li>
+  <li>First principles tell you the right \(F\).</li>
+  <li>Solving Euler–Lagrange from \(I(y)\) recovers the governing system equations.</li>
+</ul>
+
+<hr />
+
+<h2 id="eulerlagrange-equation-for-manipulators">Euler–Lagrange Equation for Manipulators</h2>
+
+<p>For a manipulator with generalized coordinates 
+\(q = [q_1, q_2, \dots, q_n]^T,\)
+and Lagrangian 
+\(L(q,\dot q) = T(q,\dot q) - V(q),\)
+the Euler–Lagrange equation is applied <strong>separately to each generalized coordinate \(q_i\):</strong></p>
+
+\[\frac{d}{dt}\!\left(\frac{\partial L}{\partial \dot q_i}\right) - \frac{\partial L}{\partial q_i} = \tau_i + Q^{\text{nc}}_i,
+\qquad i = 1,2,\dots,n.\]
+
+<ul>
+  <li>\(\tau_i\): input torque/force applied at joint \(i\)</li>
+  <li>\(Q^{\text{nc}}_i\): non-conservative forces (e.g., friction) acting on coordinate \(i\)</li>
+</ul>
+
+<h2 id="breaking-down-each-term">Breaking Down Each Term</h2>
+
+<ul>
+  <li>\(\frac{\partial L}{\partial \dot{q}_i}\): generalized momentum (linear/angular).</li>
+  <li>\(\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right)\): time derivative of momentum.</li>
+  <li>\(\frac{\partial L}{\partial q_i}\): generalized force from potential energy/geometry.</li>
+  <li>\(Q_i\): external generalized force (friction, actuation, etc.).</li>
+</ul>
+
+<h3 id="useful-formulae">Useful Formulae</h3>
+<ol>
+  <li>Mass Matrix
+\(M_{ij}(q) = \frac{\partial^2 L}{\partial \dot{q}_i \, \partial \dot{q}_j}\)</li>
+</ol>
+
+<p>In python casadi,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M(q) = H = ca.jacobian(dLdqdot, dq)   # 2x2
+</code></pre></div></div>
+<p>where H is the <strong>Hessian of the kinetic energy</strong> wrt velocities.</p>
+
+<ol>
+  <li>
+    <p>Coriolis/Centrifugal (Christoffel form)
+\(C_{ijk}(q) = \tfrac{1}{2}\left(
+\frac{\partial M_{ij}}{\partial q_k} +
+\frac{\partial M_{ik}}{\partial q_j} -
+\frac{\partial M_{jk}}{\partial q_i}
+\right)\)
+and then
+\((C(q,\dot{q})\dot{q})_i = \sum_{j,k} C_{ijk}(q) \, \dot{q}_j \, \dot{q}_k\)</p>
+  </li>
+  <li>
+    <p>Gravity Vector
+\(G_i(q) = \frac{\partial V(q)}{\partial q_i}\)</p>
+  </li>
+</ol>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/control_notes/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

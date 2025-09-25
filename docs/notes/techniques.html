@@ -119,7 +119,7 @@
 
 <ol>
   <li>\(P\) is solved to make the first part of the integral operand 0 (minimizes cost).</li>
-  <li>Plug in \(P\) to compute \(K = R^{-1}B^TP\), which, when plugged into \(u = - K x,  makes the second term of integral operand 0, where\) R \(is the cost matrix for control effort and\)B$$ is the control input Matrix.</li>
+  <li>Plug in \(P\) to compute \(K = R^{-1}B^TP\), which, when plugged into \(u = - K x\),  makes the second term of integral operand 0, where \(R\) is the cost matrix for control effort and \(B\) is the control input Matrix.</li>
 </ol>
 
 <h2 id="quadratic-cost">Quadratic Cost</h2>
@@ -135,6 +135,77 @@
 <p>Let \(P = P^T\), \(P\) is the Estimate Error Covariance, and represents how uncertain the filter currently is about the estimated state.</p>
 
 \[A^\top P + P A - P B R^{-1} B^\top P + Q = 0\]
+
+<hr />
+
+<h1 id="runge-kutta-numerical-integration">Runge-Kutta Numerical Integration</h1>
+
+<h2 id="motivation-1">Motivation</h2>
+<p>Given a vector field \(\dot{x}=f(x,t)\), how to numerically integrate to get future values.</p>
+<h3 id="forward-euler-first-order-runga-kutta">Forward Euler (first order Runga Kutta)</h3>
+<p>\(x_{k+1} = x_{k} + \Delta t * f(x_k, t_k) = x_k + \Delta t * f_1\)
+Euler Integration is inaccurate.</p>
+
+<h2 id="rungekutta-2nd-order-rk2">Runge–Kutta 2nd Order (RK2)</h2>
+
+<p>Given the ODE:<br />
+\(\frac{dy}{dt} = f(t, y), \quad y(t_0) = y_0\)</p>
+
+<p>Step size: \(h\)</p>
+
+<p>Algorithm:</p>
+
+<ol>
+  <li>
+    <p>Compute:</p>
+
+\[k_1 = f(t_n, y_n)\]
+
+\[k_2 = f\!\Big(t_n + h, \; y_n + h k_1\Big)\]
+  </li>
+  <li>
+    <p>Update:
+\(y_{n+1} = y_n + \frac{h}{2}\big(k_1 + k_2\big)\)</p>
+  </li>
+</ol>
+
+<p><strong>OR</strong> in one step:</p>
+
+\[x_{k+1} = x_k + \Delta t f(x_k + \frac{\Delta t}{2} f(x_k, t_k), t_k + \frac{\Delta t}{2}))\]
+
+<p><strong>Optimality</strong></p>
+
+<p>RK2 means the method is globally optimal in \(\sigma (2)\), while being locally optimal in \(\sigma (3)\).</p>
+
+<h3 id="intuition-behind-rk-2">Intuition behind RK (2)</h3>
+<ol>
+  <li>A half step along the vector field at \(f_1(x_k,t)\)</li>
+</ol>
+
+<hr />
+
+<h2 id="rungekutta-4th-order-rk4">Runge–Kutta 4th Order (RK4)</h2>
+
+<p>Given the ODE:<br />
+\(\frac{dy}{dt} = f(t, y), \quad y(t_0) = y_0\)</p>
+
+<p>Step size: \(h\)</p>
+
+<p>Algorithm:</p>
+
+<ol>
+  <li>
+    <p>Compute:
+\(k_1 = f(t_n, y_n)\)
+\(k_2 = f\!\Big(t_n + \tfrac{h}{2}, \; y_n + \tfrac{h}{2} k_1\Big)\)
+\(k_3 = f\!\Big(t_n + \tfrac{h}{2}, \; y_n + \tfrac{h}{2} k_2\Big)\)
+\(k_4 = f(t_n + h, \; y_n + h k_3)\)</p>
+  </li>
+  <li>
+    <p>Update:
+\(y_{n+1} = y_n + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big)\)</p>
+  </li>
+</ol>
 
 <hr />
 

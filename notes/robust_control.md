@@ -309,6 +309,10 @@ Example: 1. Aircraft gaining altitude. 2. parallel park.
 ---
 
 ## Gang of Four (No Feedforward F = 1) and Gang of Six (Feedforward)
+[Caltech Gang of Four and Gang of Six Note 1](https://www.cds.caltech.edu/~murray/books/AM08/pdf/am06-loopsyn_16Sep06.pdf)
+
+[Caltech Gang of Four and Gang of Six Note 2](https://www.cds.caltech.edu/~murray/books/AM05/pdf/am08-analysis_04Mar10.pdf)
+
 ![Block Diagram for Feedback and Feedforward control system](../figures/feedback_system_diagram.png)
 
 ### Setup
