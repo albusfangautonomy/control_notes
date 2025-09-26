@@ -101,4 +101,4 @@ If the only invariant set in $$\mathcal{S}$$ is $$\{0\}$$, then the origin is **
 ---
 
 # Poincare Maps
-
+[Poincare Resource](https://ocw.mit.edu/courses/12-006j-nonlinear-dynamics-chaos-fall-2022/mit12_006jf22_lec15-16.pdf)

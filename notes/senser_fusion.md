@@ -6,7 +6,7 @@ title: Stability Analysis
 # Sensor Fusion
 
 ## Definition
-Sensor fusion is a technique that combines two or more data sources in a way taht geneartes a more consistent, accurate, and dependable understanding of the system.
+Sensor fusion is a technique that combines two or more data sources in a way that generates a more consistent, accurate, and dependable understanding of the system.
 
 ## Advantages and Use Cases
 1. It can increase the quality of the data by fusing either two sensors of either the same type or different types together.
@@ -254,8 +254,33 @@ sensor level tracking:
 
 # Appendix
 
-## IMM walkthrough
+## IMM Detailed walkthrough
 
+### IMM Diagram
+![IMM Diagram](../figures/imm_diagram_2.png)
+
+1. State Interaction refers to the first step in the following math, specifically 
+
+    $$\bar{x}_{k-1\|k-1}^{(i)} = \sum_{j} \hat{x}_{k-1\|k-1}^{(j)} ,\mu_{k-1}^{j\|i} $$
+
+    $$
+      \bar{P}_{k-1\|k-1}^{(i)} =
+      \sum_{j}\Big(
+        P_{k-1\|k-1}^{(j)}
+        + (\bar{x}_{k-1\|k-1}^{(i)}-\hat{x}_{k-1\|k-1}^{(j)})
+          (\bar{x}_{k-1\|k-1}^{(i)}-\hat{x}_{k-1\|k-1}^{(j)})^\top
+      \Big)\,\mu_{k-1}^{j\|i}
+    $$
+
+2. $$\Lambda^{(i)}$$ is the liklehood of each model, same as likelihood $$L^{(i)}_k$$ in the following math.
+  - The likelihood for each filter model is computed uring hte state update from the innovations ($$\mathbf{Z}^i$$) and innovations covariance matrix ($$\mathbf{S}$$)
+  - $$\Lambda^i = \frac{1}{\sqrt{2 \pi \tilde{S}^j}} exp(-0.5 * ((\mathbf{Z}^j)^T)(\tilde{\mathbf{S}}^j)^{-1}(\mathbf{Z}^j))$$, same as following math.
+    - where $$\mathbf{m}_0$$ is a vector of observations for the current update and $$\mathbf{m}^j$$ is the predicted track state for filter model j **transformed into the frame of the observations**.
+  - $$\tilde{\mathbf{S}}^j = \mathbf{H}^j\tilde{\mathbf{P}}^{0j}(\mathbf{H}^j)^T + \mathbf{R}$$
+3. $$\mathbf{\hat{X}^1}$$ and $$\mathbf{\hat{X}^2}$$ are fed back to the first step, ie State Interaction.
+4. Likelihood $$Lambda^{(i)}$$ is different from $$\mu^{(i)}$$.
+  - Likelihood measures the probability of observing hte measurement $$z_k$$ assuming model $$j$$ is correct.
+  -  $$\mu^{(i)}$$ is the posterior belief of a model. The model probability represents the overall, cumulative probability that a specific model is the correct one for describing the target's behavior, based on all measurements up to the current time. Simply put,given all models and their likelihoods, how much should I trust each one now.
 <section id="imm-one-cycle">
   <h3>Interacting Multiple Model (IMM): One Cycle</h3>
   <ol>
