@@ -149,4 +149,4 @@ R = [ 1/(2)^2 ] = [ 0.25 ]
 $$
 
 ## Finite Horizon LQR
-1. 
+The optimial HJB equation depends on time, which means the terminal cost needs to be taken into account (similar to receding horizon MPC).

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Reinforcement Learning Overview | Albus’s Control Notes</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Reinforcement Learning Overview" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="https://albusfangautonomy.github.io/control_notes/rl_notes/rl.html" />
+<meta property="og:url" content="https://albusfangautonomy.github.io/control_notes/rl_notes/rl.html" />
+<meta property="og:site_name" content="Albus’s Control Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Reinforcement Learning Overview" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Reinforcement Learning Overview","url":"https://albusfangautonomy.github.io/control_notes/rl_notes/rl.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/control_notes/assets/main.css">
+  <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/control_notes/">Albus&#39;s Control Notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          <a class="page-link" href="/control_notes/">Home</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Reinforcement Learning Overview</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="rewards">Rewards</h2>
+<p>A reward \(R_t\) is a scalar feedback signal and indicates how well agent is doing at step \(t\). The agent’s goal is to maximize cumulative reward.</p>
+
+<h3 id="sequential-decision-making">Sequential Decision Making</h3>
+<p>Note:</p>
+<ol>
+  <li>The goal is to <strong>select actions to maximize total future reward</strong>.</li>
+  <li>Reward may be delayed.</li>
+  <li>It may be more advantageous to sacrifice immediate reward to gain more long term reward</li>
+</ol>
+
+<h2 id="agent-and-environment">Agent and Environment</h2>
+<p>At time \(t\)</p>
+
+<p>Inputs:</p>
+
+<ol>
+  <li>Observation \(O_t\).</li>
+  <li>Reward \(R_t\).</li>
+</ol>
+
+<p>Outputs:</p>
+
+<ol>
+  <li>Action \(A_t\).</li>
+</ol>
+
+<h3 id="environment-state">Environment State</h3>
+<p>The environment state \(S_t^e\) is the environments private representation
+    - ie. whatever data the environment uses to pick the next observation/reward.
+    - The environment state is not usually visible to the agent.
+    - Even if \(S_t^e\)  is visible, it may contain irrelevant info.</p>
+
+<h3 id="agent-state">Agent State</h3>
+<p>The agent state \(S_t^a\) is the agent’s internal representation
+    - ie. whatever info the agent uses to pick the next action
+    - It is the info used by reinforcement learning algorithms
+    - It can be any function of history: \(S_t^a = f(H_t)\)</p>
+
+<h2 id="information-state-markov-state">Information State (Markov State)</h2>
+<p>A state \(S_t\) is Markov if and only if</p>
+
+\[\mathbb{P} [S_{t+1} | S_t] = \mathbb{P} [S_{t+1} | S_1, ..., S_t]\]
+
+<p>In plain English, the probability of the next state only depends on the current state. Once the state is known the history may be thrown away.
+<strong>A Markov state encodes enough information to characterize all future reward.</strong></p>
+
+<p>The environment state \(S_t^{e}\).</p>
+
+<h2 id="fully-observable-environments-mdp">Fully Observable Environments (MDP)</h2>
+
+<p>Full observability: agent directly observes environment state: \(O_t = S_t^a = S_t^e\).</p>
+
+<ol>
+  <li>Agent state = Environment state = Information State.</li>
+  <li>This is a Markov decision process (MDP).</li>
+</ol>
+
+<h2 id="partially-observable-environments-pomdp">Partially Observable Environments (POMDP)</h2>
+<p>Partial Observability: Agent indirectly observes environment</p>
+
+<p>In this case \(S_t^a \neq S_t^e\)</p>
+
+<h2 id="major-compoents-of-an-rl-agent">Major Compoents of an RL Agent</h2>
+<ol>
+  <li>Policy: agent’s behavior</li>
+  <li>Value function: reward \(R_t\)</li>
+  <li>Model: agent’s representation of the environment</li>
+</ol>
+
+<h3 id="policy">Policy:</h3>
+<p>Policy is a map from state to action.</p>
+
+<ol>
+  <li>Deterministic Policy
+    <ul>
+      <li>
+\[a = \pi(s)\]
+      </li>
+    </ul>
+  </li>
+  <li>Stochastic Policy
+    <ul>
+      <li>
+\[\pi(a|s) = \mathbb{P}[A=a|S=s]\]
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="value-function">Value Function</h2>
+<p>Value predicts future reward. How much total reward we expect to get <em>in the future</em>.</p>
+
+\[v_\pi(s) = \mathbb{E}_\pi[R_t + \gamma R_{t+1} + \gamma^2 R_{t+2} + ... | S_t = S]\]
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/control_notes/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Albus&#39;s Control Notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Albus&#39;s Control Notes</li><li><a class="u-email" href="mailto:albus.fang.autonomy@gmail.com">albus.fang.autonomy@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/control_notes/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Walking | Albus’s Control Notes</title>
+<title>Walking and Running | Albus’s Control Notes</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Walking" />
+<meta property="og:title" content="Walking and Running" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Albus’s Control Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Walking" />
+<meta property="twitter:title" content="Walking and Running" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Walking","url":"https://albusfangautonomy.github.io/control_notes/domain_specific_control/walking.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Walking and Running","url":"https://albusfangautonomy.github.io/control_notes/domain_specific_control/walking.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/control_notes/assets/main.css">
   <link rel="stylesheet" href="/control_notes/assets/css/custom.css"><link type="application/atom+xml" rel="alternate" href="https://albusfangautonomy.github.io/control_notes/feed.xml" title="Albus&apos;s Control Notes" /><script>
@@ -53,14 +53,15 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Walking</h1>
+    <h1 class="post-title">Walking and Running</h1>
   </header>
 
   <div class="post-content">
-    <h1 id="limit-cycles">Limit Cycles</h1>
+    <h1 id="walking-models">Walking models</h1>
+<h2 id="limit-cycles">Limit Cycles</h2>
 <p>Rather than fixed point stabilization in linear systems control. Walking primarily deals with the limit cycle stability. One of the most famous limit cycle is the <em>Van der Pol oscillator</em>. Limit Cycle stability is determined by using <strong>Poincare maps</strong>, which turns the limit cycle stability problem into a fix point stability problem.</p>
 
-<h1 id="contact-models">Contact Models</h1>
+<h2 id="contact-models-for-walking">Contact Models for walking</h2>
 <ol>
   <li>Models the ground as a stiff spring, when foot makes contact.
     <ul>
@@ -74,8 +75,126 @@
   </li>
 </ol>
 
-<h1 id="rimless-wheel">Rimless wheel</h1>
-<p>Gravity adds energy</p>
+<h2 id="rimless-wheel-model">Rimless wheel Model</h2>
+<p>Gravity adds energy while collision makes system lose energy.</p>
+
+<h2 id="kneed-walker-model">Kneed Walker Model</h2>
+
+<h2 id="compass-gait-model">Compass Gait Model</h2>
+
+<hr />
+
+<h1 id="running-models">Running models</h1>
+<h2 id="spring-loaded-inverted-pendulum-slip-model">Spring Loaded Inverted Pendulum (SLIP) Model</h2>
+<p><img src="../figures/slip.png" alt="slip model" /></p>
+
+<h3 id="parameters">Parameters</h3>
+<ol>
+  <li>2D coordinate system \((x,z)\) \(x\) points to the right, \(z\) points up.</li>
+  <li>\(l_0\) = length of the spring to center of ball</li>
+  <li>\(\theta\) = angle with up, clockwise.</li>
+</ol>
+
+<h2 id="slip-modeling-and-control">SLIP Modeling and Control</h2>
+
+<h3 id="modeling-the-flight-phase">Modeling the flight phase</h3>
+<p>The full state is modeled as \(\mathbf{x} = [x, z, \dot{x}, \dot{z}]^T\).</p>
+
+<p>The <strong>dynamics</strong> is
+\(\dot{\mathbf{x}} = [\dot{x}, \dot{z}, 0, -g]^T\)</p>
+
+<p>The control input is \(u = \theta\), since we assume that the leg can be controlled to any  position instantaneously.</p>
+
+<h3 id="modeling-the-stance-phase">Modeling the stance phase</h3>
+<p>The full state of the stance phase is modeled in polar coordinates as \(\mathbf{x}= [r, \theta, \dot{r}, \dot{\theta}]^T\), where
+    - \(r\) is leg length (distance from foot to CoM)
+    - \(\theta\) : leg angle from vertical.
+    - \(\dot{r}\): radial velocity</p>
+
+<p>The location of the mass is given by \(\mathbf{x}_m = [-rsin(\theta), r cos(\theta)]^T\).</p>
+
+<p>The Lagrangian is then \(L=T-U\) where \(T = \frac{m}{2} (\dot{r}^2 + r^2 \dot{\theta}^2)\) and \(U = mrgcos(\theta) + \frac{k}{2}(l_0 - r)^2\)</p>
+
+<p>The dynamics are given as:</p>
+
+\[m \ddot{r} - mr\dot{\theta}^2 + mgcos(\theta) - k (l_0-r) = 0,\]
+
+\[mr^2\ddot{\theta} + 2mr\dot{r}\dot{\theta} - mgrsin(\theta) =0\]
+
+<p>We assume this flight phase is purely <em>ballistic</em>, ie no control input.</p>
+
+<h2 id="phase-transition">Phase Transition</h2>
+<ol>
+  <li>flight to stance: The flight phase ends when the foot touches the ground again (touchdown), typically defined by \(z-l_0cos(\theta)\leq 0\)</li>
+  <li>stance to flight phase: The transition from stance to flight happens when the stance leg reaches its rest length: \(r \geq l_0\)</li>
+</ol>
+
+<h2 id="poincare-map-of-slip-apex-to-apex-map">Poincare Map of SLIP (Apex to Apex Map)</h2>
+<p><img src="../figures/poincare_SLIP.png" alt="Poincare Map of SLIP model" /></p>
+
+<p>This is the Poincare map of the SLIP model for a specific constant energy \(\tilde{E}\).</p>
+
+<p>The iterative approach shows that the right stable point is unstable and the left one is stable.</p>
+
+<p>However, since the fundamental assumption is that energy is conserved, this analysis on this 1D Poincare map can only make a statement about partial stability, and the analysis does not pertain to stability against disturbances that change the the total energy of the system.</p>
+
+<h3 id="fundamental-simplifications">Fundamental Simplifications</h3>
+<ol>
+  <li>Through choosing Poincare section to be at the apex of the hop, \(\dot{z}=0\) by definition. We can therefore remove the state \(\dot{z}\).</li>
+  <li>We will also ignore the absolute horizontal position \(x\), and the leg angle, \(\theta\), as they are irrelevant to the flight dynamics. This will leave us with two state variables: \(\dot{x}\), the horizontal velocity, and the hopping height \(z\).</li>
+  <li>At the Apex, the two variables \(\dot{x}\), \(z\) are linked.
+    <ul>
+      <li>This is because no energy is added or dissipated from the system.</li>
+      <li>If you know the (cosntant) total energy in the system, and you know the height at the apex, then horizontal velocity can be determined (up to a sign): \(E_apex(z,\dot{x}) = \frac{1}{2} m \dot{x}^2 + mgz = E_0\)</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="humanoid-control">Humanoid Control</h1>
+<p>Once you get enough Degrees of Freedom, we can factor the optimal control problem into pieces.</p>
+
+<ol>
+  <li>First pass: control the center of mass (centroid) and angular momentum through contact forces.</li>
+  <li>Move all of our joints to accomplish
+    <ul>
+      <li>CoM + contact trajectories</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="zero-moment-point-planning">Zero Moment Point Planning</h2>
+<p><a href="http://youtube.com/watch?v=Pt_ikHJnNs4">Tutorial</a></p>
+
+<p>Quest: <strong>constraints on contact forces \(\Rightarrow\) center of mass dynamics.</strong> Note this planning method causes robot to have a constant-height center of mass. For flat terrain, \(\text{ZMP}= \text{Center of Pressure}\)</p>
+
+<p>Zero Moment point is defined as the point on the ground surface <strong>about which the horizontal component of the moment of ground reaction force is zero</strong>.</p>
+
+<p>Recall that horizontal moment means the moments around x and y axes. The moment vector is parallel to x and y axes but perpendicular to the plane of force and arm vectors.</p>
+
+<h3 id="very-important-special-cases-flat-terrain">Very Important Special cases: Flat Terrain</h3>
+<ol>
+  <li><strong>Support polygon</strong> is a horizontal region over which the center of mass must lie to achieve static stability. For example, for an object resting on a horizontal surface (e.g. a table), the support polygon is the convex hull of its “footprint” on the table.</li>
+  <li>The humanoid can’t fall down unless the CoP is at the boundary of the support polygon.</li>
+  <li>Simple trajectories of CoP lead to robust, dynamic walking.</li>
+  <li>Given desired CoP, solving for CoM is a (finite) LQR problem</li>
+</ol>
+
+<h3 id="center-of-mass-planning-with-convex-optimization">Center of Mass planning with Convex Optimization</h3>
+<p><img src="../figures/zmp_planning.png" alt="ZMP or Center of Pressure Planning" /></p>
+
+<p>The light pink line denotes the trajectory of the desired ZMP and CoP.</p>
+
+<p>Zero Moment Planning: Assuming the knowlwedge of foot placements. The center of pressure shifts from one foot to the other. CoP can be solved as an LQR problem.</p>
+
+\[\min_{u} \int_{0}^{T} \|P_{CoP} - P^d_{CoP}\|_{Q}^2 dt + u^T R u\]
+
+<p>Note that this is exactly the finite LQR formulation.</p>
+
+<h3 id="generalization">Generalization</h3>
+<ol>
+  <li>Angular momentum terms (about the center of mass): Centroidal moment matrix</li>
+  <li>Contact Wrench Cone</li>
+</ol>
 
   </div>
 

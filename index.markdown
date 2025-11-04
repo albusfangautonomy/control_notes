@@ -91,6 +91,9 @@ Welcome to my personal collection of control systems notes. This site compiles e
 - [Sliding Mode Control](./nonlinear_notes/sliding_mode.html) \\
   Sliding Mode Control derivation and design.
 
+- [Trajectory Optimization](./nonlinear_notes/trajectory_op.html) \\
+  Trajectory Optimization Formulations, direct shooting, and direct transcription.
+
 ### Domain Specific Control
 
 - [Quadcoptor Control](./domain_specific_control/drone.html)
@@ -99,10 +102,15 @@ Welcome to my personal collection of control systems notes. This site compiles e
 
 - [Manipulator Control](./domain_specific_control/manipulator.html)
 
+- [Walking and Running](./domain_specific_control/walking.html)
+
 ---
 
 ## Reinforcement Learning
+
 - [Dynamic Programming](./rl_notes/dp.html)
+
+- [Reinforcement Learning Overview](./rl_notes/rl.html)
 
 ---
 

@@ -259,6 +259,8 @@ sensor level tracking:
 ### IMM Diagram
 ![IMM Diagram](../figures/imm_diagram_2.png)
 
+[IMM Paper](https://secwww.jhuapl.edu/techdigest/Content/techdigest/pdf/V22-N04/22-04-Genovese.pdf)
+
 1. State Interaction refers to the first step in the following math, specifically 
 
     $$\bar{x}_{k-1\|k-1}^{(i)} = \sum_{j} \hat{x}_{k-1\|k-1}^{(j)} ,\mu_{k-1}^{j\|i} $$
@@ -278,9 +280,12 @@ sensor level tracking:
     - where $$\mathbf{m}_0$$ is a vector of observations for the current update and $$\mathbf{m}^j$$ is the predicted track state for filter model j **transformed into the frame of the observations**.
   - $$\tilde{\mathbf{S}}^j = \mathbf{H}^j\tilde{\mathbf{P}}^{0j}(\mathbf{H}^j)^T + \mathbf{R}$$
 3. $$\mathbf{\hat{X}^1}$$ and $$\mathbf{\hat{X}^2}$$ are fed back to the first step, ie State Interaction.
-4. Likelihood $$Lambda^{(i)}$$ is different from $$\mu^{(i)}$$.
+4. Likelihood $$\Lambda^{(i)}$$ is different from $$\mu^{(i)}$$.
   - Likelihood measures the probability of observing hte measurement $$z_k$$ assuming model $$j$$ is correct.
   -  $$\mu^{(i)}$$ is the posterior belief of a model. The model probability represents the overall, cumulative probability that a specific model is the correct one for describing the target's behavior, based on all measurements up to the current time. Simply put,given all models and their likelihoods, how much should I trust each one now.
+5. In the first step (mixing), $$\pi_{ji}$$ make up the $$\Pi$$ Matrix, which is the state transition probability matrix defined *apriori* and needs to be tuned. Note that this matrix stays constant.
+  - $$\Pi \in \mathcal{R^{n \times n}}$$ where $$n$$ is the number of models in IMM.
+  - $$p_{ij}$$, ie the $$(i,j)$$ element in the matrix denotes the probability of switching from model $$i$$ to model $$j$$.
 <section id="imm-one-cycle">
   <h3>Interacting Multiple Model (IMM): One Cycle</h3>
   <ol>

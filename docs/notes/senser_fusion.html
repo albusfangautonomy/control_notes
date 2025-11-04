@@ -373,6 +373,8 @@ If GPS reading needs to be accurate and fast velocity constantly changing, addin
 <h3 id="imm-diagram">IMM Diagram</h3>
 <p><img src="../figures/imm_diagram_2.png" alt="IMM Diagram" /></p>
 
+<p><a href="https://secwww.jhuapl.edu/techdigest/Content/techdigest/pdf/V22-N04/22-04-Genovese.pdf">IMM Paper</a></p>
+
 <ol>
   <li>
     <p>State Interaction refers to the first step in the following math, specifically</p>
@@ -397,10 +399,16 @@ If GPS reading needs to be accurate and fast velocity constantly changing, addin
     </ul>
   </li>
   <li>\(\mathbf{\hat{X}^1}\) and \(\mathbf{\hat{X}^2}\) are fed back to the first step, ie State Interaction.</li>
-  <li>Likelihood \(Lambda^{(i)}\) is different from \(\mu^{(i)}\).
+  <li>Likelihood \(\Lambda^{(i)}\) is different from \(\mu^{(i)}\).
     <ul>
       <li>Likelihood measures the probability of observing hte measurement \(z_k\) assuming model \(j\) is correct.</li>
       <li>\(\mu^{(i)}\) is the posterior belief of a model. The model probability represents the overall, cumulative probability that a specific model is the correct one for describing the target’s behavior, based on all measurements up to the current time. Simply put,given all models and their likelihoods, how much should I trust each one now.</li>
+    </ul>
+  </li>
+  <li>In the first step (mixing), \(\pi_{ji}\) make up the \(\Pi\) Matrix, which is the state transition probability matrix defined <em>apriori</em> and needs to be tuned. Note that this matrix stays constant.
+    <ul>
+      <li>\(\Pi \in \mathcal{R^{n \times n}}\) where \(n\) is the number of models in IMM.</li>
+      <li>\(p_{ij}\), ie the \((i,j)\) element in the matrix denotes the probability of switching from model \(i\) to model \(j\).</li>
     </ul>
   </li>
 </ol>
